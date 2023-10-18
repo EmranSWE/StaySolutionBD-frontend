@@ -1,11 +1,15 @@
+import LoginPage from "@/components/Login/Login";
+import { Metadata } from "next";
 import React from "react";
-
-const LoginPage = () => {
+export const metadata: Metadata = {
+  title: "UMS | Login",
+};
+const Login = () => {
   return (
     <div>
-      <h1>This is authentic page</h1>
+      <LoginPage></LoginPage>
     </div>
   );
 };
 
-export default LoginPage;
+export default Login;
