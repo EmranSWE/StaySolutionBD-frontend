@@ -3,7 +3,7 @@ import React from "react";
 const SuperAdminPage = () => {
   return (
     <div>
-      <h1>Sumper admin page</h1>
+      <h1>Super Admin Page</h1>
     </div>
   );
 };

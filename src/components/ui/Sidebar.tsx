@@ -4,14 +4,14 @@ import { useState } from "react";
 import { Layout, Menu } from "antd";
 import { sidebarItems } from "@/constants/sidebarItems";
 import { USER_ROLE } from "@/constants/role";
+import { getUserInfo } from "@/services/auth.service";
 
 const { Sider } = Layout;
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
-  //   const { role } = getUserInfo() as any;
-  const role = USER_ROLE.RENTER;
+  const { role } = getUserInfo() as any;
 
   console.log(role);
 
@@ -39,7 +39,7 @@ const SideBar = () => {
           marginBottom: "1rem",
         }}
       >
-        PH-University
+        StaySolutionBD
       </div>
       <Menu
         theme="dark"

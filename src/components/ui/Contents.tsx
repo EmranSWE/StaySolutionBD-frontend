@@ -2,6 +2,7 @@
 
 import { Layout } from "antd";
 import SSBreadCrumb from "./SSBreadCrumb";
+import Header from "./Header";
 const { Content } = Layout;
 const Contents = ({ children }: { children: React.ReactNode }) => {
   const base = "admin";
@@ -12,18 +13,8 @@ const Contents = ({ children }: { children: React.ReactNode }) => {
         color: "black",
       }}
     >
-      <SSBreadCrumb
-        items={[
-          {
-            label: `${base}`,
-            link: `/${base}`,
-          },
-          {
-            label: `owner`,
-            link: `/${base}/owner`,
-          },
-        ]}
-      />
+      <Header />
+
       {children}
     </Content>
   );

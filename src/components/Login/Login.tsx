@@ -13,27 +13,32 @@ import { SubmitHandler } from "react-hook-form";
 //   storeUserInfo,
 // } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { useUserLoginMutation } from "@/redux/api/authApi";
+import {
+  getUserInfo,
+  isLoggedIn,
+  storeUserInfo,
+} from "@/services/auth.service";
 
 type FormValues = {
-  id: string;
+  email: string;
   password: string;
 };
 const LoginPage = () => {
-  // console.log(getUserInfo());
-  // console.log(isLoggedIn());
-  //   const [userLogin] = useUserLoginMutation();
+  console.log(getUserInfo());
+  console.log(isLoggedIn());
+  const [userLogin] = useUserLoginMutation();
   const router = useRouter();
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
-      console.log(data);
-      //   const res = await userLogin({ ...data }).unwrap();
-      //   console.log(res);
-      //   if (res?.accessToken) {
-      //     router.push("/profile");
-      //     message.success("User is logged in successful");
-      //   }
-      //   // console.log(res);
-      //   storeUserInfo({ accessToken: res?.accessToken });
+      const res = await userLogin({ ...data }).unwrap();
+      console.log(res);
+
+      if (res?.accessToken) {
+        router.push("/profile");
+        message.success("User is logged in successful");
+      }
+      storeUserInfo({ accessToken: res?.accessToken });
     } catch (err: any) {
       console.error(err.message);
     }
@@ -55,7 +60,7 @@ const LoginPage = () => {
         <div>
           <Form submitHandler={onSubmit}>
             <div style={{ margin: "15px 0px" }}>
-              <FormInput name="id" type="text" size="large" label="email" />
+              <FormInput name="email" type="text" size="large" label="email" />
             </div>
             <div>
               <FormInput
