@@ -1,11 +1,14 @@
 import React from "react";
+import HomePage from "./homepage/page";
+import HeaderPage from "./HeaderPage/page";
 
-const HomePage = () => {
+const MainPage = () => {
   return (
     <div>
-      <h1>Home page</h1>
+      <HeaderPage></HeaderPage>
+      <HomePage></HomePage>
     </div>
   );
 };
 
-export default HomePage;
+export default MainPage;

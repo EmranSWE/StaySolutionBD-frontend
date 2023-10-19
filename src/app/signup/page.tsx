@@ -7,9 +7,10 @@ import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { userTypes } from "@/constants/global";
 import { useUserSignupMutation } from "@/redux/api/authApi";
 import { Button, Col, Row, message } from "antd";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const CreateAdminPage = () => {
+const SignUpPage = () => {
   const [userSignup] = useUserSignupMutation();
 
   const onSubmit = async (data: any) => {
@@ -23,19 +24,7 @@ const CreateAdminPage = () => {
   };
   return (
     <div>
-      <SSBreadCrumb
-        items={[
-          {
-            label: `super_admin`,
-            link: `/super_admin`,
-          },
-          {
-            label: `admin`,
-            link: `/super_admin/manage-admin`,
-          },
-        ]}
-      />
-      <h1>Create Admin</h1>
+      <h1>Sign Up</h1>
       <div>
         <Form submitHandler={onSubmit}>
           <div
@@ -200,4 +189,4 @@ const CreateAdminPage = () => {
   );
 };
 
-export default CreateAdminPage;
+export default SignUpPage;
