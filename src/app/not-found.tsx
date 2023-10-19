@@ -6,7 +6,7 @@ import { Row, Col } from "antd";
 const NotFound = () => {
   return (
     <Row justify="center" align="middle" style={styles.container}>
-      <Col span={12} style={styles.imageWrapper}>
+      <Col span={12} style={styles.imageWrapper as React.CSSProperties}>
         <Image src={notFound} alt="not found" layout="responsive" />
       </Col>
     </Row>

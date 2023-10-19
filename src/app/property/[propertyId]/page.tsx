@@ -46,7 +46,7 @@ const PropertyDetailPage = ({ params }: any) => {
             <List
               size="small"
               dataSource={data?.amenities}
-              renderItem={(items) => (
+              renderItem={(items: any) => (
                 <List.Item style={{ fontSize: "18px" }}>{items}</List.Item>
               )}
             />

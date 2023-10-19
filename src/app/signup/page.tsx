@@ -19,12 +19,14 @@ const SignUpPage = () => {
       console.log(data);
       const response = await userSignup(data); // Capture the response
       console.log("responsee", response);
+      //@ts-ignore
       if (response?.error) {
         // Check if the response contains an error
+        //@ts-ignore
         throw new Error(response?.error?.message); // Throw the error to be caught in the catch block
       }
 
-      message.success("Admin created successfully");
+      message.success("User created successfully");
       // Redirect to the home route
       router.push("/");
     } catch (err: any) {
