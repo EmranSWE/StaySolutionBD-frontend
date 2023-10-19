@@ -1,13 +1,14 @@
 import { authKey } from "@/constants/storageKey";
-import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 
-import { getFromLocalStorage } from "@/utils/local-storage";
+import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
+import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 
 const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
 instance.defaults.headers["Accept"] = "application/json";
 instance.defaults.timeout = 60000;
+
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
@@ -25,25 +26,26 @@ instance.interceptors.request.use(
 );
 
 // Add a response interceptor
-//@ts-ignore
 instance.interceptors.response.use(
+  //@ts-ignore
   function (response) {
     const responseObject: ResponseSuccessType = {
       data: response?.data?.data,
-      meta: response?.data.meta,
+      meta: response?.data?.meta,
     };
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     return responseObject;
   },
-  function (error) {
-    const responseObject: IGenericErrorResponse = {
-      statusCode: error?.response?.data.statusCode || 500,
-      message: error?.response?.data?.message || "Something Went wrong",
-      errorMessage: error?.response?.data?.message,
-    };
-
-    return responseObject;
+  async function (error) {
+    if (error?.response?.status === 403) {
+    } else {
+      const responseObject: IGenericErrorResponse = {
+        statusCode: error?.response?.data?.statusCode || 500,
+        message: error?.response?.data?.message || "Something went wrong",
+        errorMessages: error?.response?.data?.message,
+      };
+      return responseObject;
+    }
   }
 );
+
 export { instance };

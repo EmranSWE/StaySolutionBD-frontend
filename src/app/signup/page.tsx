@@ -11,15 +11,27 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const SignUpPage = () => {
+  const router = useRouter();
   const [userSignup] = useUserSignupMutation();
 
   const onSubmit = async (data: any) => {
     try {
       console.log(data);
-      await userSignup(data);
+      const response = await userSignup(data); // Capture the response
+      console.log("responsee", response);
+      if (response?.error) {
+        // Check if the response contains an error
+        throw new Error(response?.error?.message); // Throw the error to be caught in the catch block
+      }
+
       message.success("Admin created successfully");
+      // Redirect to the home route
+      router.push("/");
     } catch (err: any) {
       console.error(err.message);
+      message.error(
+        err.message || "An error occurred while creating the user."
+      );
     }
   };
   return (

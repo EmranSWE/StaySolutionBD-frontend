@@ -19,6 +19,7 @@ import {
   isLoggedIn,
   storeUserInfo,
 } from "@/services/auth.service";
+import Link from "next/link";
 
 type FormValues = {
   email: string;
@@ -35,7 +36,7 @@ const LoginPage = () => {
       console.log(res);
 
       if (res?.accessToken) {
-        router.push("/profile");
+        router.push("/");
         message.success("User is logged in successful");
       }
       storeUserInfo({ accessToken: res?.accessToken });
@@ -62,7 +63,7 @@ const LoginPage = () => {
             <div style={{ margin: "15px 0px" }}>
               <FormInput name="email" type="text" size="large" label="email" />
             </div>
-            <div>
+            <div style={{ margin: "15px 0px" }}>
               <FormInput
                 name="password"
                 type="password"
@@ -74,6 +75,12 @@ const LoginPage = () => {
               Login
             </Button>
           </Form>
+          <div>
+            Are you new in StaySolutionBD?
+            <Link href={`/signup`}>
+              <Button type="primary">SignUp Now!</Button>
+            </Link>
+          </div>
         </div>
       </Col>
     </Row>

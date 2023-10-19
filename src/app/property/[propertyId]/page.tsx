@@ -2,6 +2,7 @@
 import { Card, Button, List, Typography, Row, Col } from "antd";
 import { useSinglePropertyQuery } from "@/redux/api/propertyApi";
 import HeaderPage from "@/app/HeaderPage/page";
+import { isLoggedIn } from "@/services/auth.service";
 
 const { Title, Text } = Typography;
 
