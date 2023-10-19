@@ -1,3 +1,4 @@
+"use client";
 import ActionBar from "@/components/ui/ActionBar";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";

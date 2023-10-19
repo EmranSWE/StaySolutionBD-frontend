@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   HomeOutlined,
   AppstoreOutlined,
@@ -29,9 +29,7 @@ function getItem(
   } as MenuItem;
 }
 
-const userLoggedIn = isLoggedIn();
-
-const items: MenuItem[] = [
+const staticItems: MenuItem[] = [
   getItem("Home", "1", <HomeOutlined />, [], "/"),
   getItem(
     "Our Apartments",
@@ -48,17 +46,27 @@ const items: MenuItem[] = [
     getItem("Ready Plot", "10"),
     getItem("Flat", "sub3", null, [getItem("Special Plat", "11")]),
   ]),
-  ...(!userLoggedIn
-    ? [getItem("Login", "12", <UserAddOutlined />, undefined, "/login")]
-    : []),
-  ...(userLoggedIn ? [getItem("Logout", "13", <LogoutOutlined />)] : []),
 ];
 
-const handleLogout = () => {
-  removeUserInfo(authKey);
-};
-
 const HeaderPage: React.FC = () => {
+  const [menuItems, setMenuItems] = useState<MenuItem[]>(staticItems);
+
+  useEffect(() => {
+    const userLoggedIn = isLoggedIn();
+    let dynamicItems = userLoggedIn
+      ? [
+          getItem("My Profile", "14", undefined, undefined, "/profile"),
+          getItem("Logout", "13", <LogoutOutlined />),
+        ]
+      : [getItem("Login", "12", <UserAddOutlined />, undefined, "/login")];
+
+    setMenuItems([...staticItems, ...dynamicItems]);
+  }, []);
+
+  const handleLogout = () => {
+    removeUserInfo(authKey);
+  };
+
   return (
     <Row
       align="middle"
@@ -73,7 +81,7 @@ const HeaderPage: React.FC = () => {
 
       {/* Dropdown menu icon for mobile devices */}
       <Col xs={4} sm={0} md={0} lg={0} xl={0}>
-        <Dropdown overlay={<Menu items={items} />}>
+        <Dropdown overlay={<Menu items={menuItems} />} trigger={["click"]}>
           <MenuUnfoldOutlined style={{ fontSize: "20px" }} />
         </Dropdown>
       </Col>
@@ -83,7 +91,7 @@ const HeaderPage: React.FC = () => {
           defaultSelectedKeys={["1"]}
           defaultOpenKeys={["sub1"]}
           mode="horizontal"
-          items={items}
+          items={menuItems}
           style={{ justifyContent: "flex-end" }}
           onClick={({ key }) => {
             if (key === "13") handleLogout();
