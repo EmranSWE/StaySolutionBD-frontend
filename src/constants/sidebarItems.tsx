@@ -35,9 +35,9 @@ export const sidebarItems = (role: string) => {
 
   const commonAdminSidebarItems: MenuProps["items"] = [
     {
-      label: <Link href={`/${role}/manage-owner`}>Manage Owner</Link>,
+      label: <Link href={`/${role}/manage-user`}>Manage User</Link>,
       icon: <TableOutlined />,
-      key: `/${role}/manage-owner`,
+      key: `/${role}/manage-user`,
     },
     {
       label: <Link href={`/${role}/manage-property`}>Manage Property</Link>,
@@ -49,17 +49,7 @@ export const sidebarItems = (role: string) => {
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     ...commonAdminSidebarItems,
-    {
-      label: "Manage academic",
-      key: "manage-academic",
-      icon: <TableOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}/review/reviews`}>Reviews</Link>,
-          key: `/${role}/review/reviews`,
-        },
-      ],
-    },
+
     {
       label: "Management",
       key: "management",
@@ -71,32 +61,8 @@ export const sidebarItems = (role: string) => {
         },
 
         {
-          label: (
-            <Link href={`/${role}/semester-registration`}>
-              Semester registration
-            </Link>
-          ),
-          key: `/${role}/semester-registration`,
-        },
-        {
-          label: <Link href={`/${role}/offered-course`}>Offered courses</Link>,
-          key: `/${role}/offered-course`,
-        },
-        {
-          label: (
-            <Link href={`/${role}/offered-course-section`}>
-              Course sections
-            </Link>
-          ),
-          key: `/${role}/offered-course-section`,
-        },
-        {
-          label: (
-            <Link href={`/${role}/offered-course-schedule`}>
-              Course schedules
-            </Link>
-          ),
-          key: `/${role}/offered-course-schedule`,
+          label: <Link href={`/${role}/issues`}>Issues</Link>,
+          key: `/${role}/issues`,
         },
       ],
     },
@@ -122,8 +88,8 @@ export const sidebarItems = (role: string) => {
       icon: <AppstoreOutlined />,
       children: [
         {
-          label: <Link href={`/${role}/department`}>Node</Link>,
-          key: `/${role}/node`,
+          label: <Link href={`/${role}/property`}>Property</Link>,
+          key: `/${role}/property`,
         },
       ],
     },
@@ -137,8 +103,27 @@ export const sidebarItems = (role: string) => {
       icon: <AppstoreOutlined />,
       children: [
         {
-          label: <Link href={`/${role}/property`}>Property</Link>,
-          key: `/${role}/property`,
+          label: <Link href={`/${role}/my-property`}>My Property</Link>,
+          key: `/${role}/my-property`,
+        },
+        {
+          label: <Link href={`/${role}/create-property`}>Add Property</Link>,
+          key: `/${role}/create-property`,
+        },
+        {
+          label: (
+            <Link href={`/${role}/property-insurance`}>
+              {" "}
+              Property Insurance
+            </Link>
+          ),
+          key: `/${role}/property-insurance`,
+        },
+        {
+          label: (
+            <Link href={`/${role}/property-booking`}> Property Booking</Link>
+          ),
+          key: `/${role}/property-booking`,
         },
       ],
     },
@@ -146,6 +131,30 @@ export const sidebarItems = (role: string) => {
       label: <Link href={`/${role}/review`}>Manage Review</Link>,
       icon: <TableOutlined />,
       key: `/${role}/review`,
+    },
+    {
+      label: <Link href={`/${role}/issues`}>Manage Issues</Link>,
+      icon: <TableOutlined />,
+      key: `/${role}/issues`,
+    },
+    {
+      label: <Link href={`/${role}/safety`}>Safety Management</Link>,
+      icon: <TableOutlined />,
+      key: `/${role}/safety`,
+    },
+    {
+      label: <Link href={`/${role}/marketplace`}>MarketPlace</Link>,
+      icon: <TableOutlined />,
+      key: `/${role}/marketplace`,
+    },
+    {
+      label: <Link href={`/${role}/message`}>Check Message</Link>,
+      icon: <TableOutlined />,
+      key: `/${role}/message`,
+    },
+    {
+      label: <Link href={`/${role}/notification`}> Notification</Link>,
+      key: `/${role}/notification`,
     },
   ];
 

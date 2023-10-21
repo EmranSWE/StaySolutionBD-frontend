@@ -4,6 +4,14 @@ const AuthUrl = "/user";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    users: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${AuthUrl}/get-user`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [tagTypes.user],
+    }),
     userLogin: build.mutation({
       query: (loginData) => ({
         url: `${AuthUrl}/login`,
@@ -23,4 +31,5 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useUserLoginMutation, useUserSignupMutation } = authApi;
+export const { useUsersQuery, useUserLoginMutation, useUserSignupMutation } =
+  authApi;

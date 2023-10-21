@@ -15,8 +15,9 @@ type SelectFieldProps = {
   value?: string | string[] | undefined;
   placeholder?: string;
   label?: string;
+  mode?: "multiple" | "tags" | undefined;
   defaultValue?: SelectOptions;
-  handleChange?: (el: string) => void;
+  handleChange?: (value: string | string[]) => void;
 };
 
 const FormSelectField = ({
@@ -26,29 +27,38 @@ const FormSelectField = ({
   placeholder = "select",
   options,
   label,
+  mode,
   defaultValue,
   handleChange,
+  ...restProps
 }: SelectFieldProps) => {
   const { control } = useFormContext();
 
   return (
-    <>
-      {label ? label : null}
+    <div>
+      {label && <label htmlFor={name}>{label}</label>}
       <Controller
         control={control}
         name={name}
         render={({ field: { value, onChange } }) => (
           <Select
-            onChange={handleChange ? handleChange : onChange}
+            id={name}
+            onChange={(value) => {
+              handleChange && handleChange(value);
+              onChange(value);
+            }}
             size={size}
             options={options}
             value={value}
+            mode={mode}
             style={{ width: "100%" }}
             placeholder={placeholder}
+            {...restProps}
           />
         )}
+        defaultValue={defaultValue}
       />
-    </>
+    </div>
   );
 };
 

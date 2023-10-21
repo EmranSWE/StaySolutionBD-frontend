@@ -20,11 +20,19 @@ export const propertyApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.property],
     }),
+    singleUserProperty: build.query({
+      query: (id) => ({
+        url: `${PROPERTY_URL}/my-property/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.property],
+    }),
     addProperty: build.mutation({
       query: (data) => ({
         url: PROPERTY_URL,
         method: "POST",
         data,
+        contentType: "multipart/form-data",
       }),
       transformResponse: (response, meta: IMeta) => {
         return {
@@ -34,6 +42,21 @@ export const propertyApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.property],
     }),
+    updateProperty: build.mutation({
+      query: (data) => ({
+        url: `${PROPERTY_URL}/${data.id}`,
+        method: "PATCH",
+        data: data.body,
+      }),
+      invalidatesTags: [tagTypes.property],
+    }),
+    deleteProperty: build.mutation({
+      query: (id) => ({
+        url: `${PROPERTY_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.property],
+    }),
   }),
 });
 
@@ -41,4 +64,7 @@ export const {
   usePropertiesQuery,
   useSinglePropertyQuery,
   useAddPropertyMutation,
+  useDeletePropertyMutation,
+  useUpdatePropertyMutation,
+  useSingleUserPropertyQuery,
 } = propertyApi;

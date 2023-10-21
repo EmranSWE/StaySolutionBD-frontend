@@ -5,6 +5,7 @@ import { isLoggedIn } from "@/services/auth.service";
 import { Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Row, Space, Spin } from "antd";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
@@ -18,7 +19,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, [router, isLoading]);
 
   if (!isLoading) {
-    return <p>Loading........</p>;
+    return (
+      <Row justify="center" align="middle" style={{ height: "100vh" }}>
+        <Space>
+          <Spin tip="Loading" size="large"></Spin>
+        </Space>
+      </Row>
+    );
   }
   return (
     <Layout hasSider>
