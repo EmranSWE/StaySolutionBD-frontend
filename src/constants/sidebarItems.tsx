@@ -161,15 +161,52 @@ export const sidebarItems = (role: string) => {
   const renterSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
+      label: "Property",
+      key: "property",
+      icon: <AppstoreOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/my-property`}>My Property</Link>,
+          key: `/${role}/my-property`,
+        },
+        {
+          label: <Link href={`/${role}/my-wishlist`}>Property Wishlist</Link>,
+          key: `/${role}/my-wishlist`,
+        },
+        {
+          label: <Link href={`/${role}/my-voucher`}> My Voucher</Link>,
+          key: `/${role}/property-voucher`,
+        },
+        {
+          label: <Link href={`/${role}/insurance`}> My Insurance</Link>,
+          key: `/${role}/property-insurance`,
+        },
+      ],
+    },
+    {
       label: <Link href={`/${role}/review`}>Review Property</Link>,
       icon: <TableOutlined />,
       key: `/${role}/review`,
     },
-
+    {
+      label: <Link href={`/${role}/booking`}>Booking Property</Link>,
+      icon: <TableOutlined />,
+      key: `/${role}/booking`,
+    },
     {
       label: <Link href={`/${role}/payment`}>Payment</Link>,
       icon: <CreditCardOutlined />,
       key: `/${role}/payment`,
+    },
+    {
+      label: <Link href={`/${role}/issues`}>Issues</Link>,
+      icon: <CreditCardOutlined />,
+      key: `/${role}/issues`,
+    },
+    {
+      label: <Link href={`/${role}/notification`}>Notification</Link>,
+      icon: <CreditCardOutlined />,
+      key: `/${role}/notification`,
     },
   ];
 
