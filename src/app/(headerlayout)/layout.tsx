@@ -38,7 +38,14 @@ const staticItems: MenuItem[] = [
     undefined,
     "/property/all-property"
   ),
-  getItem("Long term rental", "3", undefined, undefined, "/long-term-rental"),
+  getItem(
+    "Marketplace",
+    "15",
+    undefined,
+    undefined,
+    "/marketplace/all-property"
+  ),
+  getItem("Long term rental", "3", undefined, undefined, "/long-term"),
   getItem("About us", "4", undefined, undefined, "/about-us"),
   getItem("Contact us", "5", undefined, undefined, "/contact-us"),
   getItem("For sell", "sub2", <AppstoreOutlined />, [
@@ -48,7 +55,7 @@ const staticItems: MenuItem[] = [
   ]),
 ];
 
-const HeaderPage: React.FC = () => {
+const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
   const [menuItems, setMenuItems] = useState<MenuItem[]>(staticItems);
 
   useEffect(() => {
@@ -68,38 +75,53 @@ const HeaderPage: React.FC = () => {
   };
 
   return (
-    <Row
-      align="middle"
-      justify="space-between"
-      gutter={16}
-      style={{ padding: "0 16px", display: "flex" }}
-    >
-      {/* Logo for larger devices */}
-      <Col xs={0} sm={0} md={2} lg={2} xl={2}>
-        <h1>SSBD</h1>
-      </Col>
+    <>
+      <Row
+        align="middle"
+        justify="space-between"
+        gutter={16}
+        style={{ padding: "0 16px", display: "flex" }}
+      >
+        {/* Logo for larger devices */}
+        <Col xs={0} sm={0} md={2} lg={2} xl={2}>
+          <h1>SSBD</h1>
+        </Col>
 
-      {/* Dropdown menu icon for mobile devices */}
-      <Col xs={4} sm={0} md={0} lg={0} xl={0}>
-        <Dropdown overlay={<Menu items={menuItems} />} trigger={["click"]}>
-          <MenuUnfoldOutlined style={{ fontSize: "20px" }} />
-        </Dropdown>
-      </Col>
+        {/* Dropdown menu icon for mobile devices */}
+        <Col xs={4} sm={0} md={0} lg={0} xl={0}>
+          <Dropdown overlay={<Menu items={menuItems} />} trigger={["click"]}>
+            <MenuUnfoldOutlined style={{ fontSize: "20px" }} />
+          </Dropdown>
+        </Col>
 
-      <Col xs={0} sm={24} md={22} lg={22} xl={22}>
-        <Menu
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
-          mode="horizontal"
-          items={menuItems}
-          style={{ justifyContent: "flex-end" }}
-          onClick={({ key }) => {
-            if (key === "13") handleLogout();
-          }}
-        />
-      </Col>
-    </Row>
+        <Col xs={0} sm={24} md={22} lg={22} xl={22}>
+          <Menu
+            defaultSelectedKeys={["1"]}
+            defaultOpenKeys={["sub1"]}
+            mode="horizontal"
+            items={menuItems}
+            style={{ justifyContent: "flex-end" }}
+            onClick={({ key }) => {
+              if (key === "13") handleLogout();
+            }}
+          />
+        </Col>
+      </Row>
+      {children}
+    </>
   );
 };
 
-export default HeaderPage;
+export default HeaderLayoutPage;
+
+// import React from "react";
+
+// const HomePage = () => {
+//   return (
+//     <div>
+//       <h1>Home</h1>
+//     </div>
+//   );
+// };
+
+// export default HomePage;

@@ -66,3 +66,28 @@ export const marketplaceCategory = [
   { label: "Villa", value: "Villa" },
   { label: "Studio", value: "Studio" },
 ];
+
+export const issueStatus = [
+  { label: "OPEN", value: "OPEN" },
+  { label: "IN_PROGRESS", value: "IN_PROGRESS" },
+  { label: "RESOLVED", value: "RESOLVED" },
+  { label: "CLOSED", value: "CLOSED" },
+];
+
+export const priorityLevel = [
+  { label: "Low", value: "Low" },
+  { label: "Medium", value: "Medium" },
+  { label: "High", value: "High" },
+];
+
+export const bookingStatus = [
+  { label: "Confirmed", value: "Confirmed" },
+  { label: "Pending", value: "Pending" },
+  { label: "Cancelled", value: "Cancelled" },
+];
+
+export const paymentStatus = [
+  { label: "Completed", value: "Completed" },
+  { label: "Pending", value: "Pending" },
+  { label: "Failed", value: "Failed" },
+];

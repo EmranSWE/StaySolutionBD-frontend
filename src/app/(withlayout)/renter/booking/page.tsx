@@ -19,10 +19,11 @@ import SSModal from "@/components/ui/SSModal";
 import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
+import { useReviewsQuery } from "@/redux/api/reviewApi";
+import { useIssuesQuery } from "@/redux/api/issueApi";
 import { useBookingsQuery } from "@/redux/api/bookingApi";
-import { usePaymentsQuery } from "@/redux/api/paymentApi";
 
-const PaymentPage = () => {
+const PropertyBookingPage = () => {
   const query: Record<string, any> = {};
   const [deleteProperty] = useDeletePropertyMutation();
 
@@ -54,7 +55,7 @@ const PaymentPage = () => {
     // Handle the error as required, maybe redirect the user or show an error message
   }
 
-  const { data, isLoading, isError, error } = usePaymentsQuery({ ...query });
+  const { data, isLoading, isError, error } = useBookingsQuery({ ...query });
   if (isError) {
     console.error("Error fetching property data:", error);
     // Handle the error as needed
@@ -66,31 +67,38 @@ const PaymentPage = () => {
 
   const columns = [
     {
-      title: "Payment Methods",
-      dataIndex: "paymentMethod",
+      title: "Booking Status",
+      dataIndex: "bookingStatus",
     },
     {
-      title: "Payment Status",
-      dataIndex: "paymentStatus",
+      title: "Special Request",
+      dataIndex: "specialRequest",
     },
 
     {
-      title: "Payment Date",
-      dataIndex: "paymentDate",
+      title: "Booking Start",
+      dataIndex: "bookingStartDate",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
     },
     {
-      title: "Security Deposit",
-      dataIndex: "securityDeposit",
+      title: "Booking End",
+      dataIndex: "bookingEndDate",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
+      sorter: true,
     },
     {
-      title: "Payment Amount",
-      dataIndex: "paymentAmount",
+      title: "Updated Booking",
+      dataIndex: "updatedAt",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
+      sorter: true,
     },
-    ,
     {
       title: "Action",
       dataIndex: "id",
@@ -166,7 +174,7 @@ const PaymentPage = () => {
           },
         ]}
       />
-      <ActionBar title="Payment">
+      <ActionBar title="Booking">
         <Input
           size="large"
           placeholder="Search"
@@ -176,7 +184,7 @@ const PaymentPage = () => {
           }}
         />
         <div>
-          <Link href="/renter/payment/add-payment">
+          <Link href="/renter/booking/add-booking">
             <Button type="primary">Create Booking</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
@@ -215,4 +223,4 @@ const PaymentPage = () => {
   );
 };
 
-export default PaymentPage;
+export default PropertyBookingPage;

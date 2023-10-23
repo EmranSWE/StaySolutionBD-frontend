@@ -1,10 +1,10 @@
 import React from "react";
 import { Carousel, Button } from "antd";
 import Image from "next/image";
-import home1 from "../../../assets/home100.jpg";
-import home2 from "../../../assets/home1.jpg";
-import home3 from "../../../assets/home2.jpg";
-import home4 from "../../../assets/home3.jpg";
+import home1 from "../../../../assets/home100.jpg";
+import home2 from "../../../../assets/home1.jpg";
+import home3 from "../../../../assets/home2.jpg";
+import home4 from "../../../../assets/home3.jpg";
 const contentStyle: React.CSSProperties = {
   height: "600px",
   color: "#fff",
