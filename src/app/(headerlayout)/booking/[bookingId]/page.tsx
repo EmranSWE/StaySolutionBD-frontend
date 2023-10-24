@@ -9,19 +9,34 @@ import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
-const AddBookingPage = () => {
+type BookingDetailsProps = {
+  params: {
+    bookingId: string;
+  };
+};
+
+const AddBookingPage = ({ params }: BookingDetailsProps) => {
+  console.log(params.bookingId);
   const router = useRouter();
   const [addBooking] = useAddBookingMutation();
-
+  const propertyId = params?.bookingId;
+  console.log(propertyId);
   const onSubmit = async (values: any) => {
     const { id } = getUserInfo() as { id: string };
+    const propertyId = params?.bookingId;
 
+    if (!propertyId) {
+      console.error("Property ID is missing");
+      return;
+    }
+
+    values.propertyId = propertyId;
     console.log("values", values);
 
     try {
       const res = await addBooking(values);
       if (!res) {
-        message.error("Your issue doesnot added");
+        message.error("Your issue does not added");
       }
       console.log(res);
       message.success("Reviews created successfully!");
@@ -104,6 +119,7 @@ const AddBookingPage = () => {
                 <FormInput
                   type="text"
                   name="propertyId"
+                  value={params.bookingId}
                   size="large"
                   label="Property Id"
                 />

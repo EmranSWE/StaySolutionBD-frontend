@@ -14,7 +14,7 @@ const ProductCard = ({ data, onAddToCart }: ProductCardProps) => {
         style={{ width: 300, position: "relative" }}
         cover={
           <Image
-            src={data.propertyImage}
+            src={data.propertyImage || data.imageGallery[0]}
             alt="Landscape picture"
             width={200}
             height={200}
@@ -22,7 +22,7 @@ const ProductCard = ({ data, onAddToCart }: ProductCardProps) => {
         }
       >
         <Meta
-          avatar={<Avatar src={data.propertyImage} />}
+          avatar={<Avatar src={data.propertyImage || data.imageGallery[0]} />}
           title={data.category}
           description={data.itemDescription}
         />
