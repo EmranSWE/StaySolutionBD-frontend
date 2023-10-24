@@ -56,11 +56,11 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
           },
           {
             label: "issue",
-            link: "/renter/my-issue/",
+            link: "/renter/booking/",
           },
         ]}
       />
-      <h1>Create Issue</h1>
+      <h1>Create Booking</h1>
 
       <div>
         <Form submitHandler={onSubmit}>

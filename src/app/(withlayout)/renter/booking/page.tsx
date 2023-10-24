@@ -6,9 +6,8 @@ import Link from "next/link";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
   ReloadOutlined,
-  EyeOutlined,
+  PayCircleOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
@@ -19,14 +18,11 @@ import SSModal from "@/components/ui/SSModal";
 import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
-import { useReviewsQuery } from "@/redux/api/reviewApi";
-import { useIssuesQuery } from "@/redux/api/issueApi";
 import { useBookingsQuery } from "@/redux/api/bookingApi";
 
 const PropertyBookingPage = () => {
   const query: Record<string, any> = {};
   const [deleteProperty] = useDeletePropertyMutation();
-
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -52,16 +48,12 @@ const PropertyBookingPage = () => {
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("User ID not found");
-    // Handle the error as required, maybe redirect the user or show an error message
   }
 
   const { data, isLoading, isError, error } = useBookingsQuery({ ...query });
   if (isError) {
     console.error("Error fetching property data:", error);
-    // Handle the error as needed
   }
-
-  console.log("data", data);
 
   const meta = data?.meta;
 
@@ -102,10 +94,10 @@ const PropertyBookingPage = () => {
     {
       title: "Action",
       dataIndex: "id",
-      render: function (propertyId: any) {
+      render: function (id: any, record: any) {
         return (
           <>
-            <Link href={`/renter/manage-property/edit/${propertyId}`}>
+            <Link href={`/renter/manage-property/edit/${id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -120,13 +112,27 @@ const PropertyBookingPage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setPropertyId(id);
               }}
               danger
               style={{ marginLeft: "3px" }}
             >
               <DeleteOutlined />
             </Button>
+
+            {record.bookingStatus === "Pending" && (
+              <Link href={`/renter/payment/${id}`}>
+                <Button
+                  style={{
+                    margin: "0px 5px",
+                  }}
+                  onClick={() => console.log(data)}
+                  type="primary"
+                >
+                  <PayCircleOutlined />
+                </Button>
+              </Link>
+            )}
           </>
         );
       },

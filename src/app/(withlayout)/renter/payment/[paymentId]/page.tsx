@@ -10,13 +10,25 @@ import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
-const AddPaymentPage = () => {
+type PaymentParamsProp = {
+  params: {
+    paymentId: string;
+  };
+};
+const AddPaymentPage = ({ params }: PaymentParamsProp) => {
   const router = useRouter();
   const [addPayment] = useAddPaymentMutation();
 
   const onSubmit = async (values: any) => {
     const { id } = getUserInfo() as { id: string };
+    const paymentId = params?.paymentId;
 
+    if (!paymentId) {
+      console.error("Property ID is missing");
+      return;
+    }
+
+    values.bookingId = paymentId;
     console.log("values", values);
 
     try {
@@ -26,6 +38,7 @@ const AddPaymentPage = () => {
       }
       console.log(res);
       message.success("Reviews created successfully!");
+      router.push("/renter/payment");
     } catch (err: any) {
       console.error(err.message);
     }
@@ -40,8 +53,8 @@ const AddPaymentPage = () => {
             link: "/renter",
           },
           {
-            label: "issue",
-            link: "/renter/my-issue/",
+            label: "payment",
+            link: "/renter/payment/",
           },
         ]}
       />
@@ -126,20 +139,6 @@ const AddPaymentPage = () => {
                   size="large"
                   label="Payment Amount"
                   placeholder="Enter the security money"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="bookingId"
-                  size="large"
-                  label="Booking Id"
                 />
               </Col>
             </Row>
