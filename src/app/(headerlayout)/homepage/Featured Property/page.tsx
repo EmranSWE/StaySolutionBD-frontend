@@ -40,9 +40,8 @@ const FeaturedProduct = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log("Featured", data);
 
-  const handleAddToCart = (property) => {
+  const handleAddToCart = (property: any) => {
     console.log(`Added ${property} to cart!`);
     console.log(property);
     setCartCounts((prevCounts) => ({

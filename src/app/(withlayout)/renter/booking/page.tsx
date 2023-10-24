@@ -44,7 +44,6 @@ const PropertyBookingPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  console.log(getUserInfo());
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("User ID not found");

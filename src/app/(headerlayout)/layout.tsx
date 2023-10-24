@@ -84,7 +84,9 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
       >
         {/* Logo for larger devices */}
         <Col xs={0} sm={0} md={2} lg={2} xl={2}>
-          <h1>SSBD</h1>
+          <Link href="/">
+            <h1>SSBD</h1>
+          </Link>
         </Col>
 
         {/* Dropdown menu icon for mobile devices */}
@@ -113,15 +115,3 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default HeaderLayoutPage;
-
-// import React from "react";
-
-// const HomePage = () => {
-//   return (
-//     <div>
-//       <h1>Home</h1>
-//     </div>
-//   );
-// };
-
-// export default HomePage;

@@ -9,7 +9,6 @@ import MarketPlaceProperty from "./MarketplacePage/page";
 const HomePage = () => {
   return (
     <div>
-      <h1>Home Page</h1>
       <BannerPage></BannerPage>
       <FeaturedPropertyPage></FeaturedPropertyPage>
       <RecentPropertyPage></RecentPropertyPage>
