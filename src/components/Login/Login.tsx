@@ -6,12 +6,6 @@ import Image from "next/image";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
-// import { useUserLoginMutation } from "@/redux/api/authApi";
-// import {
-//   getUserInfo,
-//   isLoggedIn,
-//   storeUserInfo,
-// } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import {
@@ -45,45 +39,66 @@ const LoginPage = () => {
     }
   };
   return (
-    <Row
-      justify="center"
-      align="middle"
-      style={{
-        minHeight: "100vh",
-      }}
-    >
-      <Col sm={12} md={16} lg={10}>
-        <Image src={loginImage} width={500} alt="login Image" />
-      </Col>
-
-      <Col sm={12} md={8} lg={8}>
-        <h1 style={{ margin: "15px 0px" }}>First login your account</h1>
-        <div>
-          <Form submitHandler={onSubmit}>
-            <div style={{ margin: "15px 0px" }}>
-              <FormInput name="email" type="text" size="large" label="email" />
-            </div>
-            <div style={{ margin: "15px 0px" }}>
-              <FormInput
-                name="password"
-                type="password"
-                size="large"
-                label="user password"
-              />
-            </div>
-            <Button type="primary" htmlType="submit">
-              Login
-            </Button>
-          </Form>
-          <div>
-            Are you new in StaySolutionBD?
-            <Link href={`/signup`}>
-              <Button type="primary">SignUp Now!</Button>
-            </Link>
+    <div>
+      <h1
+        style={{
+          fontSize: "50px",
+          textAlign: "center",
+          color: "purple",
+          marginTop: "20px",
+        }}
+      >
+        Stay Solution BD
+      </h1>
+      <Row justify="center" align="middle" style={{ minHeight: "50vh" }}>
+        <Col xs={24} sm={12} md={16} lg={10}>
+          <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+            <Image src={loginImage} width={300} alt="login Image" />
           </div>
-        </div>
-      </Col>
-    </Row>
+        </Col>
+
+        <Col xs={22} sm={12} md={8} lg={8}>
+          <h1 style={{ fontSize: "1.2rem", margin: "10px 0px" }}>
+            Login your account
+          </h1>
+          <div>
+            <Form submitHandler={onSubmit}>
+              <div style={{ margin: "10px 0px" }}>
+                <FormInput
+                  name="email"
+                  type="text"
+                  size="large"
+                  label="Email"
+                />
+              </div>
+              <div style={{ margin: "10px 0px" }}>
+                <FormInput
+                  name="password"
+                  type="password"
+                  size="large"
+                  label="Password"
+                />
+              </div>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ width: "100%" }}
+              >
+                Login
+              </Button>
+            </Form>
+            <div style={{ textAlign: "center", marginTop: "10px" }}>
+              Are you new in StaySolutionBD?
+              <Link href={`/signup`}>
+                <Button type="primary" style={{ marginLeft: "10px" }}>
+                  SignUp Now!
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
