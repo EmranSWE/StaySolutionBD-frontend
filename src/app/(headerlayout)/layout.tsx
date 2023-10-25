@@ -11,6 +11,7 @@ import { Menu, Dropdown, Row, Col, MenuProps } from "antd";
 import Link from "next/link";
 import { isLoggedIn, removeUserInfo } from "@/services/auth.service";
 import { authKey } from "@/constants/storageKey";
+import RentalFooter from "./homepage/Footer/page";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -110,6 +111,7 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
         </Col>
       </Row>
       {children}
+      <RentalFooter></RentalFooter>
     </>
   );
 };

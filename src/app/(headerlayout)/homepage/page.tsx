@@ -14,7 +14,6 @@ const HomePage = () => {
       <RecentPropertyPage></RecentPropertyPage>
       <PopularPageCategory></PopularPageCategory>
       <MarketPlaceProperty></MarketPlaceProperty>
-      <RentalFooter></RentalFooter>
     </div>
   );
 };
