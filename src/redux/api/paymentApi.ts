@@ -41,6 +41,20 @@ export const PaymentApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.payment],
     }),
+    addPaymentToStripe: build.mutation({
+      query: (data) => ({
+        url: "/payment/create-payment-intent",
+        method: "POST",
+        data: data,
+      }),
+      transformResponse: (response, meta: IMeta) => {
+        return {
+          properties: response,
+          meta,
+        };
+      },
+      invalidatesTags: [tagTypes.payment],
+    }),
     updatePayment: build.mutation({
       query: (data) => ({
         url: `${PAYMENT_URL}/${data.id}`,
@@ -66,4 +80,5 @@ export const {
   useDeletePaymentMutation,
   useUpdatePaymentMutation,
   useSingleUserPaymentQuery,
+  useAddPaymentToStripeMutation,
 } = PaymentApi;

@@ -44,12 +44,12 @@ const PropertyBookingPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { id } = getUserInfo() as { id: String };
-  if (!id) {
-    console.error("User ID not found");
+  const { data, isLoading, isError, error, refetch } = useBookingsQuery({
+    ...query,
+  });
+  if (isLoading) {
+    return <div>Loading........</div>;
   }
-
-  const { data, isLoading, isError, error } = useBookingsQuery({ ...query });
   if (isError) {
     console.error("Error fetching property data:", error);
   }
