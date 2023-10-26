@@ -3,11 +3,11 @@ import { Row, Col, Button, message } from "antd";
 import React, { useEffect, useState } from "react";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { useDebounced } from "@/redux/hooks";
-import { useMarketplacesQuery } from "@/redux/api/marketplaceApi";
+
 import { marketplaceCategory } from "@/constants/global";
 import DataSlider from "@/components/Forms/FormDataSlider";
 import FormDataSearchInput from "@/components/Forms/FormDataSearchInput";
-import ProductCard from "@/components/ui/ProductCard";
+
 import CategorySelect from "@/components/ui/CategorySelect";
 import { usePropertiesQuery } from "@/redux/api/propertyApi";
 import PropertyProductCard from "@/components/ui/PropertyProductCard";
@@ -101,9 +101,9 @@ const AllPropertyData = () => {
       >
         All Selling Property
       </h1>
-      <Row gutter={[16, 16]} style={{ marginLeft: "20px" }}>
+      <Row gutter={24} style={{ overflow: "hidden" }}>
         {/* Filters Section */}
-        <Col xs={18} sm={24} md={6} lg={5} xl={5}>
+        <Col xs={24} sm={24} md={6} lg={5} xl={5}>
           <div className="filters">
             <FormDataSearchInput
               placeholder="Search"
@@ -131,11 +131,19 @@ const AllPropertyData = () => {
         </Col>
 
         {/* Products Section */}
-        <Col xs={24} sm={24} md={18} lg={19} xl={19}>
-          <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+        <Col xs={24} sm={24} md={18} lg={18} xl={19}>
+          <Row gutter={16}>
             {data &&
               data.map((property: Property) => (
-                <Col xs={24} sm={12} md={8} lg={8} xl={8} key={property.id}>
+                <Col
+                  xs={24}
+                  sm={12}
+                  md={8}
+                  lg={8}
+                  xl={8}
+                  key={property.id}
+                  style={{ boxSizing: "border-box" }}
+                >
                   <PropertyProductCard
                     data={property}
                     onAddToCart={handleAddToCart}

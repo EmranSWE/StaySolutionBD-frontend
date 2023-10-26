@@ -43,7 +43,7 @@ const MarketPlaceProperty = () => {
   }
   console.log("market", data);
 
-  const handleAddToCart = (property) => {
+  const handleAddToCart = (property: any) => {
     console.log(`Added ${property} to cart!`);
     console.log(property);
     setCartCounts((prevCounts) => ({

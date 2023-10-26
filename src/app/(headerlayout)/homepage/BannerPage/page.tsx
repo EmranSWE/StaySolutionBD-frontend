@@ -6,10 +6,12 @@ import home2 from "../../../../assets/home1.jpg";
 import home3 from "../../../../assets/home2.jpg";
 import home4 from "../../../../assets/home3.jpg";
 const contentStyle: React.CSSProperties = {
-  height: "600px",
+  height: "400px",
   color: "#fff",
-  width: "100%",
-  textAlign: "center",
+  width: "100%", // take the full width
+  display: "flex", // use flexbox
+  justifyContent: "center", // horizontally center children
+  alignItems: "center", // vertically center children
   background: "#364d79",
   position: "relative",
 };
@@ -17,9 +19,6 @@ const contentStyle: React.CSSProperties = {
 const overlayStyle: React.CSSProperties = {
   position: "absolute",
   display: "flex",
-  top: "0",
-  bottom: "10px",
-  left: "25%",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",

@@ -81,22 +81,23 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
         align="middle"
         justify="space-between"
         gutter={16}
-        style={{ padding: "0 16px", display: "flex" }}
+        style={{ padding: "0 16px", display: "flex", margin: "10px 10px" }} // Added margin
       >
-        {/* Logo for larger devices */}
-        <Col xs={0} sm={0} md={2} lg={2} xl={2}>
+        {/* Logo for all devices */}
+        <Col xs={2} sm={0} md={2} lg={2} xl={2}>
           <Link href="/">
             <h1>SSBD</h1>
           </Link>
         </Col>
 
         {/* Dropdown menu icon for mobile devices */}
-        <Col xs={4} sm={0} md={0} lg={0} xl={0}>
+        <Col xs={2} sm={0} md={0} lg={0} xl={0} style={{ textAlign: "left" }}>
           <Dropdown overlay={<Menu items={menuItems} />} trigger={["click"]}>
-            <MenuUnfoldOutlined style={{ fontSize: "20px" }} />
+            <MenuUnfoldOutlined style={{ fontSize: "40px" }} />
           </Dropdown>
         </Col>
 
+        {/* Menu for larger devices */}
         <Col xs={0} sm={24} md={22} lg={22} xl={22}>
           <Menu
             defaultSelectedKeys={["1"]}

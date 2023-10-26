@@ -5,15 +5,17 @@ import RentalFooter from "./Footer/page";
 import RecentPropertyPage from "./RecentProperty/page";
 import PopularPageCategory from "./PopularCategory/page";
 import MarketPlaceProperty from "./MarketplacePage/page";
+import WhyUsePage from "./WhyUs/page";
 
 const HomePage = () => {
   return (
     <div>
-      <BannerPage></BannerPage>
+      {/* <BannerPage></BannerPage> */}
       <FeaturedPropertyPage></FeaturedPropertyPage>
-      <RecentPropertyPage></RecentPropertyPage>
-      <PopularPageCategory></PopularPageCategory>
+      {/* <RecentPropertyPage></RecentPropertyPage> */}
+      {/* <PopularPageCategory></PopularPageCategory> */}
       <MarketPlaceProperty></MarketPlaceProperty>
+      <WhyUsePage></WhyUsePage>
     </div>
   );
 };

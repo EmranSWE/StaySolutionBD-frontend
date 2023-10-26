@@ -51,20 +51,18 @@ const FeaturedProduct = () => {
   };
 
   return (
-    <div
-      style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
-    >
+    <div style={{ padding: "30px" }}>
       <Divider
         orientation="center"
         style={{ fontSize: "30px", fontWeight: "bolder" }}
       >
         Featured Product
       </Divider>
-      <Row gutter={16}>
+      <Row justify="center" gutter={[16, 16]}>
         {data?.slice(0, 4).map((property: any, index: any) => (
-          <Col xs={24} sm={12} md={6} key={index}>
+          <Col xs={24} sm={12} md={8} lg={6} key={index} className="custom-col">
             <Card
-              style={{ width: 300, position: "relative" }} // added position: "relative"
+              style={{ width: "100%", maxWidth: 300, margin: "0 auto" }}
               cover={
                 <Image
                   src={property.imageGallery[0]}
@@ -91,7 +89,7 @@ const FeaturedProduct = () => {
                   Rent:
                   <span style={{ fontSize: "16px", fontWeight: "bolder" }}>
                     ${property.monthlyRent}
-                  </span>{" "}
+                  </span>
                 </p>
               </div>
               <Meta

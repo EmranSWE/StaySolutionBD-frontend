@@ -9,16 +9,24 @@ import DataSlider from "@/components/Forms/FormDataSlider";
 import FormDataSearchInput from "@/components/Forms/FormDataSearchInput";
 import ProductCard from "@/components/ui/ProductCard";
 import CategorySelect from "@/components/ui/CategorySelect";
+import { usePropertiesQuery } from "@/redux/api/propertyApi";
+import PropertyProductCard from "@/components/ui/PropertyProductCard";
 
 //Types of marketplace property
-type PropertyType = {
+type Property = {
   id: string;
-  propertyImage: string;
-  category: string;
-  itemDescription: string;
-  // ... add other fields that a property might have
+  location: string[];
+  city?: string; // The "?" denotes this is optional.
+  numberOfRooms: number;
+  monthlyRent?: number;
+  flatNo?: string;
+  description?: string;
+  availableDate?: Date;
+  size?: string;
+  maxOccupancy: number;
 };
-const AllMarketPlaceProperty = () => {
+
+const AllPropertyData = () => {
   const [cartCounts, setCartCounts] = useState<Record<string, number>>(() => {
     if (typeof window !== "undefined") {
       const savedCounts = localStorage.getItem("cartCounts");
@@ -58,14 +66,14 @@ const AllMarketPlaceProperty = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = useMarketplacesQuery({ ...query });
+  const { data, isLoading } = usePropertiesQuery({ ...query });
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
   console.log("Marketplace", data);
 
-  const handleAddToCart = (property: PropertyType) => {
+  const handleAddToCart = (property: Property) => {
     console.log(`Added ${property} to cart!`);
     console.log(property);
     message.success("Added to cart");
@@ -126,9 +134,12 @@ const AllMarketPlaceProperty = () => {
         <Col xs={24} sm={24} md={18} lg={19} xl={19}>
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             {data &&
-              data.map((property: PropertyType) => (
+              data.map((property: Property) => (
                 <Col xs={24} sm={12} md={8} lg={8} xl={8} key={property.id}>
-                  <ProductCard data={property} onAddToCart={handleAddToCart} />
+                  <PropertyProductCard
+                    data={property}
+                    onAddToCart={handleAddToCart}
+                  />
                 </Col>
               ))}
           </Row>
@@ -144,4 +155,4 @@ const AllMarketPlaceProperty = () => {
   );
 };
 
-export default AllMarketPlaceProperty;
+export default AllPropertyData;
