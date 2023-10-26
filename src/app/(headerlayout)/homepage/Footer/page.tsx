@@ -10,8 +10,6 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 
-const { Footer } = Layout;
-
 const RentalFooter = () => {
   const iconStyle = { fontSize: "24px", margin: "0 5px" };
   return (

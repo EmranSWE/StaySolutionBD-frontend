@@ -73,6 +73,7 @@ const PropertyBookingPage = () => {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
+      width: 150,
     },
     {
       title: "Booking End",
@@ -144,7 +145,6 @@ const PropertyBookingPage = () => {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };

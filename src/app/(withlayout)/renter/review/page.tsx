@@ -71,12 +71,10 @@ const MyReviewPage = () => {
       title: "Comments",
       dataIndex: "comments",
       sorter: true,
-      responsive: ["sm"],
     },
     {
       title: "rating",
       dataIndex: "rating",
-      responsive: ["sm"],
     },
 
     {
@@ -86,7 +84,6 @@ const MyReviewPage = () => {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
-      responsive: ["sm"],
     },
 
     {
@@ -120,7 +117,6 @@ const MyReviewPage = () => {
           </>
         );
       },
-      responsive: ["sm"],
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {

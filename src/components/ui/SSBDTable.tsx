@@ -42,6 +42,7 @@ const SSTable = ({
       dataSource={dataSource}
       pagination={paginationConfig}
       onChange={onTableChange}
+      scroll={{ x: true }}
     />
   );
 };
