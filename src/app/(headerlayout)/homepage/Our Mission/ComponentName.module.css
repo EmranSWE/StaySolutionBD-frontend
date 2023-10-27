@@ -1,0 +1,40 @@
+.rotatingImage:hover {
+  /* transform: rotate(90deg) !important; */
+  transform: scale(0.8);
+  border-radius: 5%;
+  transition: all 5s;
+}
+
+.backgroundDroplet {
+  background: rgb(36, 164, 214);
+  border-radius: 2% 50%;
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%) scale(0.8);
+  transition: all 3s;
+  width: 25%;
+  padding-bottom: 25%;
+}
+
+.backgroundDroplet:hover {
+  left: 80%;
+  transform: translate(-50%, -50%) scale(0.8) rotate(45deg);
+}
+
+.missionContainer {
+  background-color: #f6f8fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+}
+
+.highlight {
+  font-weight: bold;
+  color: #1890ff; /* Ant Design primary color */
+}
+
+.intro {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}

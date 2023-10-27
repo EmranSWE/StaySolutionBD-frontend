@@ -2,10 +2,8 @@
 import { usePropertiesQuery } from "@/redux/api/propertyApi";
 import { Button, Card, Col, Divider, Row } from "antd";
 import React, { useState } from "react";
-const { Meta } = Card;
-import "./styles.css";
 import Link from "next/link";
-const style: React.CSSProperties = { background: "#0092ff", padding: "8px 0" };
+
 const PopularPageCategory = () => {
   const query: Record<string, any> = {};
 
@@ -28,8 +26,8 @@ const PopularPageCategory = () => {
 
   const tagToPropertyMap = new Map();
 
-  data?.forEach((prop) => {
-    prop.propertyTags?.forEach((tag) => {
+  data?.forEach((prop: { propertyTags: any[] }) => {
+    prop.propertyTags?.forEach((tag: any) => {
       if (!tagToPropertyMap.has(tag)) {
         tagToPropertyMap.set(tag, prop);
       }
@@ -38,26 +36,46 @@ const PopularPageCategory = () => {
 
   return (
     <div>
-      <h1>Popular Page Category</h1>
-      <Divider orientation="left">Responsive</Divider>
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-        {Array.from(tagToPropertyMap).map(([tag, property]) => (
-          <Col className="gutter-row" span={6}>
-            <Card hoverable style={{ width: 240 }}>
-              <div className="image-container">
-                <Link href={`/property/all-property`}>
-                  <div className="centered-tag clickable">{tag}</div>
-                </Link>
-                <img
-                  alt="example"
-                  src={property.imageGallery[0]}
-                  style={{ width: "100%" }}
-                />
-              </div>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      <Divider orientation="center">
+        <h1>Popular Category</h1>
+      </Divider>
+      <div>
+        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 16 }}>
+          {Array.from(tagToPropertyMap).map(([tag, property]) => (
+            <Col xs={24} sm={12} md={8} lg={8} xl={8}>
+              <Card
+                hoverable
+                style={{ width: "100%", maxWidth: 400, margin: "0 auto" }}
+              >
+                <div style={{ position: "relative" }}>
+                  <Link href={`/property/all-property`}>
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        fontSize: "30px",
+                        color: "#1890ff",
+                        fontWeight: "bolder",
+                        zIndex: 1, // This ensures the text is above the image
+                      }}
+                    >
+                      {tag}
+                    </div>
+                  </Link>
+                  <img
+                    alt="example"
+                    src={property.imageGallery[0]}
+                    style={{ width: "100%" }}
+                  />
+                </div>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </div>
+
       <div style={{ textAlign: "center", marginTop: "20px", width: "100%" }}>
         <Link href="/property/all-property">
           <Button type="primary">View All Properties</Button>
