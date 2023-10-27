@@ -56,7 +56,7 @@ const FeaturedProduct = () => {
         orientation="center"
         style={{ fontSize: "30px", fontWeight: "bolder" }}
       >
-        Featured Product
+        <span style={{ color: "#1890ff" }}>Featured</span> Property
       </Divider>
       <Row justify="center" gutter={[16, 16]}>
         {data?.slice(0, 4).map((property: any, index: any) => (

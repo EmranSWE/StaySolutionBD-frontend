@@ -37,7 +37,9 @@ const PopularPageCategory = () => {
   return (
     <div>
       <Divider orientation="center">
-        <h1>Popular Category</h1>
+        <h1>
+          <span style={{ color: "#1890ff" }}>Popular</span> Category
+        </h1>
       </Divider>
       <div>
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 16 }}>

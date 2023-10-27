@@ -9,7 +9,8 @@ import {
   PhoneOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
-
+import appPlay from "../../../../assets/png-clipart-app-store-google-play-apple-apple-text-logo.png";
+import Image from "next/image";
 const RentalFooter = () => {
   const iconStyle = { fontSize: "24px", margin: "0 5px" };
   return (
@@ -22,22 +23,33 @@ const RentalFooter = () => {
           lg={6}
           style={{ color: "white", marginBottom: "16px" }}
         >
-          <h3>ABOUT US</h3>
-          <div>
+          <h1>ABOUT US</h1>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <MailOutlined style={{ ...iconStyle, color: "#FDCB58" }} />
-            Contact us bdto-let.com.
+            Contact us staysolutionbd.com.
           </div>
-          <div>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <HomeOutlined style={{ ...iconStyle, color: "#4DA8DA" }} />
-            Address: 555 South Manda Mugda Dhaka-1214.
+            Address: Arshinagar,Bosila, Mohammadpur, Dhaka -1212.
           </div>
-          <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <MailOutlined style={{ ...iconStyle, color: "#FDCB58" }} />
-            Have any questions? support@bdto-let.com
+            Have any questions? mdemran.swe@gmail.com
           </div>
-          <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <PhoneOutlined style={{ ...iconStyle, color: "#67D5B5" }} />
-            Help Line: +880 16211 73 197
+            Help Line: +880 1838235450
           </div>
         </Col>
 
@@ -48,7 +60,7 @@ const RentalFooter = () => {
           lg={6}
           style={{ color: "white", marginBottom: "16px" }}
         >
-          <h3>QUICK LINKS</h3>
+          <h1>QUICK LINKS</h1>
           <div>
             <Link href="/list-for-rent">
               <p style={{ color: "white" }}>LIST FOR RENT</p>
@@ -88,15 +100,22 @@ const RentalFooter = () => {
           lg={6}
           style={{ color: "white", marginBottom: "16px" }}
         >
-          <h3>Stay In Touch</h3>
+          <h1>Stay In Touch</h1>
           <div>
-            <FacebookOutlined /> Facebook
+            <h2>
+              <FacebookOutlined /> Facebook
+            </h2>
           </div>
           <div>
-            <TwitterOutlined /> Twitter
+            <h2>
+              <TwitterOutlined /> Twitter
+            </h2>
           </div>
           <div>
-            <InstagramOutlined /> Instagram
+            <h2>
+              {" "}
+              <InstagramOutlined /> Instagram
+            </h2>
           </div>
         </Col>
 
@@ -107,7 +126,10 @@ const RentalFooter = () => {
           lg={6}
           style={{ color: "white", marginBottom: "16px" }}
         >
-          <h3>Payment Accepted</h3>
+          <h1>Payment Accepted</h1>
+          <div>
+            <Image src={appPlay} width={300} height={100} alt="play"></Image>
+          </div>
           <div>
             <CreditCardOutlined /> Visa
           </div>

@@ -8,6 +8,7 @@ import MarketPlaceProperty from "./MarketplacePage/page";
 import WhyUsePage from "./WhyUs/page";
 import OurMissionPage from "./Our Mission/page";
 import FAQ from "./FAQ/page";
+import FeedbackPage from "./Feedback/page";
 
 const HomePage = () => {
   return (
@@ -17,6 +18,7 @@ const HomePage = () => {
       <RecentPropertyPage></RecentPropertyPage>
       <PopularPageCategory></PopularPageCategory>
       <MarketPlaceProperty></MarketPlaceProperty>
+      <FeedbackPage></FeedbackPage>
       <OurMissionPage></OurMissionPage>
       <WhyUsePage></WhyUsePage>
       <FAQ></FAQ>

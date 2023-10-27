@@ -60,7 +60,7 @@ const RecentPropertyPage = () => {
           padding: "20px 0px",
         }}
       >
-        Recent Properties
+        Recent<span style={{ color: "#1890ff" }}> Properties</span>
       </h2>
       <Slider {...settings}>
         {data?.map((property: any) => (

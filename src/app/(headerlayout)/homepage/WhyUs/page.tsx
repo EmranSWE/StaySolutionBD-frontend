@@ -14,10 +14,12 @@ const AboutUsPage = () => {
     <div style={{ padding: "2rem" }}>
       <Row justify="center">
         <Col xs={24} md={16} lg={12}>
-          <Title level={2} style={{ textAlign: "center" }}>
-            Why Use<span style={{ color: "#1890ff" }}> StaySolutionBD.COM</span>
-          </Title>
-          <Divider />
+          <Divider>
+            <Title level={2} style={{ textAlign: "center" }}>
+              Why Use
+              <span style={{ color: "#1890ff" }}> StaySolutionBD.COM</span>
+            </Title>
+          </Divider>
           <Paragraph>
             Discover <strong>StaySolutionBD</strong> - the epitome of home
             rental experiences in Bangladesh! We're not just a platform; we're

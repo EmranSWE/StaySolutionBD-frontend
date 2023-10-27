@@ -8,9 +8,9 @@ import {
   useSpring,
 } from "@react-spring/web";
 import sheikh from "../../../../assets/home100.jpg";
-import sheikh1 from "../../../../assets/Feedback-rafiki.svg";
+import sheikh1 from "../../../../assets/home1.jpg";
 import styles from "./styles.module.css";
-import { Col, Collapse, Row } from "antd";
+import { Col, Collapse, Divider, Row } from "antd";
 import type { CollapseProps } from "antd";
 import Image from "next/image";
 
@@ -63,57 +63,57 @@ export default function App() {
   const items: CollapseProps["items"] = [
     {
       key: "1",
-      label: "What are the available hours for support?",
+      label: <strong>What are the available hours for support?</strong>,
       children: <p>{textAvailableHours}</p>,
     },
     {
       key: "2",
-      label: "How is the rent price determined?",
+      label: <strong>How is the rent price determined?</strong>,
       children: <p>{textRentPrice}</p>,
     },
     {
       key: "3",
-      label: "What's the application process?",
+      label: <strong>What's the application process?</strong>,
       children: <p>{textApplicationProcess}</p>,
     },
     {
       key: "4",
-      label: "What are the typical lease terms?",
+      label: <strong>What are the typical lease terms?</strong>,
       children: <p>{textLeaseTerms}</p>,
     },
     {
       key: "5",
-      label: "How do I report maintenance issues?",
+      label: <strong>How do I report maintenance issues?</strong>,
       children: <p>{textMaintenanceRequests}</p>,
     },
     {
       key: "6",
-      label: "What's the policy on pets?",
+      label: <strong>What's the policy on pets?</strong>,
       children: <p>{textPetsPolicy}</p>,
     },
     {
       key: "7",
-      label: "How can I contact the StaySolutionBD team?",
+      label: <strong>How can I contact the StaySolutionBD team?</strong>,
       children: <p>{textContactDetails}</p>,
     },
     {
       key: "8",
-      label: "What are the general rules and regulations?",
+      label: <strong>What are the general rules and regulations?</strong>,
       children: <p>{textRulesAndRegulations}</p>,
     },
     {
       key: "9",
-      label: "Is a security deposit required?",
+      label: <strong>Is a security deposit required?</strong>,
       children: <p>{textSecurityDeposit}</p>,
     },
     {
       key: "10",
-      label: "Do you have a tenant screening process?",
+      label: <strong>Do you have a tenant screening process?</strong>,
       children: <p>{textTenantScreening}</p>,
     },
     {
       key: "11",
-      label: "What's the cancellation policy?",
+      label: <strong>What's the cancellation policy?</strong>,
       children: <p>{textCancellationPolicy}</p>,
     },
   ];
@@ -148,6 +148,11 @@ export default function App() {
 
   return (
     <div>
+      <Divider orientation="center">
+        <h1>
+          Frequently <span style={{ color: "#1890ff" }}>Asked</span> Question
+        </h1>
+      </Divider>
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
         <Col
           xs={24}
