@@ -4,10 +4,13 @@ import { UserOutlined } from "@ant-design/icons";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { authKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
+import { useMyProfileQuery } from "@/redux/api/authApi";
 const { Header: AntHeader, Content, Footer } = Layout;
 const Header = () => {
-  const { role } = getUserInfo() as { role: string };
-  console.log(getUserInfo());
+  const { data, isError, isLoading, isSuccess } = useMyProfileQuery({});
+  if (isLoading) {
+    return <div>Loading.......</div>;
+  }
   const router = useRouter();
   const logOut = () => {
     removeUserInfo(authKey);
@@ -30,11 +33,15 @@ const Header = () => {
       }}
     >
       <Row justify="end" align="middle" style={{ height: "100%" }}>
-        <h1>{role}</h1>
+        <p>{`${data?.firstName} ${data?.lastName}`}</p>
         <Dropdown menu={{ items }}>
           <a>
             <Space wrap size={16}>
-              <Avatar size="large" icon={<UserOutlined />} />
+              <Avatar
+                size="large"
+                src={data?.profilePic}
+                icon={<UserOutlined />}
+              />
             </Space>
           </a>
         </Dropdown>

@@ -12,6 +12,30 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    myProfile: build.query({
+      query: () => ({
+        url: `${AuthUrl}/get-user/my-profile`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
+    userUpdate: build.mutation({
+      query: (data) => ({
+        url: `${AuthUrl}/update-profile/${data.id}`,
+        method: "PATCH",
+        data: data.body,
+        contentType: "multipart/form-data",
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+    changePassword: build.mutation({
+      query: (data) => ({
+        url: `${AuthUrl}/change-password`,
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
     userLogin: build.mutation({
       query: (loginData) => ({
         url: `${AuthUrl}/login`,
@@ -31,5 +55,11 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useUsersQuery, useUserLoginMutation, useUserSignupMutation } =
-  authApi;
+export const {
+  useUsersQuery,
+  useUserLoginMutation,
+  useUserSignupMutation,
+  useMyProfileQuery,
+  useUserUpdateMutation,
+  useChangePasswordMutation,
+} = authApi;

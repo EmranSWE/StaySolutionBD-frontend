@@ -4,49 +4,49 @@ import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import {
-  LOCATIONS,
-  propertyAmenities,
-  propertyRules,
-} from "@/constants/global";
-import { useAddPropertyMutation } from "@/redux/api/propertyApi";
+import { propertyAmenities } from "@/constants/global";
+import { useMyProfileQuery, useUserUpdateMutation } from "@/redux/api/authApi";
 import { getUserInfo } from "@/services/auth.service";
 
 import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const UpdateProfile = () => {
   const router = useRouter();
-  const [addProperty] = useAddPropertyMutation();
+  const [userUpdate] = useUserUpdateMutation();
 
+  const { id } = getUserInfo() as { id: string };
+
+  const { data, isError, isLoading, isSuccess } = useMyProfileQuery({});
+  console.log("current data", data);
+  if (isLoading) {
+    return <div>Loading....</div>;
+  }
   const onSubmit = async (values: any) => {
-    const { id } = getUserInfo() as { id: string };
-    console.log(values);
-    // values.ownerId = id;
-    // console.log("values", values);
-    // const obj = { ...values };
-    // const file = obj["file"];
-    // delete obj["file"];
-    // const data = JSON.stringify(obj);
-    // const formData = new FormData();
-    // formData.append("file", file as Blob);
-    // formData.append("data", data);
-    // message.loading("Creating...");
-    // console.log("form data", formData);
-    // try {
-    //   const res = await addProperty(formData);
-    //   if (!res) {
-    //     message.error("Your property doesnot added");
-    //   }
-    //   console.log(res);
-    //   message.success("Property created successfully!");
-    //   router.push("/owner/my-property");
-    // } catch (err: any) {
-    //   console.error(err.message);
-    // }
+    const obj = { ...values };
+    const file = obj["file"];
+    delete obj["file"];
+    const data = JSON.stringify(obj);
+    const formData = new FormData();
+    formData.append("file", file as Blob);
+    formData.append("data", data);
+    message.loading("Creating...");
+    try {
+      const res = await userUpdate({
+        id: id,
+        body: formData,
+      });
+      if (!res) {
+        message.error("Data doesn't update");
+      }
+      message.success("User updated successfully!");
+      // router.push("/owner/my-property");
+    } catch (err: any) {
+      console.error(err.message);
+    }
   };
 
   return (
@@ -103,6 +103,7 @@ const UpdateProfile = () => {
                 <FormInput
                   name="firstName"
                   type="text"
+                  value={data?.firstName}
                   size="large"
                   label="First Name"
                   placeholder="Enter the first name"
@@ -118,6 +119,7 @@ const UpdateProfile = () => {
                 <FormInput
                   name="middleName"
                   type="text"
+                  value={data?.middleName}
                   size="large"
                   label="Middle Name"
                   placeholder="Enter the Middle name"
@@ -133,23 +135,10 @@ const UpdateProfile = () => {
                 <FormInput
                   name="lastName"
                   type="text"
+                  value={data?.lastName}
                   size="large"
                   label="Last Name"
                   placeholder="Enter the Last name"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  name="email"
-                  type="number"
-                  size="large"
-                  label="Email"
                 />
               </Col>
 
@@ -163,6 +152,7 @@ const UpdateProfile = () => {
                 <FormInput
                   type="text"
                   name="phone"
+                  value={data?.phone}
                   size="large"
                   label="Phone No"
                 />
@@ -178,6 +168,7 @@ const UpdateProfile = () => {
                 <FormInput
                   type="text"
                   name="preferredPropertyType"
+                  value={data?.preferredPropertyType}
                   size="large"
                   label="Preferred Property Type"
                 />
@@ -192,6 +183,7 @@ const UpdateProfile = () => {
                 <FormSelectField
                   mode="multiple"
                   size="large"
+                  defaultValue={data?.preferredAmenities}
                   name="preferredAmenities"
                   options={propertyAmenities}
                   label="Preferred Amenities"
@@ -208,6 +200,7 @@ const UpdateProfile = () => {
                 <FormInput
                   type="text"
                   name="preferredLocation"
+                  value={data?.preferredLocation}
                   size="large"
                   label="Preferred Location"
                 />
@@ -220,25 +213,10 @@ const UpdateProfile = () => {
                   marginBottom: "10px",
                 }}
               >
-                <FormSelectField
-                  mode="multiple"
-                  size="large"
-                  name="socialMediaLink"
-                  options={propertyAmenities}
-                  label="Social Media Links"
-                  placeholder="Select Links"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
                 <FormInput
                   type="text"
                   name="address"
+                  value={data?.address}
                   size="large"
                   label="Your address"
                 />
@@ -246,7 +224,7 @@ const UpdateProfile = () => {
             </Row>
           </div>
           <Button htmlType="submit" type="primary">
-            Add Property
+            Update
           </Button>
         </Form>
       </div>

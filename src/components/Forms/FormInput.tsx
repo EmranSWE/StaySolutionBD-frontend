@@ -1,14 +1,11 @@
-// "use client";
-
-// // import { getErrorMessageByPropertyName } from "@/utils/schema-validator";
-// import { Input } from "antd";
-// import { spawn } from "child_process";
+// import { Input, InputNumber } from "antd";
 // import { useFormContext, Controller } from "react-hook-form";
+
 // interface IInput {
 //   name: string;
 //   type?: string;
 //   size?: "large" | "small";
-//   value?: string | string[] | undefined;
+//   value?: string | number | string[] | undefined;
 //   id?: string;
 //   placeholder?: string;
 //   validation?: object;
@@ -32,53 +29,60 @@
 //     formState: { errors },
 //   } = useFormContext();
 
-//   // const errorMessage = getErrorMessageByPropertyName(errors, name);
+//   const renderInput = (fieldProps: any) => {
+//     switch (type) {
+//       case "number":
+//         return (
+//           <InputNumber
+//             size={size}
+//             placeholder={placeholder}
+//             style={{ width: "100%" }}
+//             {...fieldProps}
+//             value={typeof value === "number" ? value : fieldProps.value}
+//           />
+//         );
+//       case "password":
+//         return (
+//           <Input.Password
+//             type={type}
+//             size={size}
+//             placeholder={placeholder}
+//             {...fieldProps}
+//             value={value ? value : fieldProps.value}
+//           />
+//         );
+//       default:
+//         return (
+//           <Input
+//             type={type}
+//             size={size}
+//             placeholder={placeholder}
+//             {...fieldProps}
+//             value={value ? value : fieldProps.value}
+//           />
+//         );
+//     }
+//   };
 
 //   return (
 //     <>
-//       {required ? (
-//         <span
-//           style={{
-//             color: "red",
-//           }}
-//         >
-//           *
-//         </span>
-//       ) : null}
-//       {label ? label : null}
+//       {required && <span style={{ color: "red" }}>*</span>}
+//       {label && label}
 //       <Controller
 //         control={control}
 //         name={name}
-//         render={({ field }) =>
-//           type === "password" ? (
-//             <Input.Password
-//               type={type}
-//               size={size}
-//               placeholder={placeholder}
-//               {...field}
-//               value={value ? value : field.value}
-//             />
-//           ) : (
-//             <Input
-//               type={type}
-//               size={size}
-//               placeholder={placeholder}
-//               {...field}
-//               value={value ? value : field.value}
-//             />
-//           )
-//         }
+//         render={({ field }) => renderInput(field)}
 //       />
-//       {/* <small style={{ color: "red" }}>{errorMessage}</small> */}
+//       {/* Uncomment this if you wish to display error messages
+//       <small style={{ color: "red" }}>{errorMessage}</small> */}
 //     </>
 //   );
 // };
 
 // export default FormInput;
 
-"use client";
-
 import { Input, InputNumber } from "antd";
+import { useEffect } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 
 interface IInput {
@@ -90,6 +94,7 @@ interface IInput {
   placeholder?: string;
   validation?: object;
   label?: string;
+  disabled?: boolean;
   required?: boolean;
 }
 
@@ -101,65 +106,69 @@ const FormInput = ({
   id,
   placeholder,
   validation,
+  disabled,
   label,
   required,
 }: IInput) => {
   const {
     control,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
+  // If external value prop changes, update the form value
+  useEffect(() => {
+    if (value !== undefined) {
+      setValue(name, value);
+    }
+  }, [value, setValue, name]);
+
+  const renderInput = (fieldProps: any) => {
+    switch (type) {
+      case "number":
+        return (
+          <InputNumber
+            size={size}
+            placeholder={placeholder}
+            style={{ width: "100%" }}
+            {...fieldProps}
+          />
+        );
+      case "password":
+        return (
+          <Input.Password
+            type={type}
+            size={size}
+            placeholder={placeholder}
+            {...fieldProps}
+          />
+        );
+      default:
+        return (
+          <Input
+            type={type}
+            size={size}
+            placeholder={placeholder}
+            disabled={disabled}
+            {...fieldProps}
+          />
+        );
+    }
+  };
+
   return (
     <>
-      {required ? (
-        <span
-          style={{
-            color: "red",
-          }}
-        >
-          *
-        </span>
-      ) : null}
-      {label ? label : null}
+      {required && <span style={{ color: "red" }}>*</span>}
+      {label && label}
       <Controller
         control={control}
         name={name}
-        render={({ field }) => {
-          if (type === "number") {
-            return (
-              <InputNumber
-                size={size}
-                placeholder={placeholder}
-                style={{ width: "100%" }}
-                {...field}
-                value={typeof value === "number" ? value : field.value}
-              />
-            );
-          } else if (type === "password") {
-            return (
-              <Input.Password
-                type={type}
-                size={size}
-                placeholder={placeholder}
-                {...field}
-                value={value ? value : field.value}
-              />
-            );
-          } else {
-            return (
-              <Input
-                type={type}
-                size={size}
-                placeholder={placeholder}
-                {...field}
-                value={value ? value : field.value}
-              />
-            );
-          }
-        }}
+        defaultValue={value}
+        rules={validation}
+        render={({ field }) => renderInput(field)}
       />
-      {/* Uncomment this if you wish to display error messages
-      <small style={{ color: "red" }}>{errorMessage}</small> */}
+      {/* Uncomment this if you wish to display error messages 
+      <small style={{ color: "red" }}>{errors[name]?.message}</small> */}
     </>
   );
 };
