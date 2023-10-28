@@ -4,6 +4,7 @@ import { Form, Input, Button, Typography, Row, Col } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import contact from "../../../assets/contact-us.svg";
 import Image from "next/image";
+
 const { TextArea } = Input;
 const { Title } = Typography;
 
@@ -14,11 +15,27 @@ const ContactUsPage = () => {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <Row gutter={24}>
+    <div style={{ padding: "2rem", display: "flex", justifyContent: "center" }}>
+      <Row
+        gutter={24}
+        justify="center"
+        align="middle"
+        style={{ maxWidth: "1200px", width: "100%" }}
+      >
+        <Col xs={24} md={12}>
+          <Image
+            src={contact}
+            alt="Large Image"
+            style={{
+              width: "80%",
+              height: "70%",
+            }}
+          />
+        </Col>
         <Col xs={24} md={12}>
           <Title level={2}>
-            <MailOutlined /> Contact Us
+            <MailOutlined />{" "}
+            <span style={{ color: "rgb(24, 144, 255)" }}>Contact </span> Us
           </Title>
           <Form
             name="contact_us"
@@ -68,10 +85,6 @@ const ContactUsPage = () => {
               </Button>
             </Form.Item>
           </Form>
-        </Col>
-
-        <Col xs={24} md={12}>
-          <Image src={contact} width={500} alt="login Image" />
         </Col>
       </Row>
     </div>

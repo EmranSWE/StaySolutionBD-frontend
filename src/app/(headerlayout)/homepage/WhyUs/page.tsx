@@ -15,10 +15,10 @@ const AboutUsPage = () => {
       <Row justify="center">
         <Col xs={24} md={16} lg={12}>
           <Divider>
-            <Title level={2} style={{ textAlign: "center" }}>
-              Why Use
-              <span style={{ color: "#1890ff" }}> StaySolutionBD.COM</span>
-            </Title>
+            <h2>
+              Why Use{" "}
+              <span style={{ color: "#1890ff" }}>StaySolutionBD.COM</span>
+            </h2>
           </Divider>
           <Paragraph>
             Discover <strong>StaySolutionBD</strong> - the epitome of home

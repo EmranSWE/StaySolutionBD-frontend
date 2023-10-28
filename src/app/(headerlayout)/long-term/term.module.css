@@ -1,0 +1,13 @@
+.longTermRental {
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.ant-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center; /* This centers the content inside the card */
+}
+
+.ant-card-head {
+  justify-content: center; /* This centers the title inside the card's header */
+}

@@ -4,11 +4,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { usePropertiesQuery } from "@/redux/api/propertyApi";
 import { useState } from "react";
-import { Button, Card, Row } from "antd";
+import { Button, Card } from "antd";
 const { Meta } = Card;
-import image1 from "../../../../assets/home1.jpg";
+
 import Image from "next/image";
-import "./styles.css";
+
 import Link from "next/link";
 const RecentPropertyPage = () => {
   const settings = {
@@ -49,7 +49,6 @@ const RecentPropertyPage = () => {
     return <div>Loading...</div>;
   }
 
-  console.log("recent", data);
   return (
     <>
       <h2
@@ -64,10 +63,15 @@ const RecentPropertyPage = () => {
       </h2>
       <Slider {...settings}>
         {data?.map((property: any) => (
-          <div className="slider-item-wrapper">
+          <div
+            style={{
+              display: " flex",
+              justifyContent: "center",
+            }}
+          >
             <Card
               hoverable
-              style={{ margin: "10px" }} // added margin
+              style={{ margin: "50px" }} // added margin
               cover={
                 <Image
                   src={property.imageGallery[0]}

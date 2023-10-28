@@ -81,7 +81,7 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
         align="middle"
         justify="space-between"
         gutter={16}
-        style={{ padding: "0 16px", display: "flex", margin: "10px 10px" }} // Added margin
+        style={{ padding: "16px 16px", display: "flex", margin: "10px 10px" }} // Added margin
       >
         {/* Logo for all devices */}
         <Col xs={2} sm={0} md={2} lg={2} xl={2}>
@@ -97,14 +97,13 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
           </Dropdown>
         </Col>
 
-        {/* Menu for larger devices */}
         <Col xs={0} sm={24} md={22} lg={22} xl={22}>
           <Menu
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
             mode="horizontal"
             items={menuItems}
-            style={{ justifyContent: "flex-end" }}
+            style={{ justifyContent: "flex-end", fontWeight: "bolder" }}
             onClick={({ key }) => {
               if (key === "13") handleLogout();
             }}

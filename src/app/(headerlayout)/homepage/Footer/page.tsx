@@ -12,6 +12,7 @@ import Link from "next/link";
 import appPlay from "../../../../assets/png-clipart-app-store-google-play-apple-apple-text-logo.png";
 import Image from "next/image";
 const RentalFooter = () => {
+  const date = new Date().getFullYear();
   const iconStyle = { fontSize: "24px", margin: "0 5px" };
   return (
     <div style={{ backgroundColor: "rgb(24, 130, 200)", padding: "24px 50px" }}>
@@ -143,7 +144,9 @@ const RentalFooter = () => {
       </Row>
 
       <Row style={{ marginTop: "24px", color: "white", textAlign: "center" }}>
-        <Col span={24}>Home Rental Service ©2023. All rights reserved.</Col>
+        <Col span={24}>
+          Home Rental Service ©{date}. All rights reserved.Developed by Emran
+        </Col>
       </Row>
     </div>
   );
