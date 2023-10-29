@@ -8,6 +8,7 @@ import { useMyProfileQuery } from "@/redux/api/authApi";
 const { Header: AntHeader, Content, Footer } = Layout;
 const Header = () => {
   const { data, isError, isLoading, isSuccess } = useMyProfileQuery({});
+  console.log(data);
   if (isLoading) {
     return <div>Loading.......</div>;
   }

@@ -17,7 +17,6 @@ export const authApi = baseApi.injectEndpoints({
         url: `${AuthUrl}/get-user/my-profile`,
         method: "GET",
       }),
-      providesTags: [tagTypes.user],
     }),
     userUpdate: build.mutation({
       query: (data) => ({
