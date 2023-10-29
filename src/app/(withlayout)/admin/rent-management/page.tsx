@@ -6,8 +6,9 @@ import Link from "next/link";
 import {
   DeleteOutlined,
   EditOutlined,
+  FilterOutlined,
   ReloadOutlined,
-  PayCircleOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
@@ -17,12 +18,17 @@ import SSTable from "@/components/ui/SSBDTable";
 import SSModal from "@/components/ui/SSModal";
 import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import { getUserInfo } from "@/services/auth.service";
-import { useBookingsQuery } from "@/redux/api/bookingApi";
+import { useUsersQuery } from "@/redux/api/authApi";
+import { useMonthlyPaymentsQuery } from "@/redux/api/monthlyPaymentApi";
 
-const PropertyBookingPage = () => {
+interface PaymentData {
+  flatNo: string;
+  [key: string]: string;
+}
+const RentManagement = () => {
   const query: Record<string, any> = {};
   const [deleteProperty] = useDeletePropertyMutation();
+
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -40,66 +46,64 @@ const PropertyBookingPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
+
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-
-  const { data, isLoading, isError, error, refetch } = useBookingsQuery({
-    ...query,
-  });
-
-  console.log(data);
-  if (isLoading) {
-    return <div>Loading........</div>;
-  }
-  if (isError) {
-    console.error("Error fetching property data:", error);
-  }
-
+  const { data, isLoading } = useMonthlyPaymentsQuery({ ...query });
+  console.log("monthly data", data);
   const meta = data?.meta;
+  const transformData = (data: any[]): PaymentData[] => {
+    const transformed: Record<string, PaymentData> = {};
+
+    data?.forEach((entry) => {
+      const monthName = new Date(0, entry.month - 1).toLocaleString("default", {
+        month: "long",
+      });
+
+      if (!transformed[entry.property.flatNo]) {
+        transformed[entry.property.flatNo] = {
+          flatNo: entry.property.flatNo,
+        };
+      }
+
+      transformed[entry.property.flatNo][monthName] = entry.status;
+    });
+
+    return Object.values(transformed);
+  };
+
+  const transformedDataSource: PaymentData[] = transformData(data);
+
+  // Dynamic columns generation
+  const monthColumns = Array.from({ length: 12 }).map((_, index) => {
+    const monthName = new Date(0, index).toLocaleString("default", {
+      month: "long",
+    });
+    return {
+      title: monthName,
+      dataIndex: monthName,
+      sorter: true,
+      render: (status: string) => status || "Not Available",
+    };
+  });
 
   const columns = [
     {
-      title: "Booking Status",
-      dataIndex: "bookingStatus",
+      title: "Flat No",
+      dataIndex: "flatNo",
+      sorter: true,
     },
-    {
-      title: "Special Request",
-      dataIndex: "specialRequest",
-    },
+    ...monthColumns,
+    // ... Action column ...
 
-    {
-      title: "Booking Start",
-      dataIndex: "bookingStartDate",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
-      width: 150,
-    },
-    {
-      title: "Booking End",
-      dataIndex: "bookingEndDate",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
-    },
-    {
-      title: "Updated Booking",
-      dataIndex: "updatedAt",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
-    },
     {
       title: "Action",
       dataIndex: "id",
-      render: function (id: any, record: any) {
+      render: function (propertyId: any) {
         return (
           <>
-            <Link href={`/renter/manage-property/edit/${id}`}>
+            <Link href={`/admin/manage-property/edit/${propertyId}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -114,27 +118,13 @@ const PropertyBookingPage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(id);
+                setPropertyId(propertyId); // Corrected this line
               }}
               danger
               style={{ marginLeft: "3px" }}
             >
               <DeleteOutlined />
             </Button>
-
-            {record.bookingStatus === "Pending" && (
-              <Link href={`/renter/payment/${id}`}>
-                <Button
-                  style={{
-                    margin: "0px 5px",
-                  }}
-                  onClick={() => console.log(data)}
-                  type="primary"
-                >
-                  <PayCircleOutlined />
-                </Button>
-              </Link>
-            )}
           </>
         );
       },
@@ -147,6 +137,7 @@ const PropertyBookingPage = () => {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
+    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -176,23 +167,23 @@ const PropertyBookingPage = () => {
       <SSBreadCrumb
         items={[
           {
-            label: "renter",
-            link: "/renter",
+            label: "admin",
+            link: "/admin",
           },
         ]}
       />
-      <ActionBar title="Booking">
+      <ActionBar title="Property List">
         <Input
           size="large"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "60%",
+            width: "20%",
           }}
         />
         <div>
-          <Link href="/renter/booking/add-booking">
-            <Button type="primary">Create Booking</Button>
+          <Link href="/admin/manage-property/create">
+            <Button type="primary">Create Property</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -209,7 +200,7 @@ const PropertyBookingPage = () => {
       <SSTable
         loading={isLoading}
         columns={columns}
-        dataSource={data}
+        dataSource={transformedDataSource}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -230,4 +221,4 @@ const PropertyBookingPage = () => {
   );
 };
 
-export default PropertyBookingPage;
+export default RentManagement;

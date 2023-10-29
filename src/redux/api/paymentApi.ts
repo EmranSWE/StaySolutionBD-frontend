@@ -13,6 +13,14 @@ export const PaymentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.payment],
     }),
+    rentManagement: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${PAYMENT_URL}/rent-management`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [tagTypes.payment],
+    }),
     singlePayment: build.query({
       query: (id) => ({
         url: `${PAYMENT_URL}/${id}`,
@@ -81,4 +89,5 @@ export const {
   useUpdatePaymentMutation,
   useSingleUserPaymentQuery,
   useAddPaymentToStripeMutation,
+  useRentManagementQuery,
 } = PaymentApi;
