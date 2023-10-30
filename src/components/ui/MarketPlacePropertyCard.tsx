@@ -1,5 +1,6 @@
 import { truncateText } from "@/utils/truncateText";
 import {
+  CheckOutlined,
   DollarOutlined,
   HomeOutlined,
   ShoppingCartOutlined,
@@ -17,7 +18,7 @@ const MarketPlacePropertyCard = ({
   data,
   onAddToCart,
 }: MarketPlacePropertyCardProps) => {
-  console.log(data.owner.profilePic);
+  console.log(data);
   const isAvailable = data.propertyStatus === "available";
 
   const baseStyle = {
@@ -44,7 +45,7 @@ const MarketPlacePropertyCard = ({
       }}
     >
       <div>
-        <Link href={`/property/${data?.id}`}>
+        <Link href={`/marketplace/${data?.id}`}>
           <Card
             style={{ width: 300 }}
             cover={
@@ -74,6 +75,12 @@ const MarketPlacePropertyCard = ({
                 justifyContent: "space-between",
               }}
             >
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <CheckOutlined style={{ fontSize: "1.2em" }} />
+                <p style={{ ...baseStyle, fontSize: "1.6em" }}>
+                  {data?.category}
+                </p>
+              </div>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <DollarOutlined style={{ fontSize: "1.2em" }} />
                 <p style={{ ...baseStyle, fontSize: "1.6em" }}>{data?.price}</p>

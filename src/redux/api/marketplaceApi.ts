@@ -1,4 +1,3 @@
-import { IMeta } from "@/types";
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 const MARKETPLACE_URL = "/marketplace";
@@ -15,7 +14,7 @@ export const marketplaceApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.marketplace],
     }),
     // Get single data
-    marketplace: build.query({
+    getSingleMarketplace: build.query({
       query: (id) => ({
         url: `${MARKETPLACE_URL}/${id}`,
         method: "GET",
@@ -69,6 +68,7 @@ export const marketplaceApi = baseApi.injectEndpoints({
 export const {
   useAddToMarketplaceMutation,
   useMarketplacesQuery,
+  useGetSingleMarketplaceQuery,
   useSingleUserMarketplaceDataQuery,
   useDeleteMarketplaceDataMutation,
 } = marketplaceApi;

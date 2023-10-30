@@ -19,7 +19,7 @@ const PopularPageCategory = () => {
   query["sortOrder"] = sortOrder;
 
   const { data, isLoading } = usePropertiesQuery({ ...query });
-
+  console.log(data);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -60,7 +60,7 @@ const PopularPageCategory = () => {
                         fontSize: "30px",
                         color: "#1890ff",
                         fontWeight: "bolder",
-                        zIndex: 1, // This ensures the text is above the image
+                        zIndex: 1,
                       }}
                     >
                       {tag}

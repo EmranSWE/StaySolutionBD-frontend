@@ -1,14 +1,11 @@
 "use client";
 import { Row, Col, Button, message, Divider } from "antd";
 import React, { useEffect, useState } from "react";
-
-import { usePropertiesQuery } from "@/redux/api/propertyApi";
-import PropertyProductCard from "@/components/ui/PropertyProductCard";
 import { useMarketplacesQuery } from "@/redux/api/marketplaceApi";
 import MarketPlacePropertyCard from "@/components/ui/MarketPlacePropertyCard";
+import Link from "next/link";
 
 //Types of marketplace property
-
 const MarketPlacePropertyPage = () => {
   const [cartCounts, setCartCounts] = useState<Record<string, number>>(() => {
     if (typeof window !== "undefined") {
@@ -34,7 +31,7 @@ const MarketPlacePropertyPage = () => {
   query["sortOrder"] = sortOrder;
 
   const { data, isLoading } = useMarketplacesQuery({ ...query });
-  console.log("marketplace", data);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -82,6 +79,11 @@ const MarketPlacePropertyPage = () => {
             </Col>
           ))}
       </Row>
+      <div style={{ textAlign: "center", marginTop: "20px", width: "100%" }}>
+        <Link href="/marketplace/">
+          <Button type="primary">View All Marketplace</Button>
+        </Link>
+      </div>
     </>
   );
 };

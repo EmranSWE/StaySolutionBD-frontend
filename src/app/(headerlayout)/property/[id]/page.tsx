@@ -77,7 +77,7 @@ const PageDetails = ({ params }: PageDetailsProps) => {
           <div style={{ marginTop: "20px" }}>
             <h2>Description:</h2> {property.description}
           </div>
-          <p style={{ margin: "20px 0" }}>
+          <p style={{ margin: "20px 20px" }}>
             <IconList
               title="Rules"
               dataSource={property.rules}

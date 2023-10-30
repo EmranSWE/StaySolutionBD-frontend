@@ -39,13 +39,7 @@ const staticItems: MenuItem[] = [
     undefined,
     "/property/all-property"
   ),
-  getItem(
-    "Marketplace",
-    "15",
-    undefined,
-    undefined,
-    "/marketplace/all-property"
-  ),
+  getItem("Marketplace", "15", undefined, undefined, "/marketplace/"),
   getItem("Long term rental", "3", undefined, undefined, "/long-term"),
   getItem("About us", "4", undefined, undefined, "/about-us"),
   getItem("Contact us", "5", undefined, undefined, "/contact-us"),
