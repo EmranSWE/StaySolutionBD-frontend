@@ -153,14 +153,8 @@ export default function App() {
           Frequently <span style={{ color: "#1890ff" }}>Asked</span> Question
         </h1>
       </Divider>
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-        <Col
-          xs={24}
-          sm={24}
-          md={10}
-          lg={12}
-          style={{ display: "flex", justifyContent: "center" }}
-        >
+      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 24 }}>
+        <Col xs={24} sm={24} md={10} lg={14}>
           <div className={styles.container}>
             <div className={styles.container__inner}>
               {transitions((springs, item) => (
@@ -172,7 +166,6 @@ export default function App() {
                       width: "100%",
                       height: "100%",
                     }}
-                    className="rotatingImage"
                   />
                 </animated.div>
               ))}
@@ -183,7 +176,7 @@ export default function App() {
           xs={24}
           sm={24}
           md={10}
-          lg={12}
+          lg={10}
           style={{
             display: "flex",
             justifyContent: "center",

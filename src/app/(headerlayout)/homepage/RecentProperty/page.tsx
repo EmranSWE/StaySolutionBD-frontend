@@ -43,7 +43,6 @@ const RecentPropertyPage = () => {
   query["sortOrder"] = sortOrder;
 
   const { data, isLoading } = usePropertiesQuery({ ...query });
-  console.log(data);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -70,13 +69,13 @@ const RecentPropertyPage = () => {
           >
             <Card
               hoverable
-              style={{ margin: "50px" }} // added margin
+              style={{ margin: "50px" }}
               cover={
                 <Image
                   src={property.imageGallery[0]}
                   alt="Landscape picture"
-                  width={200} // changed from 240
-                  height={200} // changed from 240
+                  width={200}
+                  height={200}
                 />
               }
             >
@@ -91,7 +90,7 @@ const RecentPropertyPage = () => {
                 Monthly Rent:{" "}
                 <span style={{ fontWeight: "bolder" }}>
                   {property.monthlyRent}
-                </span>{" "}
+                </span>
               </p>
             </Card>
           </div>

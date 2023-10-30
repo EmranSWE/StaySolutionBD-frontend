@@ -9,7 +9,7 @@
 .container__inner {
   overflow: hidden;
   position: relative;
-  width: 80vw;
+  width: 80%;
 }
 
 .container__inner::before {

@@ -18,7 +18,6 @@ const MarketPlacePropertyCard = ({
   data,
   onAddToCart,
 }: MarketPlacePropertyCardProps) => {
-  console.log(data);
   const isAvailable = data.propertyStatus === "available";
 
   const baseStyle = {

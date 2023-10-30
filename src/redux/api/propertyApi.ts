@@ -20,6 +20,13 @@ export const propertyApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.property],
     }),
+    featuredProperty: build.query({
+      query: () => ({
+        url: `${PROPERTY_URL}/featured-property`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.property],
+    }),
     singleUserProperty: build.query({
       query: (id) => ({
         url: `${PROPERTY_URL}/my-property/${id}`,
@@ -62,6 +69,7 @@ export const propertyApi = baseApi.injectEndpoints({
 
 export const {
   usePropertiesQuery,
+  useFeaturedPropertyQuery,
   useSinglePropertyQuery,
   useAddPropertyMutation,
   useDeletePropertyMutation,
