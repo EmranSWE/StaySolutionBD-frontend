@@ -46,35 +46,35 @@ const AccountProfile = () => {
           <Col xs={24} md={12} style={{ textAlign: "center" }}>
             <Avatar
               size={100}
-              src={profileData.profilePic}
+              src={profileData?.profilePic}
               icon={<UserOutlined />}
             />
             <h2>
-              {profileData.firstName} {profileData.middleName}{" "}
-              {profileData.lastName}
+              {profileData?.firstName} {profileData?.middleName}{" "}
+              {profileData?.lastName}
             </h2>
           </Col>
           <Col xs={24} md={12}>
             <List>
               <List.Item>
-                <strong>Email:</strong> {profileData.email}
+                <strong>Email:</strong> {profileData?.email}
               </List.Item>
               <List.Item>
-                <strong>Address:</strong> {profileData.address}
+                <strong>Address:</strong> {profileData?.address}
               </List.Item>
               <List.Item>
-                <strong>Phone:</strong> {profileData.phone}
+                <strong>Phone:</strong> {profileData?.phone}
               </List.Item>
               <List.Item>
                 <strong>Preferred Location:</strong>{" "}
-                {profileData.preferredLocation}
+                {profileData?.preferredLocation}
               </List.Item>
               <List.Item>
                 <strong>Preferred Property Type:</strong>{" "}
-                {profileData.preferredPropertyType}
+                {profileData?.preferredPropertyType}
               </List.Item>
               <List.Item>
-                <strong>Role:</strong> {profileData.role}
+                <strong>Role:</strong> {profileData?.role}
               </List.Item>
             </List>
           </Col>

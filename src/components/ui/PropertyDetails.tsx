@@ -26,16 +26,23 @@ export const PropertyDetails: React.FC<PropertyDetailsProps> = ({
     <>
       <Row gutter={16}>
         <Col span={12}>
-          <p>
-            <HomeOutlined /> Rent: {monthlyRent}
-          </p>
-          <p>
-            <UserOutlined /> Max Occupancy: {maxOccupancy}
-          </p>
-          <p>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <p style={{ fontSize: "20px", marginRight: "5px" }}>
+              <HomeOutlined />
+            </p>
+            <p style={{ fontSize: "20px" }}>Rent:{monthlyRent}</p>
+          </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <p style={{ fontSize: "20px", marginRight: "5px" }}>
+              <UserOutlined />
+            </p>
+            <h4>Max Occupancy:{maxOccupancy}</h4>
+          </div>
+
+          <h4>
             <AppstoreOutlined /> Number of Rooms: {numberOfRooms}
-          </p>
-          <p>Size: {size}</p>
+          </h4>
+          <h2>Size: {size}</h2>
         </Col>
       </Row>
     </>

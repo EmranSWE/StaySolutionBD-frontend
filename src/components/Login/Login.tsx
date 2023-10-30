@@ -20,14 +20,11 @@ type FormValues = {
   password: string;
 };
 const LoginPage = () => {
-  console.log(getUserInfo());
-  console.log(isLoggedIn());
   const [userLogin] = useUserLoginMutation();
   const router = useRouter();
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      console.log(res);
 
       if (res?.accessToken) {
         router.push("/");

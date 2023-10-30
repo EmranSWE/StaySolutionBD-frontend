@@ -41,7 +41,6 @@ const MarketPlaceProperty = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log("market", data);
 
   const handleAddToCart = (property: any) => {
     console.log(`Added ${property} to cart!`);

@@ -1,0 +1,41 @@
+.rotatingImage {
+  transform: scale(1);
+  border-radius: 0;
+  transition: transform 2s, border-radius 2s;
+}
+
+.rotatingImage:hover {
+  transform: rotate(-5deg) scale(1.2);
+  border-radius: 10%;
+}
+
+.imageContainer {
+  width: 400px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.zoom {
+  transition: transform 0.5s;
+}
+
+.zoom:hover {
+  transform: scale(1.5);
+}
+
+.imageContainerDetails {
+  width: 600px;
+  height: 500px;
+  overflow: hidden;
+  position: relative;
+}
+
+.zoomDetails {
+  transition: transform 3s;
+}
+
+.zoomDetails:hover {
+  transform: rotate(-5deg) scale(1.2);
+  border-radius: 5%;
+}

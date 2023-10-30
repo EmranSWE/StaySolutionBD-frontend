@@ -90,6 +90,20 @@ const CreatePropertyPage = () => {
                   marginBottom: "10px",
                 }}
               >
+                <FormInput
+                  type="text"
+                  name="title"
+                  size="large"
+                  label="Title"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
                 <FormSelectField
                   mode="multiple"
                   size="large"

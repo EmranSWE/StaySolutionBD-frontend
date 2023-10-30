@@ -1,3 +1,4 @@
+import { truncateText } from "@/utils/truncateText";
 import {
   DollarOutlined,
   HomeOutlined,
@@ -7,7 +8,7 @@ import { Avatar, Button, Card, Col } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 const { Meta } = Card;
-
+import styles from "./css/propertyCard.module.css";
 type PropertyProductCardProps = {
   data?: any;
   onAddToCart?: any;
@@ -16,8 +17,6 @@ const PropertyProductCard = ({
   data,
   onAddToCart,
 }: PropertyProductCardProps) => {
-  console.log(data.amenities.join());
-
   const isAvailable = data.propertyStatus === "available";
 
   const baseStyle = {
@@ -37,18 +36,26 @@ const PropertyProductCard = ({
         color: "black",
       };
   return (
-    <Col xs={24} sm={12} md={6} lg={6}>
+    <Col
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <div>
-        <Link href={`/property/${data.id}`}>
+        <Link href={`/property/${data?.id}`}>
           <Card
-            style={{ width: 300, position: "relative" }}
+            style={{ width: 300 }}
             cover={
-              <Image
-                src={data.propertyImage || data.imageGallery[0]}
-                alt="Landscape picture"
-                width={200}
-                height={200}
-              />
+              <div className={styles.imageContainer}>
+                <Image
+                  src={data.propertyImage || data.imageGallery[0]}
+                  alt="Landscape picture"
+                  className={styles.zoom}
+                  width={300}
+                  height={200}
+                />
+              </div>
             }
           >
             <div
@@ -67,14 +74,12 @@ const PropertyProductCard = ({
                 }}
               >
                 <HomeOutlined style={{ fontSize: "1.2em", color: "green" }} />
-                <p style={{ ...baseStyle, color: "green" }}>
+                <p style={{ ...baseStyle, color: "green", fontSize: "1.3em" }}>
                   {data.numberOfRooms}
                 </p>
               </div>
               <div>
-                <p style={{ ...baseStyle, ...statusStyle }}>
-                  {data.propertyStatus}
-                </p>
+                <p style={{ ...statusStyle }}>{data.propertyStatus}</p>
               </div>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <DollarOutlined style={{ fontSize: "1.2em" }} />
@@ -84,14 +89,34 @@ const PropertyProductCard = ({
               </div>
             </div>
             <Meta
-              avatar={
-                <Avatar src={data.propertyImage || data.imageGallery[0]} />
-              }
-              title={data.city}
-              description={data.description}
+              title={data.title}
+              description={truncateText({ text: data.description, limit: 100 })}
             />
             <div>
-              <p>Amenities:{data.amenities.join()}</p>
+              <p>
+                <span
+                  style={{ fontWeight: "bolder", color: "rgb(24, 144, 255)" }}
+                >
+                  Location:{" "}
+                </span>
+                {data.city}
+              </p>
+              <p>
+                <span style={{ fontWeight: "bolder", color: "green" }}>
+                  Amenities
+                </span>
+                :{data.amenities.join()}
+              </p>
+            </div>
+            <div>
+              <p>
+                <span
+                  style={{ fontWeight: "bolder", color: "rgb(24, 144, 255)" }}
+                >
+                  Rules
+                </span>{" "}
+                :{data.rules.join()}
+              </p>
             </div>
             <Button
               type="text"
