@@ -1,0 +1,8 @@
+.slider-item-wrapper {
+  padding: 0 24px;
+}
+
+.squareCard {
+  border-radius: 0 !important; /* This will ensure the card has square corners */
+  background-color: red;
+}

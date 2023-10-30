@@ -1,27 +1,25 @@
 "use client";
-import { useMarketplacesQuery } from "@/redux/api/marketplaceApi";
-import { usePropertiesQuery } from "@/redux/api/propertyApi";
-import { Card, Avatar, Row, Col, Divider, Button } from "antd";
-import Image from "next/image";
-import Link from "next/link";
+import { Row, Col, Button, message, Divider } from "antd";
 import React, { useEffect, useState } from "react";
-import { ShoppingCartOutlined } from "@ant-design/icons";
 
-const { Meta } = Card;
+import { usePropertiesQuery } from "@/redux/api/propertyApi";
+import PropertyProductCard from "@/components/ui/PropertyProductCard";
+import { useMarketplacesQuery } from "@/redux/api/marketplaceApi";
+import MarketPlacePropertyCard from "@/components/ui/MarketPlacePropertyCard";
 
-const MarketPlaceProperty = () => {
+//Types of marketplace property
+
+const MarketPlacePropertyPage = () => {
   const [cartCounts, setCartCounts] = useState<Record<string, number>>(() => {
-    // This function runs during SSR as well, so check for window object
     if (typeof window !== "undefined") {
       const savedCounts = localStorage.getItem("cartCounts");
       return savedCounts ? JSON.parse(savedCounts) : {};
     }
-    return {}; // default value if not in browser context
+    return {};
   });
 
   useEffect(() => {
-    // Since useEffect runs only on the client side, this is safe
-    localStorage.setItem("marketplaceCounts", JSON.stringify(cartCounts));
+    localStorage.setItem("propertyCount", JSON.stringify(cartCounts));
   }, [cartCounts]);
   const query: Record<string, any> = {};
 
@@ -29,7 +27,6 @@ const MarketPlaceProperty = () => {
   const [size, setSize] = useState<number>(4);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -37,14 +34,13 @@ const MarketPlaceProperty = () => {
   query["sortOrder"] = sortOrder;
 
   const { data, isLoading } = useMarketplacesQuery({ ...query });
-
+  console.log("marketplace", data);
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   const handleAddToCart = (property: any) => {
-    console.log(`Added ${property} to cart!`);
-    console.log(property);
+    message.success("Added to cart");
     setCartCounts((prevCounts) => ({
       ...prevCounts,
       [property.id]: (prevCounts[property.id] || 0) + 1,
@@ -52,58 +48,42 @@ const MarketPlaceProperty = () => {
   };
 
   return (
-    <div
-      style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
-    >
+    <>
       <Divider
         orientation="center"
         style={{ fontSize: "30px", fontWeight: "bolder" }}
       >
-        Featured Product
+        <span style={{ color: "#1890ff" }}>Marketplace</span> Property
       </Divider>
-      <Row gutter={16}>
-        {data?.slice(0, 4).map((property: any, index: any) => (
-          <Col xs={24} sm={12} md={6} key={index}>
-            <Card
-              style={{ width: 300, position: "relative" }} // added position: "relative"
-              cover={
-                <Image
-                  src={property.propertyImage}
-                  alt="Landscape picture"
-                  width={200}
-                  height={200}
-                />
-              }
-              actions={[
-                <ShoppingCartOutlined
-                  key="addToCart"
-                  onClick={() => handleAddToCart(property)}
-                />,
-              ]}
+
+      <Row
+        gutter={[0, 20]}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {data &&
+          data.map((property: any) => (
+            <Col
+              xs={24}
+              sm={24}
+              md={6}
+              lg={6}
+              xl={6}
+              key={property.id}
+              style={{ margin: "0 auto" }}
             >
-              <Meta
-                avatar={<Avatar src={property.propertyImage} />}
-                title={property.category}
-                description={property.itemDescription}
+              <MarketPlacePropertyCard
+                data={property}
+                onAddToCart={handleAddToCart}
               />
-              <Button
-                type="text"
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  right: 10,
-                  border: "none",
-                  background: "transparent",
-                }}
-                icon={<ShoppingCartOutlined />}
-                onClick={() => handleAddToCart(property)}
-              />
-            </Card>
-          </Col>
-        ))}
+            </Col>
+          ))}
       </Row>
-    </div>
+    </>
   );
 };
 
-export default MarketPlaceProperty;
+export default MarketPlacePropertyPage;

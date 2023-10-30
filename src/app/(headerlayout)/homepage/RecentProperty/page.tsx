@@ -6,10 +6,10 @@ import { usePropertiesQuery } from "@/redux/api/propertyApi";
 import { useState } from "react";
 import { Button, Card } from "antd";
 const { Meta } = Card;
-
 import Image from "next/image";
 
 import Link from "next/link";
+import { truncateText } from "@/utils/truncateText";
 const RecentPropertyPage = () => {
   const settings = {
     dots: true,
@@ -36,7 +36,6 @@ const RecentPropertyPage = () => {
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -44,7 +43,7 @@ const RecentPropertyPage = () => {
   query["sortOrder"] = sortOrder;
 
   const { data, isLoading } = usePropertiesQuery({ ...query });
-
+  console.log(data);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -59,7 +58,7 @@ const RecentPropertyPage = () => {
           padding: "20px 0px",
         }}
       >
-        Recent<span style={{ color: "#1890ff" }}> Properties</span>
+        Recent<span style={{ color: "#1890ff" }}> Added Properties</span>
       </h2>
       <Slider {...settings}>
         {data?.map((property: any) => (
@@ -82,9 +81,18 @@ const RecentPropertyPage = () => {
               }
             >
               <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
+                title={property?.title}
+                description={truncateText({
+                  text: property.description,
+                  limit: 100,
+                })}
               />
+              <p>
+                Monthly Rent:{" "}
+                <span style={{ fontWeight: "bolder" }}>
+                  {property.monthlyRent}
+                </span>{" "}
+              </p>
             </Card>
           </div>
         ))}
