@@ -32,11 +32,9 @@ export const axiosBaseQuery =
         },
       });
 
-      if (!result.data) {
-        return { error: { message: "No data returned from the request." } };
-      }
       //@ts-ignore
-      return { data: result.data, meta: result.meta };
+      // return { data: result.data, meta: result.meta };
+      return { data: result.data || result, meta: result.meta };
     } catch (axiosError) {
       const err = axiosError as AxiosError;
       return {

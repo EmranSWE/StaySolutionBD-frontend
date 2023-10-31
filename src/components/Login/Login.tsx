@@ -1,56 +1,61 @@
 "use client";
-
+import { useState } from "react";
 import { Button, Col, Row, message } from "antd";
-import loginImage from "../../assets/Loginsvg.svg";
+import loginImage from "../../assets/computer-login-animate.svg";
 import Image from "next/image";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useUserLoginMutation } from "@/redux/api/authApi";
-import {
-  getUserInfo,
-  isLoggedIn,
-  storeUserInfo,
-} from "@/services/auth.service";
+import { storeUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 
 type FormValues = {
   email: string;
   password: string;
 };
+
 const LoginPage = () => {
   const [userLogin] = useUserLoginMutation();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
+
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-
       if (res?.accessToken) {
+        message.success("User is logged in successfully");
+        storeUserInfo({ accessToken: res.accessToken });
         router.push("/");
-        message.success("User is logged in successful");
+      } else {
+        if (res?.statusCode === 500) {
+          setErrorMessage(
+            "Invalid email or password. Please check your credentials."
+          );
+        }
       }
-      storeUserInfo({ accessToken: res?.accessToken });
     } catch (err: any) {
-      console.error(err.message);
+      setErrorMessage("An error occurred while processing your request.");
     }
   };
+
   return (
     <div>
       <h1
         style={{
           fontSize: "50px",
           textAlign: "center",
-          color: "purple",
-          marginTop: "20px",
+          color: "#1890ff",
+          margin: "10px 20px",
         }}
       >
         Stay Solution BD
       </h1>
-      <Row justify="center" align="middle" style={{ minHeight: "50vh" }}>
+      <Row justify="center" align="middle" style={{ minHeight: "80vh" }}>
         <Col xs={24} sm={12} md={16} lg={10}>
           <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-            <Image src={loginImage} width={300} alt="login Image" />
+            <Image src={loginImage} width={500} alt="login Image" />
           </div>
         </Col>
 
@@ -76,6 +81,11 @@ const LoginPage = () => {
                   label="Password"
                 />
               </div>
+              {errorMessage && (
+                <div style={{ color: "red", marginBottom: "10px" }}>
+                  {errorMessage}
+                </div>
+              )}
               <Button
                 type="primary"
                 htmlType="submit"

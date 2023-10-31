@@ -1,60 +1,61 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { message, Button, Col, Divider, Row } from "antd";
+import Image from "next/image";
+import Link from "next/link";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useUserSignupMutation } from "@/redux/api/authApi";
+import { SignUpValidation } from "@/schemas/signupValidate";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import { userTypes } from "@/constants/global";
-import { useUserSignupMutation } from "@/redux/api/authApi";
-import { Button, Col, Divider, Row, message } from "antd";
-import { useRouter } from "next/navigation";
 import sheikhHome from "../../../assets/sheikhHome.png";
-import React from "react";
-import Image from "next/image";
 import styles from "./signup.module.css";
-import Link from "next/link";
-import { Metadata } from "next";
-const metadata: Metadata = {
-  title: "SSBD | Login",
-};
+
 const SignUpPage = () => {
   const router = useRouter();
   const [userSignup] = useUserSignupMutation();
+  const [error, setError] = useState("");
 
-  const onSubmit = async (data: any) => {
+  type FormDataType = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    phone: string;
+    role: string;
+    address: string;
+  };
+  const onSubmit = async (data: FormDataType) => {
     try {
-      console.log(data);
-      const response = await userSignup(data);
-      console.log("responsee", response);
+      const res = await userSignup(data);
       //@ts-ignore
-      if (response?.error) {
-        // Check if the response contains an error
+      if (res?.data?.id) {
+        message.success("User registration was successful");
+        router.push("/login");
         //@ts-ignore
-        throw new Error(response?.error?.message); // Throw the error to be caught in the catch block
+      } else if (res?.data?.statusCode === 500) {
+        setError("The email already exists. Please use a different email.");
       }
-
-      message.success("User created successfully");
-      // Redirect to the home route
-      router.push("/login");
-    } catch (err: any) {
-      console.error(err.message);
-      message.error(
-        err.message || "An error occurred while creating the user."
-      );
+    } catch (err) {
+      setError("An error occurred while processing your request.");
     }
   };
+
   return (
     <div>
       <Divider
         orientation="center"
-        style={{ fontSize: "30px", fontWeight: "bolder" }}
+        style={{ fontSize: "30px", fontWeight: "bold" }}
       >
         <Link href={`/`}>
-          {" "}
           <span style={{ color: "#1890ff" }}>Stay Solution</span> BD{" "}
         </Link>
       </Divider>
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} resolver={yupResolver(SignUpValidation)}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -64,8 +65,7 @@ const SignUpPage = () => {
             }}
           >
             <Divider orientation="center" style={{ fontSize: "20px" }}>
-              User
-              <span style={{ color: "#1890ff" }}> Register</span> Form
+              User <span style={{ color: "#1890ff" }}>Register</span> Form
             </Divider>
             <Row
               gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
@@ -78,29 +78,19 @@ const SignUpPage = () => {
               <Col
                 xs={24}
                 md={12}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
+                style={{ display: "flex", justifyContent: "center" }}
               >
                 <Image
                   src={sheikhHome}
                   alt="Large Image"
-                  style={{
-                    width: "80%",
-                    height: "70%",
-                  }}
+                  style={{ width: "80%", height: "70%" }}
                   className={styles.rotatingImage}
                 />
               </Col>
-
               <Col
                 xs={24}
                 md={8}
-                style={{
-                  fontWeight: "bolder",
-                  fontSize: "20px",
-                }}
+                style={{ fontWeight: "bold", fontSize: "20px" }}
               >
                 <FormInput
                   type="text"
@@ -145,6 +135,13 @@ const SignUpPage = () => {
                   size="large"
                   label="Address"
                 />
+                {error && (
+                  <div
+                    style={{ color: "red", marginBottom: "5px !importance" }}
+                  >
+                    {error}
+                  </div>
+                )}
                 <Button
                   type="primary"
                   htmlType="submit"
@@ -153,7 +150,7 @@ const SignUpPage = () => {
                   Sign Up
                 </Button>
                 <div style={{ textAlign: "center", marginTop: "10px" }}>
-                  Already register to StaySolutionBD?
+                  Already registered with StaySolutionBD?{" "}
                   <Link href={`/login`}>
                     <Button type="primary" style={{ marginLeft: "10px" }}>
                       Login Now!
