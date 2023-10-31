@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useMarketplacesQuery } from "@/redux/api/marketplaceApi";
 import MarketPlacePropertyCard from "@/components/ui/MarketPlacePropertyCard";
 import Link from "next/link";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 //Types of marketplace property
 const MarketPlacePropertyPage = () => {
@@ -33,7 +34,7 @@ const MarketPlacePropertyPage = () => {
   const { data, isLoading } = useMarketplacesQuery({ ...query });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CustomLoading></CustomLoading>;
   }
 
   const handleAddToCart = (property: any) => {

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { useFeaturedPropertyQuery } from "@/redux/api/propertyApi";
 import PropertyProductCard from "@/components/ui/PropertyProductCard";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 //Types of marketplace property
 type Property = {
@@ -35,7 +36,7 @@ const AllPropertyData = () => {
   const { data, isLoading } = useFeaturedPropertyQuery({});
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CustomLoading></CustomLoading>;
   }
 
   const handleAddToCart = (property: Property) => {

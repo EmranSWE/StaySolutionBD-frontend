@@ -3,6 +3,7 @@ import { usePropertiesQuery } from "@/redux/api/propertyApi";
 import { Button, Card, Col, Divider, Row } from "antd";
 import React, { useState } from "react";
 import Link from "next/link";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 const PopularPageCategory = () => {
   const query: Record<string, any> = {};
@@ -20,7 +21,7 @@ const PopularPageCategory = () => {
 
   const { data, isLoading } = usePropertiesQuery({ ...query });
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CustomLoading></CustomLoading>;
   }
 
   const tagToPropertyMap = new Map();

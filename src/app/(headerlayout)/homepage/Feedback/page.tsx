@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/app/loading";
+import CustomLoading from "@/components/ui/CustomLoading";
 import FeedbackCard from "@/components/ui/FeedbackCard";
 import { useFeedbacksQuery } from "@/redux/api/feedbackApi";
 import { Col, Divider, Row } from "antd";
@@ -8,7 +9,7 @@ import React from "react";
 const FeedbackPage = () => {
   const { data, isLoading, isError } = useFeedbacksQuery({});
   if (isLoading) {
-    return <Loading></Loading>;
+    return <CustomLoading></CustomLoading>;
   }
   if (isError) {
     return <div>message.error</div>;
@@ -27,7 +28,7 @@ const FeedbackPage = () => {
         </Divider>
 
         <Row gutter={16}>
-          {data?.map((feedbackData) => (
+          {data?.map((feedbackData: any) => (
             <Col xs={24} sm={12} md={8} lg={6} key={feedbackData.id}>
               <FeedbackCard feedbackData={feedbackData} />
             </Col>

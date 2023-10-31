@@ -90,7 +90,7 @@ const PropertyProductCard = ({
             </div>
             <Meta
               title={data.title}
-              description={truncateText({ text: data.description, limit: 100 })}
+              description={truncateText({ text: data.description, limit: 200 })}
             />
             <div>
               <p>

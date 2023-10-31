@@ -10,6 +10,8 @@ import Image from "next/image";
 
 import Link from "next/link";
 import { truncateText } from "@/utils/truncateText";
+import Loading from "@/app/loading";
+import CustomLoading from "@/components/ui/CustomLoading";
 const RecentPropertyPage = () => {
   const settings = {
     dots: true,
@@ -44,7 +46,7 @@ const RecentPropertyPage = () => {
 
   const { data, isLoading } = usePropertiesQuery({ ...query });
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CustomLoading></CustomLoading>;
   }
 
   return (
