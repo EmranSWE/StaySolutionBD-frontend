@@ -7,10 +7,9 @@ import { useState } from "react";
 import { Button, Card } from "antd";
 const { Meta } = Card;
 import Image from "next/image";
-
 import Link from "next/link";
 import { truncateText } from "@/utils/truncateText";
-import Loading from "@/app/loading";
+
 import CustomLoading from "@/components/ui/CustomLoading";
 const RecentPropertyPage = () => {
   const settings = {

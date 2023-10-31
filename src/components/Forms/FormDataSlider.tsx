@@ -14,7 +14,7 @@ const DataSlider = ({
   min = 0,
   max = 100,
   defaultValue = 0,
-  tooltipVisible = true,
+
   onChange,
 }: DataSliderProps) => {
   return (
@@ -23,7 +23,6 @@ const DataSlider = ({
       min={min}
       max={max}
       defaultValue={defaultValue}
-      tooltipVisible={tooltipVisible}
       onChange={onChange}
     />
   );

@@ -1,7 +1,6 @@
 "use client";
 import { Row, Col, message, Divider } from "antd";
 import React, { useEffect, useState } from "react";
-
 import { useFeaturedPropertyQuery } from "@/redux/api/propertyApi";
 import PropertyProductCard from "@/components/ui/PropertyProductCard";
 import CustomLoading from "@/components/ui/CustomLoading";
@@ -34,7 +33,6 @@ const AllPropertyData = () => {
   }, [cartCounts]);
 
   const { data, isLoading } = useFeaturedPropertyQuery({});
-
   if (isLoading) {
     return <CustomLoading></CustomLoading>;
   }

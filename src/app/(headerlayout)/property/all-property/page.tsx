@@ -3,14 +3,14 @@ import { Row, Col, Button, message } from "antd";
 import React, { useEffect, useState } from "react";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { useDebounced } from "@/redux/hooks";
-
 import { marketplaceCategory } from "@/constants/global";
 import DataSlider from "@/components/Forms/FormDataSlider";
 import FormDataSearchInput from "@/components/Forms/FormDataSearchInput";
-
 import CategorySelect from "@/components/ui/CategorySelect";
 import { usePropertiesQuery } from "@/redux/api/propertyApi";
 import PropertyProductCard from "@/components/ui/PropertyProductCard";
+import CustomLoading from "@/components/ui/CustomLoading";
+import { BorderDiv } from "@/utils/borderDiv";
 
 //Types of marketplace property
 type Property = {
@@ -49,7 +49,10 @@ const AllPropertyData = () => {
   const [rent, setRent] = useState<number>(0);
   const [room, setRoom] = useState<number>(0);
   const [occupancy, setOccupancy] = useState<number>(0);
-
+  const handleReset = () => {
+    setSearchTerm("");
+    setCategory(null);
+  };
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
@@ -79,9 +82,8 @@ const AllPropertyData = () => {
   const { data, isLoading } = usePropertiesQuery({ ...query });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CustomLoading />;
   }
-
   const handleAddToCart = (property: Property) => {
     message.success("Added to cart");
     setCartCounts((prevCounts) => ({
@@ -120,112 +122,38 @@ const AllPropertyData = () => {
               position: "relative",
             }}
           >
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                width: "4px",
-                background: "linear-gradient(to bottom, green, red, blue)",
-              }}
-            ></div>
-            <div
-              style={{
-                content: "",
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: "4px",
-                background: "linear-gradient(to right, blue, yellow)", // Bottom border
-              }}
-            ></div>
+            <BorderDiv
+              top
+              gradient="linear-gradient(to right, green, red, blue, yellow)"
+            />
+            <BorderDiv
+              bottom
+              gradient="linear-gradient(to right, blue, yellow)"
+            />
+            <BorderDiv
+              left
+              gradient="linear-gradient(to bottom, green, blue)"
+            />
+            <BorderDiv
+              right
+              gradient="linear-gradient(to bottom, red, yellow)"
+            />
 
-            <div
-              style={{
-                content: "",
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                width: "4px",
-                background: "linear-gradient(to bottom, green, blue)", // Left border
-              }}
-            ></div>
-
-            <div
-              style={{
-                content: "",
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                right: 0,
-                width: "4px",
-                background: "linear-gradient(to bottom, red, yellow)", // Right border
-              }}
-            ></div>
-            <div
-              style={{
-                content: "",
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: "4px",
-                background: "linear-gradient(to right, blue, yellow)", // Bottom border
-              }}
-            ></div>
-
-            <div
-              style={{
-                content: "",
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                width: "4px",
-                background: "linear-gradient(to bottom, green, blue)", // Left border
-              }}
-            ></div>
-
-            <div
-              style={{
-                content: "",
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                right: 0,
-                width: "4px",
-                background: "linear-gradient(to bottom, red, yellow)", // Right border
-              }}
-            ></div>
-            <div
-              style={{
-                content: "",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: "4px",
-                background:
-                  "linear-gradient(to right, green, red, blue, yellow)", // Top border
-              }}
-            ></div>
             <p>Sort by relevance</p>
+
             <FormDataSearchInput
               placeholder="Search by title, ..etc"
               onChange={setSearchTerm}
               style={{ width: "100%", marginBottom: "10px" }}
             />
-            <p>Search by category</p>
+            {/* <p>Search by category</p>
             <CategorySelect
               options={marketplaceCategory}
               value={category || undefined}
               onChange={setCategory}
               placeholder="Search The category"
               style={{ width: "100%", marginBottom: "10px" }}
-            />
+            /> */}
 
             <p>Monthly Rent</p>
             <DataSlider
@@ -251,6 +179,13 @@ const AllPropertyData = () => {
               onChange={handleMaxOccupancy}
               style={{ width: "100%", marginBottom: "10px" }}
             />
+            {/* <Button
+              type="primary"
+              onClick={handleReset}
+              style={{ width: "100%", marginBottom: "10px" }}
+            >
+              Reset
+            </Button> */}
           </div>
         </Col>
 

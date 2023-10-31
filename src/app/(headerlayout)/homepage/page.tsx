@@ -1,5 +1,4 @@
-import React from "react";
-import BannerPage from "./BannerPage/page";
+import React, { Suspense } from "react";
 import FeaturedPropertyPage from "./Featured Property/page";
 import RecentPropertyPage from "./RecentProperty/page";
 import PopularPageCategory from "./PopularCategory/page";
@@ -9,18 +8,27 @@ import OurMissionPage from "./Our Mission/page";
 import FAQ from "./FAQ/page";
 import FeedbackPage from "./Feedback/page";
 
+const LazyBannerPage = React.lazy(() => import("./BannerPage/page"));
+
+const LoadingComponent = () => {
+  // You can customize the loading component as needed
+  return <div>Loading...</div>;
+};
+
 const HomePage = () => {
   return (
     <div>
-      <BannerPage></BannerPage>
+      <Suspense fallback={<LoadingComponent />}>
+        <LazyBannerPage />
+      </Suspense>
       <FeaturedPropertyPage></FeaturedPropertyPage>
       <RecentPropertyPage></RecentPropertyPage>
       <PopularPageCategory></PopularPageCategory>
       <MarketPlaceProperty></MarketPlaceProperty>
       <FeedbackPage></FeedbackPage>
       <OurMissionPage></OurMissionPage>
-      <WhyUsePage></WhyUsePage>
       <FAQ></FAQ>
+      <WhyUsePage></WhyUsePage>
     </div>
   );
 };

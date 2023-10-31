@@ -14,6 +14,7 @@ import { PropertyDetails } from "@/components/ui/PropertyDetails";
 import { IconList } from "@/components/ui/IconList";
 import Link from "next/link";
 import styles from "./singleproperty.module.css";
+import CustomLoading from "@/components/ui/CustomLoading";
 const { Title, Paragraph } = Typography;
 type PageDetailsProps = {
   params: {
@@ -50,9 +51,10 @@ const PageDetails = ({ params }: PageDetailsProps) => {
     isLoading,
     isError,
   } = useSinglePropertyQuery(params.id);
-  console.log(property);
-  if (isLoading) return <div>Loading...</div>;
 
+  if (isLoading) {
+    return <CustomLoading />;
+  }
   if (isError) return <div>Error fetching property details.</div>;
 
   return (

@@ -1,4 +1,5 @@
 "use client";
+import CustomLoading from "@/components/ui/CustomLoading";
 import { PropertyImage } from "@/components/ui/PropertyImage";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { useGetSingleMarketplaceQuery } from "@/redux/api/marketplaceApi";
@@ -15,8 +16,9 @@ const MarketplacePropertyDetails = ({ params }: any) => {
     isLoading,
     isError,
   } = useGetSingleMarketplaceQuery(params.id);
-  console.log("data", property);
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <CustomLoading />;
+  }
 
   return (
     <div>

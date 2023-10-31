@@ -4,11 +4,12 @@ import {
   HomeOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Card, Col } from "antd";
+import { Button, Card, Col } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 const { Meta } = Card;
 import styles from "./css/propertyCard.module.css";
+import React, { useMemo } from "react";
 type PropertyProductCardProps = {
   data?: any;
   onAddToCart?: any;
@@ -19,22 +20,29 @@ const PropertyProductCard = ({
 }: PropertyProductCardProps) => {
   const isAvailable = data.propertyStatus === "available";
 
-  const baseStyle = {
-    fontWeight: "bold",
-    fontSize: "1.2em", // Increase font size for rooms and rent
-    alignItems: "center",
-  };
+  const baseStyle = useMemo(
+    () => ({
+      fontWeight: "bold",
+      fontSize: "1.2em",
+      alignItems: "center",
+    }),
+    []
+  );
 
-  const statusStyle = isAvailable
-    ? {
-        background: "green",
-        color: "white",
-        padding: "4px 8px",
-        borderRadius: "4px",
-      }
-    : {
-        color: "black",
-      };
+  const statusStyle = useMemo(
+    () =>
+      isAvailable
+        ? {
+            background: "green",
+            color: "white",
+            padding: "4px 8px",
+            borderRadius: "4px",
+          }
+        : {
+            color: "black",
+          },
+    [isAvailable]
+  );
   return (
     <Col
       style={{
@@ -90,7 +98,7 @@ const PropertyProductCard = ({
             </div>
             <Meta
               title={data.title}
-              description={truncateText({ text: data.description, limit: 200 })}
+              description={truncateText({ text: data.description, limit: 150 })}
             />
             <div>
               <p>
@@ -118,23 +126,24 @@ const PropertyProductCard = ({
                 :{data.rules.join()}
               </p>
             </div>
-            <Button
-              type="text"
-              style={{
-                position: "absolute",
-                top: 10,
-                right: 10,
-                border: "none",
-                background: "transparent",
-              }}
-              icon={<ShoppingCartOutlined />}
-              onClick={() => onAddToCart(data)}
-            />
           </Card>
         </Link>
+        <Button
+          type="text"
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 45,
+            border: "none",
+            background: "gray",
+            borderRadius: "50%",
+          }}
+          icon={<ShoppingCartOutlined />}
+          onClick={() => onAddToCart(data)}
+        />
       </div>
     </Col>
   );
 };
 
-export default PropertyProductCard;
+export default React.memo(PropertyProductCard);

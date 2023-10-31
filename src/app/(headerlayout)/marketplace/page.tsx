@@ -12,6 +12,8 @@ import CategorySelect from "@/components/ui/CategorySelect";
 
 import MarketPlacePropertyCard from "@/components/ui/MarketPlacePropertyCard";
 import { useMarketplacesQuery } from "@/redux/api/marketplaceApi";
+import Loading from "@/app/loading";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 //Types of marketplace property
 type Property = {
@@ -72,7 +74,7 @@ const MarketplacePropertyPage = () => {
   const { data, isLoading } = useMarketplacesQuery({ ...query });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CustomLoading />;
   }
 
   const handleAddToCart = (property: Property) => {
