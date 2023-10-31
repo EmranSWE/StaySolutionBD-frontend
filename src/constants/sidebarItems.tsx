@@ -49,6 +49,16 @@ export const sidebarItems = (role: string) => {
       icon: <TableOutlined />,
       key: `/${role}/manage-property`,
     },
+    {
+      label: <Link href={`/${role}/contact-us`}>Contact Us Information</Link>,
+      icon: <ScheduleOutlined />,
+      key: `/${role}/contact-us`,
+    },
+    {
+      label: <Link href={`/${role}/user-feedback`}>Feedback Us </Link>,
+      icon: <ScheduleOutlined />,
+      key: `/${role}/user-feedback`,
+    },
   ];
 
   const adminSidebarItems: MenuProps["items"] = [
@@ -161,6 +171,11 @@ export const sidebarItems = (role: string) => {
       label: <Link href={`/${role}/notification`}> Notification</Link>,
       key: `/${role}/notification`,
     },
+    {
+      label: <Link href={`/${role}/feedback`}> Feedback</Link>,
+      icon: <CreditCardOutlined />,
+      key: `/${role}/feedback`,
+    },
   ];
 
   const renterSidebarItems: MenuProps["items"] = [
@@ -212,6 +227,11 @@ export const sidebarItems = (role: string) => {
       label: <Link href={`/${role}/notification`}>Notification</Link>,
       icon: <CreditCardOutlined />,
       key: `/${role}/notification`,
+    },
+    {
+      label: <Link href={`/${role}/feedback`}> Feedback</Link>,
+      icon: <CreditCardOutlined />,
+      key: `/${role}/feedback`,
     },
   ];
 

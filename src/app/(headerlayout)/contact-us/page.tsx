@@ -1,17 +1,33 @@
 "use client";
 import React from "react";
-import { Form, Input, Button, Typography, Row, Col } from "antd";
+import { Form, Input, Button, Typography, Row, Col, message } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import contact from "../../../assets/contact-us.svg";
 import Image from "next/image";
+import { useAddContactMutation } from "@/redux/api/contactApi";
 
 const { TextArea } = Input;
 const { Title } = Typography;
 
 const ContactUsPage = () => {
-  const onFinish = (values: any) => {
-    console.log("Received values of form:", values);
+  const [addContact] = useAddContactMutation();
+  const [form] = Form.useForm();
+  const onFinish = async (values: any) => {
+    const { ...rest } = values;
+    console.log("Received values of form:", rest);
     // Handle the form values, e.g., send them to your backend
+    try {
+      const res = await addContact(rest);
+      if (res) {
+        form.resetFields(); // <-- Reset the form fields
+        message.success("Message created successfully!");
+      } else {
+        message.error("Your review doesn't added");
+      }
+      console.log(res);
+    } catch (err: any) {
+      console.error(err.message);
+    }
   };
 
   return (
@@ -38,6 +54,7 @@ const ContactUsPage = () => {
             <span style={{ color: "rgb(24, 144, 255)" }}>Contact </span> Us
           </Title>
           <Form
+            form={form}
             name="contact_us"
             onFinish={onFinish}
             initialValues={{ remember: true }}

@@ -1,5 +1,5 @@
 "use client";
-import { Row, Col, Button, message, Divider } from "antd";
+import { Row, Col, message, Divider } from "antd";
 import React, { useEffect, useState } from "react";
 
 import { useFeaturedPropertyQuery } from "@/redux/api/propertyApi";
@@ -31,19 +31,8 @@ const AllPropertyData = () => {
   useEffect(() => {
     localStorage.setItem("propertyCount", JSON.stringify(cartCounts));
   }, [cartCounts]);
-  const query: Record<string, any> = {};
 
-  const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(4);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-
-  query["limit"] = size;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
-
-  const { data, isLoading } = useFeaturedPropertyQuery();
+  const { data, isLoading } = useFeaturedPropertyQuery({});
 
   if (isLoading) {
     return <div>Loading...</div>;
