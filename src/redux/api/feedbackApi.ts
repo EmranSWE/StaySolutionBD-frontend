@@ -1,6 +1,6 @@
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
-const Feedback_URL = "/Feedback";
+const Feedback_URL = "/feedback";
 
 export const FeedbackApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
