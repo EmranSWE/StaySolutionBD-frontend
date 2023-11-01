@@ -4,6 +4,7 @@ import { Button, Card, Col, Divider, Row } from "antd";
 import React, { useState } from "react";
 import Link from "next/link";
 import CustomLoading from "@/components/ui/CustomLoading";
+import Image from "next/image";
 
 const PopularPageCategory = () => {
   const query: Record<string, any> = {};
@@ -66,10 +67,11 @@ const PopularPageCategory = () => {
                       {tag}
                     </div>
                   </Link>
-                  <img
-                    alt="example"
+                  <Image
                     src={property.imageGallery[0]}
-                    style={{ width: "100%" }}
+                    alt="Large Image"
+                    width={350}
+                    height={200}
                   />
                 </div>
               </Card>

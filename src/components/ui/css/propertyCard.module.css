@@ -36,7 +36,7 @@
 }
 
 .zoomDetails:hover {
-  transform: rotate(-5deg) scale(1.2);
+  transform: rotate(-5deg) scale(0.8);
 }
 
 .avatarSection {

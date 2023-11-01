@@ -150,7 +150,7 @@ export default function App() {
     <div>
       <Divider orientation="center">
         <h1>
-          Frequently <span style={{ color: "#1890ff" }}>Asked</span> Question
+          Frequently <span style={{ color: "#1890ff" }}>Asked</span>
         </h1>
       </Divider>
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 24 }}>

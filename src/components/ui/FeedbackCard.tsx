@@ -1,6 +1,7 @@
 import { UserOutlined } from "@ant-design/icons";
 import styles from "./css/propertyCard.module.css";
 import { Avatar, Rate } from "antd";
+import { truncateText } from "@/utils/truncateText";
 const FeedbackCard = ({ feedbackData }: any) => {
   const { name, feedback, rating, user } = feedbackData;
   return (
@@ -20,7 +21,9 @@ const FeedbackCard = ({ feedbackData }: any) => {
           className={styles.userName}
         >{`${user?.firstName} ${user?.middleName} ${user?.lastName}`}</h3>
         <Rate disabled value={rating} />
-        <p className={styles.feedbackText}>{feedback}</p>
+        <p className={styles.feedbackText}>
+          {truncateText({ text: feedback, limit: 80 })}
+        </p>
       </div>
     </div>
   );

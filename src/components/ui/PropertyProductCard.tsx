@@ -133,7 +133,7 @@ const PropertyProductCard = ({
           style={{
             position: "absolute",
             top: 10,
-            right: 45,
+            right: 60,
             border: "none",
             background: "gray",
             borderRadius: "50%",
