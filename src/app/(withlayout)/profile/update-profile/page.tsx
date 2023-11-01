@@ -4,6 +4,7 @@ import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
+import CustomLoading from "@/components/ui/CustomLoading";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { propertyAmenities } from "@/constants/global";
@@ -22,7 +23,7 @@ const UpdateProfile = () => {
   const { data, isError, isLoading, isSuccess } = useMyProfileQuery({});
 
   if (isLoading) {
-    return <div>Loading....</div>;
+    return <CustomLoading />;
   }
   const onSubmit = async (values: any) => {
     const obj = { ...values };
@@ -83,22 +84,11 @@ const UpdateProfile = () => {
               Profile Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              {/* For extra small screens (xs) */}
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <UploadImage name="file" />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormInput
                   name="firstName"
                   type="text"
@@ -108,13 +98,7 @@ const UpdateProfile = () => {
                   placeholder="Enter the first name"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormInput
                   name="middleName"
                   type="text"
@@ -124,13 +108,7 @@ const UpdateProfile = () => {
                   placeholder="Enter the Middle name"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormInput
                   name="lastName"
                   type="text"
@@ -140,14 +118,7 @@ const UpdateProfile = () => {
                   placeholder="Enter the Last name"
                 />
               </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormInput
                   type="text"
                   name="phone"
@@ -156,14 +127,7 @@ const UpdateProfile = () => {
                   label="Phone No"
                 />
               </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormInput
                   type="text"
                   name="preferredPropertyType"
@@ -172,13 +136,7 @@ const UpdateProfile = () => {
                   label="Preferred Property Type"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormSelectField
                   mode="multiple"
                   size="large"
@@ -189,13 +147,7 @@ const UpdateProfile = () => {
                   placeholder="Select Amenities"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormInput
                   type="text"
                   name="preferredLocation"
@@ -204,14 +156,7 @@ const UpdateProfile = () => {
                   label="Preferred Location"
                 />
               </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormInput
                   type="text"
                   name="address"

@@ -211,7 +211,7 @@ const MyPropertyPage = () => {
       />
       <Divider orientation="center">
         <h1>
-          My All <span style={{ color: "#1890ff" }}>Property</span> Question
+          My All <span style={{ color: "#1890ff" }}>Property</span>
         </h1>
       </Divider>
       <SSTable

@@ -1,14 +1,11 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-
 import { Button, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
   ReloadOutlined,
-  EyeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
@@ -16,7 +13,6 @@ import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
 import SSTable from "@/components/ui/SSBDTable";
 import SSModal from "@/components/ui/SSModal";
-import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
 import {
@@ -24,6 +20,7 @@ import {
   useMarketplacesQuery,
   useSingleUserMarketplaceDataQuery,
 } from "@/redux/api/marketplaceApi";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 const MyMarketplaceProduct = () => {
   const query: Record<string, any> = {};
@@ -57,20 +54,31 @@ const MyMarketplaceProduct = () => {
 
   const { data, isLoading, isError, error } =
     useSingleUserMarketplaceDataQuery(id);
+
   if (isError) {
     console.error("Error fetching property data:", error);
     // Handle the error as needed
   }
-
+  if (isLoading) {
+    return <CustomLoading />;
+  }
   console.log("data", data);
 
   const meta = data?.meta;
 
   const columns = [
     {
+      title: "Title",
+      dataIndex: "title",
+    },
+    {
       title: "Category",
       dataIndex: "category",
       sorter: true,
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
     },
     {
       title: "Owner",
@@ -82,36 +90,19 @@ const MyMarketplaceProduct = () => {
         return name;
       },
     },
-    {
-      title: "Price",
-      dataIndex: "price",
-    },
+
     {
       title: "Description",
       dataIndex: "itemDescription",
     },
 
     {
-      title: "Size of FLat",
-      dataIndex: "size",
-    },
-
-    {
-      title: "Available Date at",
-      dataIndex: "availableDate",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
-    },
-
-    {
       title: "Action",
       dataIndex: "id",
-      render: function (propertyId: any) {
+      render: function (id: any) {
         return (
           <>
-            <Link href={`/admin/manage-property/edit/${propertyId}`}>
+            <Link href={`/owner/marketplace/edit/${id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -126,7 +117,7 @@ const MyMarketplaceProduct = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setPropertyId(id); // Corrected this line
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -145,7 +136,6 @@ const MyMarketplaceProduct = () => {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -162,7 +152,7 @@ const MyMarketplaceProduct = () => {
       const res = await deleteMarketplaceData(id);
       console.log("response", res);
       if (res) {
-        message.success("Property Successfully Deleted!");
+        message.success("Marketplace Data Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {

@@ -140,6 +140,33 @@ export const sidebarItems = (role: string) => {
           ),
           key: `/${role}/property-booking`,
         },
+        {
+          label: <Link href={`/${role}/safety`}>Safety Management</Link>,
+
+          key: `/${role}/safety`,
+        },
+      ],
+    },
+
+    {
+      label: "Marketplace",
+      key: "marketplace",
+      icon: <AppstoreOutlined />,
+      children: [
+        {
+          label: (
+            <Link href={`/${role}/marketplace`}>My Marketplace Property</Link>
+          ),
+          key: `/${role}/marketplace`,
+        },
+        {
+          label: (
+            <Link href={`/${role}/marketplace/add-to-marketplace`}>
+              Add To Marketplace
+            </Link>
+          ),
+          key: `/${role}/marketplace/add-to-marketplace`,
+        },
       ],
     },
     {
@@ -152,16 +179,7 @@ export const sidebarItems = (role: string) => {
       icon: <TableOutlined />,
       key: `/${role}/issues`,
     },
-    {
-      label: <Link href={`/${role}/safety`}>Safety Management</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/safety`,
-    },
-    {
-      label: <Link href={`/${role}/marketplace`}>MarketPlace</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/marketplace`,
-    },
+
     {
       label: <Link href={`/${role}/message`}>Check Message</Link>,
       icon: <TableOutlined />,
@@ -169,6 +187,7 @@ export const sidebarItems = (role: string) => {
     },
     {
       label: <Link href={`/${role}/notification`}> Notification</Link>,
+      icon: <TableOutlined />,
       key: `/${role}/notification`,
     },
     {

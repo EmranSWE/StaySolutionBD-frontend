@@ -123,3 +123,14 @@ export const months = [
   { label: "November", value: 11 },
   { label: "December", value: 12 },
 ];
+
+export const categoryOptions = [
+  { label: "Apartment", value: "Apartment" },
+  { label: "Condominium", value: "Condominium" },
+  { label: "Single Family Home", value: "Single_family_home" },
+  { label: "Townhouse", value: "Townhouse" },
+  { label: "Studio", value: "Studio" },
+  { label: "Duplex", value: "Duplex" },
+  { label: "Villa", value: "Villa" },
+  { label: "Cottage", value: "Cottage" },
+];

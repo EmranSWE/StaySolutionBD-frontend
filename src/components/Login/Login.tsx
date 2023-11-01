@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Divider, Row, message } from "antd";
 import loginImage from "../../assets/computer-login-animate.svg";
 import Image from "next/image";
 import Form from "@/components/Forms/Form";
@@ -42,20 +42,18 @@ const LoginPage = () => {
 
   return (
     <div>
-      <h1
-        style={{
-          fontSize: "50px",
-          textAlign: "center",
-          color: "#1890ff",
-          margin: "10px 20px",
-        }}
+      <Divider
+        orientation="center"
+        style={{ fontSize: "30px", fontWeight: "bold" }}
       >
-        Stay Solution BD
-      </h1>
+        <Link href={`/`}>
+          <span style={{ color: "#1890ff" }}>Stay Solution</span> BD{" "}
+        </Link>
+      </Divider>
       <Row justify="center" align="middle" style={{ minHeight: "80vh" }}>
         <Col xs={24} sm={12} md={16} lg={10}>
           <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-            <Image src={loginImage} width={500} alt="login Image" />
+            <Image src={loginImage} width={350} alt="login Image" />
           </div>
         </Col>
 

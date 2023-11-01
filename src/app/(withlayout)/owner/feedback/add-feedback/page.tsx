@@ -6,8 +6,10 @@ import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { useAddFeedbackMutation } from "@/redux/api/feedbackApi";
 import { useAddReviewMutation } from "@/redux/api/reviewApi";
+import { FeedbackValidation } from "@/schemas/feedbackValidation";
 import { getUserInfo } from "@/services/auth.service";
-import { Button, Col, Row, message } from "antd";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const AddReviewPage = () => {
@@ -17,12 +19,23 @@ const AddReviewPage = () => {
   const onSubmit = async (values: any) => {
     try {
       const res = await addFeedback(values);
-      if (!res) {
-        message.error("Your feedback doesnot added");
+      //@ts-ignore
+      if (res?.data.success === true) {
+        message.success({
+          content: "Property created successfully!",
+          key: "loading",
+          duration: 2,
+        });
+
+        //@ts-ignore
+      } else if (res?.data.success === false) {
+        message.error({
+          content:
+            "Property creation failed. Please check the data and try again.",
+          key: "loading",
+          duration: 5,
+        });
       }
-      console.log(res);
-      message.success("Feedback created successfully!");
-      //   router.push("/renter/review");
     } catch (err: any) {
       console.error(err.message);
     }
@@ -33,19 +46,26 @@ const AddReviewPage = () => {
       <SSBreadCrumb
         items={[
           {
-            label: "renter",
-            link: "/renter",
+            label: "owner",
+            link: "/owner",
           },
           {
             label: "feedback",
-            link: "/renter/feedback/",
+            link: "/owner/feedback/",
           },
         ]}
       />
-      <h1>Create Review</h1>
+      <Divider orientation="center">
+        <h1>
+          Create <span style={{ color: "#1890ff" }}>Feedback</span> Question
+        </h1>
+      </Divider>
 
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form
+          submitHandler={onSubmit}
+          resolver={yupResolver(FeedbackValidation)}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -58,14 +78,20 @@ const AddReviewPage = () => {
               style={{
                 fontSize: "18px",
                 marginBottom: "10px",
+                textAlign: "center",
               }}
             >
               Feedback Information
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Row
+              gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
               <Col
                 className="gutter-row"
-                span={8}
+                sm={24}
+                md={18}
+                lg={18}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -80,19 +106,34 @@ const AddReviewPage = () => {
               </Col>
               <Col
                 className="gutter-row"
-                span={8}
+                sm={24}
+                md={18}
+                lg={18}
                 style={{
                   marginBottom: "10px",
                 }}
               >
                 <FormTextArea name="feedback" label="Feedback" rows={4} />
               </Col>
+              <Col
+                className="gutter-row"
+                sm={24}
+                md={18}
+                lg={18}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  style={{ width: "100%" }}
+                >
+                  Add Feedback
+                </Button>
+              </Col>
             </Row>
           </div>
-
-          <Button htmlType="submit" type="primary">
-            Add Feedback
-          </Button>
         </Form>
       </div>
     </div>

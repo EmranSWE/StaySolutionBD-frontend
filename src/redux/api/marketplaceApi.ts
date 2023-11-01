@@ -46,11 +46,12 @@ export const marketplaceApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.marketplace],
     }),
     //Update the data
-    updateProperty: build.mutation({
+    updateMarketplace: build.mutation({
       query: (data) => ({
         url: `${MARKETPLACE_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
+        contentType: "multipart/form-data",
       }),
       invalidatesTags: [tagTypes.marketplace],
     }),
@@ -71,4 +72,5 @@ export const {
   useGetSingleMarketplaceQuery,
   useSingleUserMarketplaceDataQuery,
   useDeleteMarketplaceDataMutation,
+  useUpdateMarketplaceMutation,
 } = marketplaceApi;

@@ -21,7 +21,7 @@ import {
 import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
-const UpdatePropertyPage = ({ params }: any) => {
+const UpdateFeedback = ({ params }: any) => {
   const router = useRouter();
   const { data, isLoading } = useSinglePropertyQuery(params.id);
 
@@ -311,4 +311,4 @@ const UpdatePropertyPage = ({ params }: any) => {
   );
 };
 
-export default UpdatePropertyPage;
+export default UpdateFeedback;
