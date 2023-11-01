@@ -5,20 +5,20 @@ type TextAreaProps = {
   name: string;
   label?: string;
   rows?: number;
-  value?: string;
   placeholder?: string;
+  defaultValue?: string | number | string[] | undefined;
 };
 
 const FormTextArea = ({
   name,
   label,
   rows,
-  value,
   placeholder,
+  defaultValue,
 }: TextAreaProps) => {
   const { control } = useFormContext();
   return (
-    <div className={`flex flex-col  w-full`}>
+    <div className={`flex flex-col w-full`}>
       {label ? label : null}
       <Controller
         name={name}
@@ -28,7 +28,7 @@ const FormTextArea = ({
             rows={rows}
             placeholder={placeholder}
             {...field}
-            defaultValue={value}
+            value={field.value || defaultValue} // Use value with a fallback to defaultValue
           />
         )}
       />

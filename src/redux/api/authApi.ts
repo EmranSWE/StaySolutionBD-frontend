@@ -12,6 +12,13 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    deleteUser: build.mutation({
+      query: (id) => ({
+        url: `${AuthUrl}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
     myProfile: build.query({
       query: () => ({
         url: `${AuthUrl}/get-user/my-profile`,
@@ -61,4 +68,5 @@ export const {
   useMyProfileQuery,
   useUserUpdateMutation,
   useChangePasswordMutation,
+  useDeleteUserMutation,
 } = authApi;

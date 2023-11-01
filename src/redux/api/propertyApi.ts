@@ -54,6 +54,7 @@ export const propertyApi = baseApi.injectEndpoints({
         url: `${PROPERTY_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
+        contentType: "multipart/form-data",
       }),
       invalidatesTags: [tagTypes.property],
     }),

@@ -4,27 +4,29 @@ import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
+import FormTextArea from "@/components/Forms/FormTextArea";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import { propertyAmenities } from "@/constants/global";
-import { useMyProfileQuery, useUserUpdateMutation } from "@/redux/api/authApi";
+import {
+  LOCATIONS,
+  propertyAmenities,
+  propertyRules,
+} from "@/constants/global";
+import { useAddPropertyMutation } from "@/redux/api/propertyApi";
 import { getUserInfo } from "@/services/auth.service";
 
 import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
-const UpdateProfile = () => {
+const UpdatePropertyPage = ({ params }: any) => {
+  console.log(params);
   const router = useRouter();
-  const [userUpdate] = useUserUpdateMutation();
+  const [addProperty] = useAddPropertyMutation();
 
-  const { id } = getUserInfo() as { id: string };
-
-  const { data, isError, isLoading, isSuccess } = useMyProfileQuery({});
-  console.log(data);
-  if (isLoading) {
-    return <div>Loading....</div>;
-  }
   const onSubmit = async (values: any) => {
+    const { id } = getUserInfo() as { id: string };
+    values.ownerId = id;
+    console.log("values", values);
     const obj = { ...values };
     const file = obj["file"];
     delete obj["file"];
@@ -33,16 +35,15 @@ const UpdateProfile = () => {
     formData.append("file", file as Blob);
     formData.append("data", data);
     message.loading("Creating...");
+    console.log("form data", formData);
     try {
-      const res = await userUpdate({
-        id: id,
-        body: formData,
-      });
+      const res = await addProperty(formData);
       if (!res) {
-        message.error("Data doesn't update");
+        message.error("Your property doesnot added");
       }
-      message.success("User updated successfully!");
-      // router.push("/owner/my-property");
+      console.log(res);
+      message.success("Property created successfully!");
+      router.push("/owner/my-property");
     } catch (err: any) {
       console.error(err.message);
     }
@@ -53,16 +54,16 @@ const UpdateProfile = () => {
       <SSBreadCrumb
         items={[
           {
-            label: "profile",
-            link: "/profile",
+            label: "owner",
+            link: "/owner",
           },
           {
-            label: "account",
-            link: "/profile/account-profile/",
+            label: "property",
+            link: "/owner/my-property/",
           },
         ]}
       />
-      <h1>Profile Update</h1>
+      <h1>Create Property</h1>
 
       <div>
         <Form submitHandler={onSubmit}>
@@ -80,7 +81,7 @@ const UpdateProfile = () => {
                 marginBottom: "10px",
               }}
             >
-              Profile Information
+              Property Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -90,86 +91,11 @@ const UpdateProfile = () => {
                   marginBottom: "10px",
                 }}
               >
-                <UploadImage name="file" />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  name="firstName"
-                  type="text"
-                  value={data?.firstName}
-                  size="large"
-                  label="First Name"
-                  placeholder="Enter the first name"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  name="middleName"
-                  type="text"
-                  value={data?.middleName}
-                  size="large"
-                  label="Middle Name"
-                  placeholder="Enter the Middle name"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  name="lastName"
-                  type="text"
-                  value={data?.lastName}
-                  size="large"
-                  label="Last Name"
-                  placeholder="Enter the Last name"
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
                 <FormInput
                   type="text"
-                  name="phone"
-                  value={data?.phone}
+                  name="title"
                   size="large"
-                  label="Phone No"
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="preferredPropertyType"
-                  value={data?.preferredPropertyType}
-                  size="large"
-                  label="Preferred Property Type"
+                  label="Title"
                 />
               </Col>
               <Col
@@ -182,10 +108,139 @@ const UpdateProfile = () => {
                 <FormSelectField
                   mode="multiple"
                   size="large"
-                  defaultValue={data?.preferredAmenities}
-                  name="preferredAmenities"
+                  name="location"
+                  options={LOCATIONS}
+                  label="Location"
+                  placeholder="Select Locations"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput type="text" name="city" size="large" label="City" />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  name="numberOfRooms"
+                  type="number"
+                  size="large"
+                  label="Number Of Rooms"
+                  placeholder="Enter the number of rooms"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  name="monthlyRent"
+                  type="number"
+                  size="large"
+                  label="Monthly Rent"
+                  placeholder="Enter the monthly rent"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="text"
+                  name="flatNo"
+                  size="large"
+                  label="Flat No"
+                />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  mode="multiple"
+                  size="large"
+                  name="rules"
+                  options={propertyRules}
+                  label="Rules"
+                  placeholder="Select Rules"
+                />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <UploadImage name="file" />
+              </Col>
+            </Row>
+          </div>
+
+          {/* basic info */}
+          <div
+            style={{
+              border: "1px solid #d9d9d9",
+              borderRadius: "5px",
+              padding: "15px",
+              marginBottom: "10px",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "18px",
+                marginBottom: "10px",
+              }}
+            >
+              Basic Information
+            </p>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormDatePicker
+                  name="availableDate"
+                  label="Available Date"
+                  size="large"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  mode="multiple"
+                  size="large"
+                  name="amenities"
                   options={propertyAmenities}
-                  label="Preferred Amenities"
+                  label="Property Amenities"
                   placeholder="Select Amenities"
                 />
               </Col>
@@ -198,10 +253,9 @@ const UpdateProfile = () => {
               >
                 <FormInput
                   type="text"
-                  name="preferredLocation"
-                  value={data?.preferredLocation}
+                  name="size"
                   size="large"
-                  label="Preferred Location"
+                  label="Property Size"
                 />
               </Col>
 
@@ -213,17 +267,24 @@ const UpdateProfile = () => {
                 }}
               >
                 <FormInput
-                  type="text"
-                  name="address"
-                  value={data?.address}
+                  name="maxOccupancy"
+                  type="number"
                   size="large"
-                  label="Your address"
+                  label="People Occupancy"
+                  placeholder="Enter the highest number of people allowed"
+                />
+              </Col>
+              <Col span={12} style={{ margin: "10px 0" }}>
+                <FormTextArea
+                  name="description"
+                  label="Property Description"
+                  rows={4}
                 />
               </Col>
             </Row>
           </div>
           <Button htmlType="submit" type="primary">
-            Update
+            Add Property
           </Button>
         </Form>
       </div>
@@ -231,4 +292,4 @@ const UpdateProfile = () => {
   );
 };
 
-export default UpdateProfile;
+export default UpdatePropertyPage;

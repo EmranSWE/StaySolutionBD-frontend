@@ -22,11 +22,11 @@ import {
 } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { setPriority } from "os";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 const AdminPage = () => {
   const query: Record<string, any> = {};
   const [deleteProperty] = useDeletePropertyMutation();
-
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -49,8 +49,10 @@ const AdminPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = usePropertiesQuery({ ...query });
-  console.log("data", data);
 
+  if (isLoading) {
+    return <CustomLoading></CustomLoading>;
+  }
   const meta = data?.meta;
 
   const columns = [
@@ -91,10 +93,6 @@ const AdminPage = () => {
     },
 
     {
-      title: "Designation",
-      dataIndex: "designation",
-    },
-    {
       title: "Available Date at",
       dataIndex: "availableDate",
       render: function (data: any) {
@@ -124,7 +122,7 @@ const AdminPage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setPropertyId(propertyId);
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -137,13 +135,11 @@ const AdminPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -158,7 +154,6 @@ const AdminPage = () => {
     console.log(id);
     try {
       const res = await deleteProperty(id);
-      console.log("response", res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);
