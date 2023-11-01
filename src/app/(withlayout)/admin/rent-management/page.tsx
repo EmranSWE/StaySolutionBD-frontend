@@ -20,6 +20,7 @@ import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { useUsersQuery } from "@/redux/api/authApi";
 import { useMonthlyPaymentsQuery } from "@/redux/api/monthlyPaymentApi";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 interface PaymentData {
   flatNo: string;
@@ -51,7 +52,10 @@ const RentManagement = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = useMonthlyPaymentsQuery({ ...query });
-  console.log("monthly data", data);
+
+  if (isLoading) {
+    return <CustomLoading />;
+  }
   const meta = data?.meta;
   const transformData = (data: any[]): PaymentData[] => {
     const transformed: Record<string, PaymentData> = {};

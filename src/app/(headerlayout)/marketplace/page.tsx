@@ -237,7 +237,7 @@ const MarketplacePropertyPage = () => {
             }}
           >
             {data &&
-              data.map((property: Property) => (
+              data?.map((property: Property) => (
                 <Col
                   xs={20}
                   sm={24}

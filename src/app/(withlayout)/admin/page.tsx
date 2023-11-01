@@ -1,8 +1,12 @@
 "use client";
 import CustomLoading from "@/components/ui/CustomLoading";
-import { useTotalMonthlyPaymentQuery } from "@/redux/api/monthlyPaymentApi";
+import {
+  useMonthlyPaymentsQuery,
+  useTotalMonthlyPaymentQuery,
+} from "@/redux/api/monthlyPaymentApi";
+import { useDebounced } from "@/redux/hooks";
 import { Col, Divider, Row } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
 import {
   LineChart,
@@ -20,11 +24,41 @@ import {
 } from "recharts";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 const AdminPage = () => {
-  const { data: totalAmount, isLoading } = useTotalMonthlyPaymentQuery({});
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+  const query: Record<string, any> = {};
 
-  if (isLoading) {
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+
+  const { data: paymentData, isLoading } = useMonthlyPaymentsQuery({
+    ...query,
+  });
+  const { data: totalAmount, isLoading: isLoading1 } =
+    useTotalMonthlyPaymentQuery({});
+
+  if (isLoading1 || isLoading) {
     return <CustomLoading />;
   }
+
+  // Calculate monthly total amounts
+  const monthlyTotals = paymentData.reduce((acc, payment) => {
+    const month = payment.month;
+    const amount = payment.amount;
+    if (acc[month]) {
+      acc[month].totalAmount += amount;
+    } else {
+      acc[month] = {
+        month,
+        totalAmount: amount,
+      };
+    }
+    return acc;
+  }, []);
 
   const pieChartData = [{ name: "Total Amount", value: totalAmount }];
   const data = [
@@ -50,6 +84,8 @@ const AdminPage = () => {
     { name: "Nov", amount: 2100 },
     { name: "Dec", amount: 1300 },
   ];
+
+  console.log("Payment", paymentData);
   return (
     <>
       <Divider orientation="left">Welcome to Admin Page</Divider>
@@ -85,7 +121,7 @@ const AdminPage = () => {
                 outerRadius={80}
                 fill="#8884d8"
               >
-                {data.map((entry, index) => (
+                {data?.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
@@ -97,7 +133,7 @@ const AdminPage = () => {
           </div>
         </Col>
         <Col className="gutter-row" span={6}>
-          <div>
+          {/* <div>
             {" "}
             <BarChart width={600} height={400} data={dataS}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -107,10 +143,19 @@ const AdminPage = () => {
               <Legend />
               <Bar dataKey="amount" fill="#8884d8" />
             </BarChart>
-          </div>
+          </div> */}
         </Col>
         <Col className="gutter-row" span={6}>
-          <div>col-6</div>
+          {/* <div>
+            <BarChart width={600} height={400} data={monthlyTotals}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="totalAmount" fill="#8884d8" />
+            </BarChart>
+          </div> */}
         </Col>
       </Row>
     </>

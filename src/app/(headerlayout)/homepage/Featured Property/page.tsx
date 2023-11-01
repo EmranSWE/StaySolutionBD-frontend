@@ -63,7 +63,7 @@ const AllPropertyData = () => {
         }}
       >
         {data &&
-          data.map((property: Property) => (
+          data?.map((property: Property) => (
             <Col
               xs={24}
               sm={24}
