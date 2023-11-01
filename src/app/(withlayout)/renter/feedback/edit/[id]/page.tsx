@@ -64,12 +64,12 @@ const UpdateFeedback = ({ params }: any) => {
       <SSBreadCrumb
         items={[
           {
-            label: "owner",
-            link: "/owner",
+            label: "renter",
+            link: "/renter",
           },
           {
             label: "feedback",
-            link: "/owner/feedback/",
+            link: "/renter/feedback/",
           },
         ]}
       />

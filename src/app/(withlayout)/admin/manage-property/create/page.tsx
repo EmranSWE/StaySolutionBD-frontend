@@ -6,29 +6,29 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
+import UploadImage from "@/components/ui/UploadImage";
 import {
-  useAddPropertyMutation,
-  usePropertiesQuery,
-} from "@/redux/api/propertyApi";
+  locations,
+  propertyAmenities,
+  propertyRules,
+  propertyTags,
+} from "@/constants/global";
+import { useAddPropertyMutation } from "@/redux/api/propertyApi";
+import propertySchema from "@/schemas/propertyValidation";
+import { getUserInfo } from "@/services/auth.service";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
+import { useRouter } from "next/navigation";
 
-const CreateAdminPage = () => {
-  const { data, isLoading } = usePropertiesQuery({ limit: 100, page: 1 });
-  const [addAdminWithFormData] = useAddPropertyMutation();
-  //@ts-ignore
-  const departments: IDepartment[] = data?.departments;
-
-  const departmentOptions =
-    departments &&
-    departments?.map((department) => {
-      return {
-        label: department?.title,
-        value: department?.id,
-      };
-    });
+const CreatePropertyPage = () => {
+  const router = useRouter();
+  const [addProperty] = useAddPropertyMutation();
 
   const onSubmit = async (values: any) => {
+    const { id } = getUserInfo() as { id: string };
+    values.ownerId = id;
+    console.log("values", values);
     const obj = { ...values };
     const file = obj["file"];
     delete obj["file"];
@@ -36,10 +36,28 @@ const CreateAdminPage = () => {
     const formData = new FormData();
     formData.append("file", file as Blob);
     formData.append("data", data);
-    message.loading("Creating...");
+    message.loading({ content: "Creating...", key: "loading" });
     try {
-      await addAdminWithFormData(formData);
-      message.success("Admin created successfully!");
+      const res = await addProperty(formData);
+      //@ts-ignore
+      if (res?.data.success === true) {
+        message.success({
+          content: "Property created successfully!",
+          key: "loading",
+          duration: 2,
+        });
+        console.log("success", res);
+        // router.push("/owner/my-property");
+        //@ts-ignore
+      } else if (res?.data.success === false) {
+        message.error({
+          content:
+            "Property creation failed. Please check the data and try again.",
+          key: "loading",
+          duration: 5,
+        });
+        console.log("error", res);
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -59,10 +77,11 @@ const CreateAdminPage = () => {
           },
         ]}
       />
-      <h1>Create Propert</h1>
+      <h1>Create Property</h1>
 
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} resolver={yupResolver(propertySchema)}>
+          {/* Property Information */}
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -71,106 +90,86 @@ const CreateAdminPage = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
-              Admin Information
+            <p style={{ fontSize: "18px", marginBottom: "10px" }}>
+              Property Information
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+            <Row gutter={[8, 16]}>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <UploadImage name="file" />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormInput
                   type="text"
-                  name="admin.name.firstName"
+                  name="title"
                   size="large"
-                  label="First Name"
+                  label="Title"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="admin.name.middleName"
-                  size="large"
-                  label="Middle Name"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="admin.name.lastName"
-                  size="large"
-                  label="Last Name"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="password"
-                  name="password"
-                  size="large"
-                  label="Password"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              ></Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormSelectField
+                  mode="multiple"
                   size="large"
-                  name="admin.managementDepartment"
-                  options={departmentOptions}
-                  label="Department"
-                  placeholder="Select"
+                  name="city"
+                  options={locations}
+                  label="City"
+                  placeholder="Select City"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                {/* <UploadImage name="file" /> */}
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  type="text"
+                  name="location"
+                  size="large"
+                  label="Location"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  type="text"
+                  name="size"
+                  size="large"
+                  label="Property Size"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  name="numberOfRooms"
+                  type="number"
+                  size="large"
+                  label="Number Of Rooms"
+                  placeholder="Enter the number of rooms"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  name="monthlyRent"
+                  type="number"
+                  size="large"
+                  label="Monthly Rent"
+                  placeholder="Enter the monthly rent"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  type="text"
+                  name="flatNo"
+                  size="large"
+                  label="Flat No"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  name="maxOccupancy"
+                  type="number"
+                  size="large"
+                  label="People Occupancy"
+                  placeholder="Enter the highest number of people allowed"
+                />
               </Col>
             </Row>
           </div>
 
-          {/* basic info */}
+          {/* More Info info */}
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -179,118 +178,58 @@ const CreateAdminPage = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
+            <p style={{ fontSize: "18px", marginBottom: "10px" }}>
               Basic Information
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="email"
-                  name="admin.email"
-                  size="large"
-                  label="Email address"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="admin.contactNo"
-                  size="large"
-                  label="Contact No."
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="admin.emergencyContactNo"
-                  size="large"
-                  label="Emergency Contact No."
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+            <Row gutter={[8, 16]}>
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormDatePicker
-                  name="admin.dateOfBirth"
-                  label="Date of birth"
+                  name="availableDate"
+                  label="Available Date"
                   size="large"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                {/* <FormSelectField
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormSelectField
+                  mode="multiple"
                   size="large"
-                  name="admin.bloodGroup"
-                  // options={bloodGroupOptions}
-                  label="Blood group"
-                  placeholder="Select"
-                /> */}
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="admin.designation"
-                  size="large"
-                  label="Designation"
+                  name="amenities"
+                  options={propertyAmenities}
+                  label="Property Amenities"
+                  placeholder="Select Amenities"
                 />
               </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormSelectField
+                  mode="multiple"
+                  size="large"
+                  name="propertyTags"
+                  options={propertyTags}
+                  label="Property Tags"
+                  placeholder="Select Property Tags"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormSelectField
+                  mode="multiple"
+                  size="large"
+                  name="rules"
+                  options={propertyRules}
+                  label="Rules"
+                  placeholder="Select Rules"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={12}>
                 <FormTextArea
-                  name="admin.presentAddress"
-                  label="Present address"
-                  rows={4}
-                />
-              </Col>
-
-              <Col span={12} style={{ margin: "10px 0" }}>
-                <FormTextArea
-                  name="admin.permanentAddress"
-                  label="Permanent address"
+                  name="description"
+                  label="Property Description"
                   rows={4}
                 />
               </Col>
             </Row>
           </div>
           <Button htmlType="submit" type="primary">
-            Create
+            Add Property
           </Button>
         </Form>
       </div>
@@ -298,4 +237,4 @@ const CreateAdminPage = () => {
   );
 };
 
-export default CreateAdminPage;
+export default CreatePropertyPage;

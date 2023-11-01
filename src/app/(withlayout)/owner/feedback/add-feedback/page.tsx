@@ -22,7 +22,7 @@ const AddReviewPage = () => {
       //@ts-ignore
       if (res?.data.success === true) {
         message.success({
-          content: "Property created successfully!",
+          content: "Feedback created successfully!",
           key: "loading",
           duration: 2,
         });
@@ -31,7 +31,7 @@ const AddReviewPage = () => {
       } else if (res?.data.success === false) {
         message.error({
           content:
-            "Property creation failed. Please check the data and try again.",
+            "Feedback creation failed. Please check the data and try again.",
           key: "loading",
           duration: 5,
         });

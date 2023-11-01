@@ -87,11 +87,11 @@ const UpdatePropertyPage = ({ params }: any) => {
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={6}
+                style={{ marginBottom: "10px" }}
               >
                 <FormInput
                   type="text"
@@ -102,11 +102,11 @@ const UpdatePropertyPage = ({ params }: any) => {
                 />
               </Col>
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={6}
+                style={{ marginBottom: "10px" }}
               >
                 <FormSelectField
                   mode="multiple"
@@ -119,11 +119,11 @@ const UpdatePropertyPage = ({ params }: any) => {
                 />
               </Col>
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={6}
+                style={{ marginBottom: "10px" }}
               >
                 <FormInput
                   type="text"
@@ -134,11 +134,11 @@ const UpdatePropertyPage = ({ params }: any) => {
                 />
               </Col>
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={6}
+                style={{ marginBottom: "10px" }}
               >
                 <FormInput
                   name="numberOfRooms"
@@ -150,11 +150,11 @@ const UpdatePropertyPage = ({ params }: any) => {
                 />
               </Col>
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={6}
+                style={{ marginBottom: "10px" }}
               >
                 <FormInput
                   name="monthlyRent"
@@ -166,11 +166,11 @@ const UpdatePropertyPage = ({ params }: any) => {
                 />
               </Col>
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={6}
+                style={{ marginBottom: "10px" }}
               >
                 <FormInput
                   type="text"
@@ -180,13 +180,12 @@ const UpdatePropertyPage = ({ params }: any) => {
                   label="Flat No"
                 />
               </Col>
-
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={6}
+                style={{ marginBottom: "10px" }}
               >
                 <FormSelectField
                   mode="multiple"
@@ -198,13 +197,12 @@ const UpdatePropertyPage = ({ params }: any) => {
                   placeholder="Select Rules"
                 />
               </Col>
-
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={6}
+                style={{ marginBottom: "10px" }}
               >
                 <UploadImage name="file" />
               </Col>
@@ -228,10 +226,14 @@ const UpdatePropertyPage = ({ params }: any) => {
             >
               Basic Information
             </p>
+
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
-                span={8}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={8} // For large devices, set it to 8 columns
                 style={{
                   marginBottom: "10px",
                 }}
@@ -245,7 +247,10 @@ const UpdatePropertyPage = ({ params }: any) => {
               </Col>
               <Col
                 className="gutter-row"
-                span={8}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={8} // For large devices, set it to 8 columns
                 style={{
                   marginBottom: "10px",
                 }}
@@ -262,7 +267,10 @@ const UpdatePropertyPage = ({ params }: any) => {
               </Col>
               <Col
                 className="gutter-row"
-                span={8}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={8} // For large devices, set it to 8 columns
                 style={{
                   marginBottom: "10px",
                 }}
@@ -275,10 +283,12 @@ const UpdatePropertyPage = ({ params }: any) => {
                   label="Property Size"
                 />
               </Col>
-
               <Col
                 className="gutter-row"
-                span={8}
+                xs={24}
+                sm={12}
+                md={12}
+                lg={8} // For large devices, set it to 8 columns
                 style={{
                   marginBottom: "10px",
                 }}
@@ -292,7 +302,7 @@ const UpdatePropertyPage = ({ params }: any) => {
                   placeholder="Enter the highest number of people allowed"
                 />
               </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} sm={12} md={12} lg={12} style={{ margin: "10px 0" }}>
                 <FormTextArea
                   name="description"
                   defaultValue={data?.description}

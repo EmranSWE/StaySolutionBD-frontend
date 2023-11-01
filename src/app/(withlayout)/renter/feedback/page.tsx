@@ -6,27 +6,23 @@ import Link from "next/link";
 import {
   DeleteOutlined,
   EditOutlined,
-  FilterOutlined,
   ReloadOutlined,
-  EyeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
-
-import dayjs from "dayjs";
 import SSTable from "@/components/ui/SSBDTable";
 import SSModal from "@/components/ui/SSModal";
-import {
-  useDeletePropertyMutation,
-  useSingleUserPropertyQuery,
-} from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
-import { useReviewsQuery } from "@/redux/api/reviewApi";
+import {
+  useDeleteFeedbackMutation,
+  useMyFeedbackQuery,
+} from "@/redux/api/feedbackApi";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 const MyReviewPage = () => {
   const query: Record<string, any> = {};
-  const [deleteProperty] = useDeletePropertyMutation();
+  const [deleteFeedback] = useDeleteFeedbackMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -34,7 +30,7 @@ const MyReviewPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-  const [propertyId, setPropertyId] = useState<string>("");
+  const [ids, setIds] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -49,51 +45,42 @@ const MyReviewPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  console.log(getUserInfo());
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("User ID not found");
     // Handle the error as required, maybe redirect the user or show an error message
   }
 
-  const { data, isLoading, isError, error } = useReviewsQuery({ ...query });
-  console.log(data);
+  const { data, isLoading, isError, error } = useMyFeedbackQuery(id);
+
   if (isError) {
     console.error("Error fetching property data:", error);
-    // Handle the error as needed
   }
 
-  console.log("data", data);
+  if (isLoading) {
+    return <CustomLoading />;
+  }
 
   const meta = data?.meta;
 
   const columns = [
     {
-      title: "Comments",
-      dataIndex: "comments",
-      sorter: true,
-    },
-    {
       title: "rating",
       dataIndex: "rating",
-    },
-
-    {
-      title: "Review Date at",
-      dataIndex: "reviewDate",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
       sorter: true,
+    },
+    {
+      title: "Comments",
+      dataIndex: "feedback",
     },
 
     {
       title: "Action",
       dataIndex: "id",
-      render: function (propertyId: any) {
+      render: function (id: any) {
         return (
           <>
-            <Link href={`/renter/manage-property/edit/${propertyId}`}>
+            <Link href={`/renter/feedback/edit/${id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -108,7 +95,7 @@ const MyReviewPage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setIds(id); // Corrected this line
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -121,13 +108,11 @@ const MyReviewPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -138,13 +123,12 @@ const MyReviewPage = () => {
     setSearchTerm("");
   };
 
-  const deletePropertyHandler = async (id: string) => {
-    console.log(id);
+  const DeleteFeedbackHandler = async (ids: string) => {
     try {
-      const res = await deleteProperty(id);
-      console.log("response", res);
+      const res = await deleteFeedback(ids);
+
       if (res) {
-        message.success("Property Successfully Deleted!");
+        message.success("Feedback Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
@@ -203,9 +187,9 @@ const MyReviewPage = () => {
         title="Remove property"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deletePropertyHandler(propertyId)}
+        handleOk={() => DeleteFeedbackHandler(ids)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this feedback?</p>
       </SSModal>
     </div>
   );
