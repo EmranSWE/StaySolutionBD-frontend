@@ -18,11 +18,14 @@ import SSModal from "@/components/ui/SSModal";
 import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
-import { useBookingsQuery } from "@/redux/api/bookingApi";
+import {
+  useBookingsQuery,
+  useDeleteBookingMutation,
+} from "@/redux/api/bookingApi";
 
 const PropertyBookingPage = () => {
   const query: Record<string, any> = {};
-  const [deleteProperty] = useDeletePropertyMutation();
+  const [deleteBooking] = useDeleteBookingMutation();
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -48,7 +51,6 @@ const PropertyBookingPage = () => {
     ...query,
   });
 
-  console.log(data);
   if (isLoading) {
     return <div>Loading........</div>;
   }
@@ -157,13 +159,11 @@ const PropertyBookingPage = () => {
     setSearchTerm("");
   };
 
-  const deletePropertyHandler = async (id: string) => {
-    console.log(id);
+  const deleteBookingHandler = async (id: string) => {
     try {
-      const res = await deleteProperty(id);
-      console.log("response", res);
+      const res = await deleteBooking(id);
       if (res) {
-        message.success("Property Successfully Deleted!");
+        message.success("Booking Successfully Deleted!");
         setOpen(false);
       }
     } catch (error: any) {
@@ -222,7 +222,7 @@ const PropertyBookingPage = () => {
         title="Remove property"
         isOpen={open}
         closeModal={() => setOpen(false)}
-        handleOk={() => deletePropertyHandler(propertyId)}
+        handleOk={() => deleteBookingHandler(propertyId)}
       >
         <p className="my-5">Do you want to remove this admin?</p>
       </SSModal>

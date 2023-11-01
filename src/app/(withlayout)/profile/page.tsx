@@ -5,7 +5,6 @@ import AdminPage from "../admin/page";
 
 const ProfilePage = () => {
   const { email, role } = getUserInfo() as { email: string; role: string };
-  console.log(role);
   return (
     <div>
       <h2>Welcome back to your profile </h2>

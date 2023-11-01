@@ -49,7 +49,7 @@ const AdminPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = usePropertiesQuery({ ...query });
-
+  console.log(data);
   if (isLoading) {
     return <CustomLoading></CustomLoading>;
   }

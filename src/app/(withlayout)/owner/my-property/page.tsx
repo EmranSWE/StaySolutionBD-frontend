@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -23,6 +23,7 @@ import {
 } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 const MyPropertyPage = () => {
   const query: Record<string, any> = {};
@@ -49,32 +50,47 @@ const MyPropertyPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  console.log(getUserInfo());
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("User ID not found");
-    // Handle the error as required, maybe redirect the user or show an error message
   }
 
   const { data, isLoading, isError, error } = useSingleUserPropertyQuery(id);
   if (isError) {
     console.error("Error fetching property data:", error);
-    // Handle the error as needed
+  }
+  if (isLoading) {
+    return <CustomLoading></CustomLoading>;
   }
 
-  console.log("data", data);
-
   const meta = data?.meta;
-
   const columns = [
+    {
+      title: "Flat No",
+      dataIndex: "flatNo",
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      render: function (title: any) {
+        return `${title.substring(0, 20)}...`;
+      },
+    },
     {
       title: "Property Status",
       dataIndex: "propertyStatus",
-      sorter: true,
     },
     {
-      title: "City",
-      dataIndex: "city",
+      title: "Locations",
+      dataIndex: "location",
+      render: function (location: any) {
+        return `${location.substring(0, 16)}...`;
+      },
+    },
+
+    {
+      title: "Size",
+      dataIndex: "size",
     },
     {
       title: "Monthly Rent",
@@ -83,6 +99,13 @@ const MyPropertyPage = () => {
     {
       title: "No. Rooms",
       dataIndex: "numberOfRooms",
+    },
+    {
+      title: "City",
+      dataIndex: "city",
+      render: function (city: string[]) {
+        return <>{city.join(", ")}</>;
+      },
     },
     {
       title: "Amenities",
@@ -133,7 +156,7 @@ const MyPropertyPage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setPropertyId(propertyId);
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -152,7 +175,6 @@ const MyPropertyPage = () => {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -187,31 +209,11 @@ const MyPropertyPage = () => {
           },
         ]}
       />
-      <ActionBar title="Property List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "60%",
-          }}
-        />
-        <div>
-          <Link href="/owner/create-property">
-            <Button type="primary">Create Property</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="primary"
-              onClick={resetFilters}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
-      </ActionBar>
-
+      <Divider orientation="center">
+        <h1>
+          My All <span style={{ color: "#1890ff" }}>Property</span> Question
+        </h1>
+      </Divider>
       <SSTable
         loading={isLoading}
         columns={columns}
@@ -230,7 +232,7 @@ const MyPropertyPage = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deletePropertyHandler(propertyId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this property?</p>
       </SSModal>
     </div>
   );

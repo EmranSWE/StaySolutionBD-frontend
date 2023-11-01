@@ -41,12 +41,7 @@ export const propertyApi = baseApi.injectEndpoints({
         data,
         contentType: "multipart/form-data",
       }),
-      transformResponse: (response, meta: IMeta) => {
-        return {
-          properties: response,
-          meta,
-        };
-      },
+
       invalidatesTags: [tagTypes.property],
     }),
     updateProperty: build.mutation({

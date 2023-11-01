@@ -29,10 +29,11 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   //@ts-ignore
   function (response) {
-    const responseObject: ResponseSuccessType = {
+    const responseObject = {
       data: response?.data?.data,
       meta: response?.data?.meta,
     };
+    console.log(response);
     return responseObject;
   },
   async function (error) {

@@ -8,12 +8,15 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import {
-  LOCATIONS,
+  locations,
   propertyAmenities,
   propertyRules,
+  propertyTags,
 } from "@/constants/global";
 import { useAddPropertyMutation } from "@/redux/api/propertyApi";
+import propertySchema from "@/schemas/propertyValidation";
 import { getUserInfo } from "@/services/auth.service";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
@@ -33,16 +36,28 @@ const CreatePropertyPage = () => {
     const formData = new FormData();
     formData.append("file", file as Blob);
     formData.append("data", data);
-    message.loading("Creating...");
-    console.log("form data", formData);
+    message.loading({ content: "Creating...", key: "loading" });
     try {
       const res = await addProperty(formData);
-      if (!res) {
-        message.error("Your property doesnot added");
+      //@ts-ignore
+      if (res?.data.success === true) {
+        message.success({
+          content: "Property created successfully!",
+          key: "loading",
+          duration: 2,
+        });
+        console.log("success", res);
+        // router.push("/owner/my-property");
+        //@ts-ignore
+      } else if (res?.data.success === false) {
+        message.error({
+          content:
+            "Property creation failed. Please check the data and try again.",
+          key: "loading",
+          duration: 5,
+        });
+        console.log("error", res);
       }
-      console.log(res);
-      message.success("Property created successfully!");
-      router.push("/owner/my-property");
     } catch (err: any) {
       console.error(err.message);
     }
@@ -65,7 +80,8 @@ const CreatePropertyPage = () => {
       <h1>Create Property</h1>
 
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} resolver={yupResolver(propertySchema)}>
+          {/* Property Information */}
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -74,22 +90,14 @@ const CreatePropertyPage = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
+            <p style={{ fontSize: "18px", marginBottom: "10px" }}>
               Property Information
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+            <Row gutter={[8, 16]}>
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <UploadImage name="file" />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormInput
                   type="text"
                   name="title"
@@ -97,38 +105,33 @@ const CreatePropertyPage = () => {
                   label="Title"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormSelectField
                   mode="multiple"
                   size="large"
-                  name="location"
-                  options={LOCATIONS}
-                  label="Location"
-                  placeholder="Select Locations"
+                  name="city"
+                  options={locations}
+                  label="City"
+                  placeholder="Select City"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput type="text" name="city" size="large" label="City" />
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  type="text"
+                  name="location"
+                  size="large"
+                  label="Location"
+                />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  type="text"
+                  name="size"
+                  size="large"
+                  label="Property Size"
+                />
+              </Col>
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormInput
                   name="numberOfRooms"
                   type="number"
@@ -137,13 +140,7 @@ const CreatePropertyPage = () => {
                   placeholder="Enter the number of rooms"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormInput
                   name="monthlyRent"
                   type="number"
@@ -152,13 +149,7 @@ const CreatePropertyPage = () => {
                   placeholder="Enter the monthly rent"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormInput
                   type="text"
                   name="flatNo"
@@ -166,37 +157,19 @@ const CreatePropertyPage = () => {
                   label="Flat No"
                 />
               </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  mode="multiple"
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormInput
+                  name="maxOccupancy"
+                  type="number"
                   size="large"
-                  name="rules"
-                  options={propertyRules}
-                  label="Rules"
-                  placeholder="Select Rules"
+                  label="People Occupancy"
+                  placeholder="Enter the highest number of people allowed"
                 />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <UploadImage name="file" />
               </Col>
             </Row>
           </div>
 
-          {/* basic info */}
+          {/* More Info info */}
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -205,35 +178,18 @@ const CreatePropertyPage = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-              }}
-            >
+            <p style={{ fontSize: "18px", marginBottom: "10px" }}>
               Basic Information
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+            <Row gutter={[8, 16]}>
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormDatePicker
                   name="availableDate"
                   label="Available Date"
                   size="large"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <FormSelectField
                   mode="multiple"
                   size="large"
@@ -243,37 +199,27 @@ const CreatePropertyPage = () => {
                   placeholder="Select Amenities"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="size"
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormSelectField
+                  mode="multiple"
                   size="large"
-                  label="Property Size"
+                  name="propertyTags"
+                  options={propertyTags}
+                  label="Property Tags"
+                  placeholder="Select Property Tags"
                 />
               </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  name="maxOccupancy"
-                  type="number"
+              <Col xs={24} sm={24} md={12} lg={8}>
+                <FormSelectField
+                  mode="multiple"
                   size="large"
-                  label="People Occupancy"
-                  placeholder="Enter the highest number of people allowed"
+                  name="rules"
+                  options={propertyRules}
+                  label="Rules"
+                  placeholder="Select Rules"
                 />
               </Col>
-              <Col span={12} style={{ margin: "10px 0" }}>
+              <Col xs={24} sm={24} md={24} lg={12}>
                 <FormTextArea
                   name="description"
                   label="Property Description"

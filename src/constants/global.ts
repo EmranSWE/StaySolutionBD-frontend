@@ -45,7 +45,7 @@ export const propertyAmenities = [
   { label: "24/7 Front Desk", value: "24/7 Front Desk" },
 ];
 
-export const LOCATIONS = [
+export const locations = [
   { label: "Barisal", value: "Barisal" },
   { label: "Chittagong", value: "Chittagong" },
   { label: "Dhaka", value: "Dhaka" },
@@ -65,6 +65,23 @@ export const marketplaceCategory = [
   { label: "Cottage", value: "Cottage" },
   { label: "Villa", value: "Villa" },
   { label: "Studio", value: "Studio" },
+];
+
+export const propertyTags = [
+  { label: "Family", value: "Family" },
+  { label: "Apartment", value: "Apartment" },
+  { label: "Beachfront", value: "Beachfront" },
+  { label: "Luxury", value: "Luxury" },
+  { label: "Villa", value: "Villa" },
+  { label: "Mountain View", value: "Mountain View" },
+  { label: "Countryside", value: "Countryside" },
+  { label: "Urban", value: "Urban" },
+  { label: "Lakefront", value: "Lakefront" },
+  { label: "Studio", value: "Studio" },
+  { label: "Penthouse", value: "Penthouse" },
+  { label: "Duplex", value: "Duplex" },
+  { label: "Loft", value: "Loft" },
+  { label: "Single Family", value: "Single Family" },
 ];
 
 export const issueStatus = [
