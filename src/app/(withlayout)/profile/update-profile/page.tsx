@@ -20,7 +20,7 @@ const UpdateProfile = () => {
   const { id } = getUserInfo() as { id: string };
 
   const { data, isError, isLoading, isSuccess } = useMyProfileQuery({});
-  console.log(data);
+
   if (isLoading) {
     return <div>Loading....</div>;
   }

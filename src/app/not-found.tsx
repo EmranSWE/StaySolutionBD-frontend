@@ -1,9 +1,25 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import notFound from "../assets/notFound.svg";
 import Image from "next/image";
 import { Row, Col } from "antd";
+import { useRouter } from "next/navigation";
 
 const NotFound = () => {
+  const router = useRouter();
+
+  // Use useEffect to trigger the router push with a 2-second delay
+  useEffect(() => {
+    const redirectTimeout = setTimeout(() => {
+      router.push("/");
+    }, 2000); // 2000 milliseconds = 2 seconds
+
+    // Clear the timeout when the component unmounts
+    return () => {
+      clearTimeout(redirectTimeout);
+    };
+  }, [router]);
+
   return (
     <Row justify="center" align="middle" style={styles.container}>
       <Col span={12} style={styles.imageWrapper as React.CSSProperties}>

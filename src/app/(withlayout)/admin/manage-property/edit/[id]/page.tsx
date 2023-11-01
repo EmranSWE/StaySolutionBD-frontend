@@ -5,6 +5,7 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import CustomLoading from "@/components/ui/CustomLoading";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import {
@@ -25,14 +26,13 @@ import { useRouter } from "next/navigation";
 const UpdatePropertyPage = ({ params }: any) => {
   const router = useRouter();
   const { data, isLoading } = useSinglePropertyQuery(params.id);
-  console.log(data);
-  console.log("Data location:", data?.location);
-  console.log("LOCATIONS:", LOCATIONS);
-  const [updateProperty] = useUpdatePropertyMutation();
 
+  const [updateProperty] = useUpdatePropertyMutation();
+  if (isLoading) {
+    return <CustomLoading></CustomLoading>;
+  }
   const onSubmit = async (values: any) => {
     const obj = { ...values };
-    console.log(values);
     const file = obj["file"];
     delete obj["file"];
     const data = JSON.stringify(obj);
@@ -49,7 +49,6 @@ const UpdatePropertyPage = ({ params }: any) => {
         message.error("Data doesn't update");
       }
       message.success("User updated successfully!");
-      // router.push("/owner/my-property");
     } catch (err: any) {
       console.error(err.message);
     }
@@ -115,7 +114,7 @@ const UpdatePropertyPage = ({ params }: any) => {
                   mode="multiple"
                   size="large"
                   name="location"
-                  defaultValue={data?.location ? [data?.location] : []}
+                  defaultValue={data?.location}
                   options={LOCATIONS}
                   label="Locations"
                   placeholder="Select Location"
@@ -257,9 +256,9 @@ const UpdatePropertyPage = ({ params }: any) => {
                   mode="multiple"
                   size="large"
                   name="amenities"
-                  defaultValue={data?.amenities}
+                  defaultValue={data?.amenities || []}
                   options={propertyAmenities}
-                  label="Property Amenities"
+                  label="Preferred Amenities"
                   placeholder="Select Amenities"
                 />
               </Col>

@@ -28,6 +28,13 @@ export const MonthlyPaymentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.monthlyPayment],
     }),
+    totalMonthlyPayment: build.query({
+      query: () => ({
+        url: `${MonthlyPayment_URL}/rents/total`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.monthlyPayment],
+    }),
     singleUserMonthlyPayment: build.query({
       query: (id) => ({
         url: `${MonthlyPayment_URL}/my-MonthlyPayment/${id}`,
@@ -90,4 +97,5 @@ export const {
   useSingleUserMonthlyPaymentQuery,
   useAddMonthlyPaymentToStripeMutation,
   useRentManagementQuery,
+  useTotalMonthlyPaymentQuery,
 } = MonthlyPaymentApi;

@@ -18,15 +18,16 @@ import SSTable from "@/components/ui/SSBDTable";
 import SSModal from "@/components/ui/SSModal";
 import {
   useDeletePropertyMutation,
-  usePropertiesQuery,
+  useSingleUserPropertyQuery,
 } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import { setPriority } from "os";
-import CustomLoading from "@/components/ui/CustomLoading";
+import { getUserInfo } from "@/services/auth.service";
+import { useReviewsQuery } from "@/redux/api/reviewApi";
 
-const AdminPage = () => {
+const MyReviewPage = () => {
   const query: Record<string, any> = {};
   const [deleteProperty] = useDeletePropertyMutation();
+
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -44,70 +45,42 @@ const AdminPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
-
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = usePropertiesQuery({ ...query });
 
-  if (isLoading) {
-    return <CustomLoading></CustomLoading>;
+  console.log(getUserInfo());
+  const { id } = getUserInfo() as { id: String };
+  if (!id) {
+    console.error("User ID not found");
+    // Handle the error as required, maybe redirect the user or show an error message
   }
+
+  const { data, isLoading, isError, error } = useReviewsQuery({ ...query });
+  console.log(data);
+  if (isError) {
+    console.error("Error fetching property data:", error);
+    // Handle the error as needed
+  }
+
+  console.log("data", data);
+
   const meta = data?.meta;
 
   const columns = [
     {
-      title: "Property Status",
-      dataIndex: "propertyStatus",
+      title: "Comments",
+      dataIndex: "comments",
       sorter: true,
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      sorter: true,
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      render: function (description: string) {
-        const textDescription = description.slice(0, 100);
-        return <>{`${textDescription} ...`}</>;
-      },
-    },
-    {
-      title: "City",
-      dataIndex: "city",
-    },
-    {
-      title: "Monthly Rent",
-      dataIndex: "monthlyRent",
-    },
-    {
-      title: "No. Rooms",
-      dataIndex: "numberOfRooms",
-    },
-    {
-      title: "Amenities",
-      dataIndex: "amenities",
-      render: function (amenities: string[]) {
-        return <>{amenities.join(", ")}</>;
-      },
-    },
-    {
-      title: "Rules",
-      dataIndex: "rules",
-      render: function (rules: string[]) {
-        return <>{rules.join(", ")}</>;
-      },
-    },
-    {
-      title: "Size of FLat",
-      dataIndex: "size",
+      title: "rating",
+      dataIndex: "rating",
     },
 
     {
-      title: "Available Date at",
-      dataIndex: "availableDate",
+      title: "Review Date at",
+      dataIndex: "reviewDate",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
@@ -120,7 +93,7 @@ const AdminPage = () => {
       render: function (propertyId: any) {
         return (
           <>
-            <Link href={`/admin/manage-property/edit/${propertyId}`}>
+            <Link href={`/renter/manage-property/edit/${propertyId}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -135,7 +108,7 @@ const AdminPage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId);
+                setPropertyId(propertyId); // Corrected this line
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -148,11 +121,13 @@ const AdminPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
+    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
+    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -167,6 +142,7 @@ const AdminPage = () => {
     console.log(id);
     try {
       const res = await deleteProperty(id);
+      console.log("response", res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);
@@ -181,23 +157,23 @@ const AdminPage = () => {
       <SSBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: "renter",
+            link: "/renter",
           },
         ]}
       />
-      <ActionBar title="Property List">
+      <ActionBar title="Feedback List">
         <Input
           size="large"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "60%",
           }}
         />
         <div>
-          <Link href="/admin/manage-property/create">
-            <Button type="primary">Create Property</Button>
+          <Link href="/renter/feedback/add-feedback">
+            <Button type="primary">Create Feedback</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -235,4 +211,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default MyReviewPage;
