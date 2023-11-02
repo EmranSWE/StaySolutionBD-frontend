@@ -8,6 +8,7 @@ type UMDatePikerProps = {
   label?: string;
   value?: Dayjs;
   size?: "large" | "small";
+  required?: boolean;
 };
 
 const FormDatePicker = ({
@@ -15,6 +16,7 @@ const FormDatePicker = ({
   label,
   onChange,
   size = "large",
+  required,
 }: UMDatePikerProps) => {
   const { control, setValue } = useFormContext();
 

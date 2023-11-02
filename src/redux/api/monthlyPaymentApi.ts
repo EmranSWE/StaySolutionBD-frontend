@@ -36,8 +36,8 @@ export const MonthlyPaymentApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.monthlyPayment],
     }),
     singleUserMonthlyPayment: build.query({
-      query: (id) => ({
-        url: `${MonthlyPayment_URL}/my-MonthlyPayment/${id}`,
+      query: () => ({
+        url: `${MonthlyPayment_URL}/renters/my-rents/`,
         method: "GET",
       }),
       providesTags: [tagTypes.monthlyPayment],
@@ -48,12 +48,7 @@ export const MonthlyPaymentApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      transformResponse: (response, meta: IMeta) => {
-        return {
-          properties: response,
-          meta,
-        };
-      },
+
       invalidatesTags: [tagTypes.monthlyPayment],
     }),
     addMonthlyPaymentToStripe: build.mutation({

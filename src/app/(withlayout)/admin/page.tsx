@@ -46,19 +46,19 @@ const AdminPage = () => {
   }
 
   // Calculate monthly total amounts
-  const monthlyTotals = paymentData.reduce((acc, payment) => {
-    const month = payment.month;
-    const amount = payment.amount;
-    if (acc[month]) {
-      acc[month].totalAmount += amount;
-    } else {
-      acc[month] = {
-        month,
-        totalAmount: amount,
-      };
-    }
-    return acc;
-  }, []);
+  // const monthlyTotals = paymentData.reduce((acc, payment) => {
+  //   const month = payment.month;
+  //   const amount = payment.amount;
+  //   if (acc[month]) {
+  //     acc[month].totalAmount += amount;
+  //   } else {
+  //     acc[month] = {
+  //       month,
+  //       totalAmount: amount,
+  //     };
+  //   }
+  //   return acc;
+  // }, []);
 
   const pieChartData = [{ name: "Total Amount", value: totalAmount }];
   const data = [

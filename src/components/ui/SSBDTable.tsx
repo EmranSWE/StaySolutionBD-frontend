@@ -1,7 +1,5 @@
 "use client";
-
 import { Table } from "antd";
-
 type SSTableProps = {
   loading?: boolean;
   columns: any;
@@ -12,6 +10,7 @@ type SSTableProps = {
   onPaginationChange?: (page: number, pageSize: number) => void;
   onTableChange?: (pagination: any, filter: any, sorter: any) => void;
   showPagination?: boolean;
+  rowClassName?: (record: any) => string;
 };
 
 const SSTable = ({
@@ -24,12 +23,13 @@ const SSTable = ({
   onPaginationChange,
   onTableChange,
   showPagination = true,
+  rowClassName,
 }: SSTableProps) => {
   const paginationConfig = showPagination
     ? {
         pageSize: pageSize,
         total: totalPages,
-        pageSizeOptions: [5, 10, 20],
+        pageSizeOptions: [5, 10, 20, 100],
         showSizeChanger: showSizeChanger,
         onChange: onPaginationChange,
       }
@@ -42,6 +42,7 @@ const SSTable = ({
       dataSource={dataSource}
       pagination={paginationConfig}
       onChange={onTableChange}
+      rowClassName={rowClassName}
       scroll={{ x: true }}
     />
   );

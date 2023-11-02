@@ -51,7 +51,7 @@ const PageDetails = ({ params }: PageDetailsProps) => {
     isLoading,
     isError,
   } = useSinglePropertyQuery(params.id);
-
+  console.log(property);
   if (isLoading) {
     return <CustomLoading />;
   }
@@ -112,11 +112,32 @@ const PageDetails = ({ params }: PageDetailsProps) => {
             icon={<SmileOutlined />}
           />
 
-          <Link href={`/renter/booking/${property.id}`}>
-            <Button type="primary" size="large" style={{ marginTop: "20px" }}>
-              Book Now
-            </Button>
-          </Link>
+          {property.propertyStatus === "available" ? (
+            <Link href={`/renter/booking/${property.id}`}>
+              <Button
+                type="primary"
+                size="large"
+                style={{ width: "100%", margin: "50px 0" }}
+              >
+                Book Now
+              </Button>
+            </Link>
+          ) : (
+            <Link href={`/property/all-property/`}>
+              <Button
+                type="primary"
+                size="large"
+                disabled
+                style={{
+                  width: "100%",
+                  margin: "50px 0",
+                  backgroundColor: "gray",
+                }}
+              >
+                Not Available
+              </Button>
+            </Link>
+          )}
         </Col>
       </Row>
     </div>

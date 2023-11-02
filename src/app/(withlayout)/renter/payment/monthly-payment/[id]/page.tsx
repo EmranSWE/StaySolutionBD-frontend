@@ -6,10 +6,13 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { months, paymentStatus } from "@/constants/global";
-import { useAddBookingMutation } from "@/redux/api/bookingApi";
+import {
+  useAddBookingMutation,
+  useSingleBookingQuery,
+} from "@/redux/api/bookingApi";
 import { useAddMonthlyPaymentMutation } from "@/redux/api/monthlyPaymentApi";
 import { getUserInfo } from "@/services/auth.service";
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 type BookingDetailsProps = {
@@ -19,20 +22,31 @@ type BookingDetailsProps = {
 };
 
 const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
-  console.log(params.id);
+  const { data } = useSingleBookingQuery(params?.id);
+  console.log(data);
   const [addMonthlyPayment] = useAddMonthlyPaymentMutation();
   const onSubmit = async (values: any) => {
     const bookingId = params?.id;
     values.bookingId = bookingId;
-    console.log("values", values);
-
     try {
       const res = await addMonthlyPayment(values);
-      if (!res) {
-        message.error("Your Payment does not added");
-      }
       console.log(res);
-      message.success("Reviews created successfully!");
+      //@ts-ignore
+      if (res?.data.success === true) {
+        message.success({
+          content: "Payment created successfully!",
+          key: "loading",
+          duration: 5,
+        });
+        //@ts-ignore
+      } else if (res?.data.statusCode === 500) {
+        message.error({
+          content:
+            "Payment creation failed. Please check the data and try again.",
+          key: "loading",
+          duration: 5,
+        });
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -52,7 +66,11 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
           },
         ]}
       />
-      <h1>Monthly Rent</h1>
+      <Divider orientation="center">
+        <h1>
+          Monthly <span style={{ color: "#1890ff" }}>Rent</span> Payment
+        </h1>
+      </Divider>
 
       <div>
         <Form submitHandler={onSubmit}>
@@ -70,31 +88,20 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                 marginBottom: "10px",
               }}
             >
-              Property Information
+              Payment Information
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={12} md={8} lg={6}>
                 <FormSelectField
-                  name="month"
-                  options={months}
                   size="large"
-                  label="Status"
+                  name="month"
+                  //@ts-ignore
+                  options={months}
+                  label="Month"
+                  placeholder="Select Payment Month"
                 />
               </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={12} md={8} lg={6}>
                 <FormInput
                   type="number"
                   name="year"
@@ -102,13 +109,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   label="Year"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={12} md={8} lg={6}>
                 <FormSelectField
                   name="status"
                   options={paymentStatus}
@@ -116,14 +117,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   label="Status"
                 />
               </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={12} md={8} lg={6}>
                 <FormInput
                   type="number"
                   name="amount"
@@ -131,13 +125,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   label="Monthly Rent Amount"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={12} md={8} lg={6}>
                 <FormDatePicker
                   name="paymentDate"
                   label="Payment Date"
@@ -148,7 +136,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
           </div>
 
           <Button htmlType="submit" type="primary">
-            Add Review
+            Pay Now
           </Button>
         </Form>
       </div>

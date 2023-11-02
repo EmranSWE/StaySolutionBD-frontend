@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -53,10 +53,6 @@ const MyReviewPage = () => {
 
   const { data, isLoading, isError, error } = useMyFeedbackQuery(id);
 
-  if (isError) {
-    console.error("Error fetching property data:", error);
-  }
-
   if (isLoading) {
     return <CustomLoading />;
   }
@@ -80,7 +76,7 @@ const MyReviewPage = () => {
       render: function (id: any) {
         return (
           <>
-            <Link href={`/renter/feedback/edit/${id}`}>
+            <Link href={`/owner/feedback/edit/${id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -146,6 +142,11 @@ const MyReviewPage = () => {
           },
         ]}
       />
+      <Divider orientation="center">
+        <h1>
+          Create <span style={{ color: "#1890ff" }}>Feedback</span> Question
+        </h1>
+      </Divider>
       <ActionBar title="Feedback List">
         <Input
           size="large"
@@ -156,7 +157,7 @@ const MyReviewPage = () => {
           }}
         />
         <div>
-          <Link href="/renter/feedback/add-feedback">
+          <Link href="/owner/feedback/add-feedback">
             <Button type="primary">Create Feedback</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

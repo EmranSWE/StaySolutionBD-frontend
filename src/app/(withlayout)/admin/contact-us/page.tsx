@@ -81,25 +81,14 @@ const AdminPage = () => {
     {
       title: "Action",
       dataIndex: "id",
-      render: function (propertyId: any) {
+      render: function (id: any) {
         return (
           <>
-            <Link href={`/admin/manage-property/edit/${propertyId}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
             <Button
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setPropertyId(id); // Corrected this line
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -150,7 +139,7 @@ const AdminPage = () => {
           },
         ]}
       />
-      <ActionBar title="Property List">
+      <ActionBar title="Contact us info">
         <Input
           size="large"
           placeholder="Search"

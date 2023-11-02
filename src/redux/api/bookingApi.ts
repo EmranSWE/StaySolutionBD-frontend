@@ -21,8 +21,8 @@ export const BookingApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.booking],
     }),
     singleUserBooking: build.query({
-      query: (id) => ({
-        url: `${BOOKING_URL}/my-Booking/${id}`,
+      query: () => ({
+        url: `${BOOKING_URL}/my-booking/`,
         method: "GET",
       }),
       providesTags: [tagTypes.booking],
@@ -33,12 +33,6 @@ export const BookingApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      transformResponse: (response, meta: IMeta) => {
-        return {
-          properties: response,
-          meta,
-        };
-      },
       invalidatesTags: [tagTypes.booking],
     }),
     updateBooking: build.mutation({

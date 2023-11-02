@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -9,6 +9,7 @@ import {
   FilterOutlined,
   ReloadOutlined,
   EyeOutlined,
+  PayCircleOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
@@ -19,14 +20,17 @@ import SSModal from "@/components/ui/SSModal";
 import {
   useDeletePropertyMutation,
   usePropertiesQuery,
+  useSingleRenterPropertyQuery,
+  useSingleUserPropertyQuery,
 } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import { setPriority } from "os";
+import { getUserInfo } from "@/services/auth.service";
 import CustomLoading from "@/components/ui/CustomLoading";
 
-const AdminPage = () => {
+const MyPropertyPage = () => {
   const query: Record<string, any> = {};
   const [deleteProperty] = useDeletePropertyMutation();
+
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -44,115 +48,113 @@ const AdminPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
-
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-  const { data, isLoading } = usePropertiesQuery({ ...query });
+
+  const { id } = getUserInfo() as { id: String };
+  if (!id) {
+    console.error("User ID not found");
+  }
+
+  const { data, isLoading, isError, error } = useSingleRenterPropertyQuery(id);
   console.log(data);
+  if (isError) {
+    console.error("Error fetching property data:", error);
+  }
   if (isLoading) {
     return <CustomLoading></CustomLoading>;
   }
-  const meta = data?.meta;
 
+  const meta = data?.meta;
   const columns = [
+    {
+      title: "Pay Now!",
+      dataIndex: "id",
+      render: function (propertyId: any) {
+        return (
+          <>
+            <div>
+              <Link href={`/renter/payment/${propertyId}`}>
+                <Button
+                  style={{
+                    margin: "0px 10px",
+                    backgroundColor: "green",
+                  }}
+                  onClick={() => ""}
+                  type="primary"
+                >
+                  <PayCircleOutlined />
+                </Button>
+              </Link>
+            </div>
+          </>
+        );
+      },
+    },
     {
       title: "Flat No",
       dataIndex: "flatNo",
-      sorter: true,
     },
     {
       title: "Property Status",
       dataIndex: "propertyStatus",
-      sorter: true,
-    },
-    {
-      title: "Title",
-      dataIndex: "title",
-      sorter: true,
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      render: function (description: string) {
-        const textDescription = description.slice(0, 100);
-        return <>{`${textDescription} ...`}</>;
-      },
-    },
-    {
-      title: "City",
-      dataIndex: "city",
     },
     {
       title: "Monthly Rent",
       dataIndex: "monthlyRent",
     },
     {
+      title: "Title",
+      dataIndex: "title",
+      render: function (title: any) {
+        return `${title.substring(0, 20)}...`;
+      },
+    },
+
+    {
+      title: "Locations",
+      dataIndex: "location",
+      render: function (location: any) {
+        return `${location.substring(0, 16)}...`;
+      },
+    },
+
+    {
+      title: "Size",
+      dataIndex: "size",
+    },
+
+    {
       title: "No. Rooms",
       dataIndex: "numberOfRooms",
     },
     {
-      title: "Amenities",
-      dataIndex: "amenities",
-      render: function (amenities: string[]) {
-        return <>{amenities.join(", ")}</>;
+      title: "City",
+      dataIndex: "city",
+      render: function (city: string[]) {
+        return <>{city.join(", ")}</>;
       },
     },
-    {
-      title: "Rules",
-      dataIndex: "rules",
-      render: function (rules: string[]) {
-        return <>{rules.join(", ")}</>;
-      },
-    },
+
     {
       title: "Size of FLat",
       dataIndex: "size",
     },
 
     {
-      title: "Available Date at",
-      dataIndex: "availableDate",
+      title: "Booking Start",
+      dataIndex: "bookings",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        const startAt = data[0]?.bookingStartDate;
+        console.log(startAt);
+        return startAt && dayjs(startAt).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
     },
-
-    {
-      title: "Action",
-      dataIndex: "id",
-      render: function (propertyId: any) {
-        return (
-          <>
-            <Link href={`/admin/manage-property/edit/${propertyId}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button
-              type="primary"
-              onClick={() => {
-                setOpen(true);
-                setPropertyId(propertyId);
-              }}
-              danger
-              style={{ marginLeft: "3px" }}
-            >
-              <DeleteOutlined />
-            </Button>
-          </>
-        );
-      },
-    },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
+    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -172,6 +174,7 @@ const AdminPage = () => {
     console.log(id);
     try {
       const res = await deleteProperty(id);
+      console.log("response", res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);
@@ -186,36 +189,16 @@ const AdminPage = () => {
       <SSBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: "owner",
+            link: "/owner",
           },
         ]}
       />
-      <ActionBar title="Property List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-        <div>
-          <Link href="/admin/manage-property/create">
-            <Button type="primary">Create Property</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="primary"
-              onClick={resetFilters}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
-      </ActionBar>
-
+      <Divider orientation="center">
+        <h1>
+          My All <span style={{ color: "#1890ff" }}>Property</span>
+        </h1>
+      </Divider>
       <SSTable
         loading={isLoading}
         columns={columns}
@@ -234,10 +217,10 @@ const AdminPage = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deletePropertyHandler(propertyId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this property?</p>
       </SSModal>
     </div>
   );
 };
 
-export default AdminPage;
+export default MyPropertyPage;

@@ -39,6 +39,9 @@ const PropertyProductCard = ({
             borderRadius: "4px",
           }
         : {
+            background: "gray",
+            padding: "4px 8px",
+            borderRadius: "4px",
             color: "black",
           },
     [isAvailable]

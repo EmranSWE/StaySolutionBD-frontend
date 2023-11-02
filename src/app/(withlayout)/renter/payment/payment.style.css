@@ -1,0 +1,11 @@
+.green {
+  background-color: rgb(
+    42,
+    153,
+    42
+  ); /* Define the background color for Completed rows */
+}
+
+.yellow {
+  background-color: rgb(248, 236, 236);
+}

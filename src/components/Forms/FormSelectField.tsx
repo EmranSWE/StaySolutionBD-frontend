@@ -28,6 +28,8 @@ const FormSelectField = ({
   mode,
   defaultValue,
   handleChange,
+  value,
+
   ...restProps
 }: SelectFieldProps) => {
   const { control } = useFormContext();

@@ -31,6 +31,7 @@ const UpdatePropertyPage = ({ params }: any) => {
   }
   const onSubmit = async (values: any) => {
     const obj = { ...values };
+    console.log(values);
     const file = obj["file"];
     delete obj["file"];
     const data = JSON.stringify(obj);
@@ -43,6 +44,7 @@ const UpdatePropertyPage = ({ params }: any) => {
         id: params.id,
         body: formData,
       });
+      console.log(res);
       if (!res) {
         message.error("Data doesn't update");
       }

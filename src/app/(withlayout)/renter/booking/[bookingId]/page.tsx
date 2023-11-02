@@ -16,31 +16,36 @@ type BookingDetailsProps = {
 };
 
 const AddBookingPage = ({ params }: BookingDetailsProps) => {
-  console.log(params.bookingId);
   const router = useRouter();
   const [addBooking] = useAddBookingMutation();
-  const propertyId = params?.bookingId;
-  console.log(propertyId);
-  const onSubmit = async (values: any) => {
-    const { id } = getUserInfo() as { id: string };
-    const propertyId = params?.bookingId;
 
+  const onSubmit = async (values: any) => {
+    const propertyId = params?.bookingId;
     if (!propertyId) {
       console.error("Property ID is missing");
       return;
     }
-
     values.propertyId = propertyId;
-    console.log("values", values);
-
     try {
       const res = await addBooking(values);
-      if (!res) {
-        message.error("Your issue does not added");
-      }
       console.log(res);
-      message.success("Reviews created successfully!");
-      router.push("/renter/booking");
+      //@ts-ignore
+      if (res?.data.success === true) {
+        message.success({
+          content: "Booking created successfully!",
+          key: "loading",
+          duration: 5,
+        });
+        router.push("/renter/booking");
+        //@ts-ignore
+      } else if (res?.data.statusCode === 500) {
+        message.error({
+          content:
+            "Booking creation failed. Please check the data and try again.",
+          key: "loading",
+          duration: 5,
+        });
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -55,7 +60,7 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
             link: "/renter",
           },
           {
-            label: "issue",
+            label: "booking",
             link: "/renter/booking/",
           },
         ]}
@@ -82,6 +87,11 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
+                xs={24}
+                sm={24}
+                md={12}
+                lg={12}
+                xl={12}
                 className="gutter-row"
                 span={8}
                 style={{
@@ -92,11 +102,16 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
                   name="bookingStartDate"
                   label="Booking  Date"
                   size="large"
+                  required
                 />
               </Col>
               <Col
                 className="gutter-row"
-                span={8}
+                xs={24}
+                sm={24}
+                md={12}
+                lg={12}
+                xl={12}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -105,30 +120,16 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
                   type="text"
                   name="specialRequest"
                   size="large"
-                  label="Special Request"
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name="propertyId"
-                  value={params.bookingId}
-                  size="large"
-                  label="Property Id"
+                  required
+                  label="Booking Request"
+                  placeholder="Enter the type of payment, Advanced, Monthly ...."
                 />
               </Col>
             </Row>
           </div>
 
           <Button htmlType="submit" type="primary">
-            Add Review
+            Add Booking
           </Button>
         </Form>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -15,13 +15,13 @@ import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
 import SSTable from "@/components/ui/SSBDTable";
 import SSModal from "@/components/ui/SSModal";
-import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import { getUserInfo } from "@/services/auth.service";
 import {
   useBookingsQuery,
   useDeleteBookingMutation,
+  useSingleUserBookingQuery,
 } from "@/redux/api/bookingApi";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 const PropertyBookingPage = () => {
   const query: Record<string, any> = {};
@@ -47,12 +47,11 @@ const PropertyBookingPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading, isError, error, refetch } = useBookingsQuery({
-    ...query,
-  });
-
+  const { data, isLoading, isError, error, refetch } =
+    useSingleUserBookingQuery({});
+  console.log(data);
   if (isLoading) {
-    return <div>Loading........</div>;
+    return <CustomLoading />;
   }
   if (isError) {
     console.error("Error fetching property data:", error);
@@ -61,6 +60,22 @@ const PropertyBookingPage = () => {
   const meta = data?.meta;
 
   const columns = [
+    {
+      title: "Flat No",
+      dataIndex: "property",
+      render: function (data: any) {
+        return `${data.flatNo}`;
+      },
+      sorter: true,
+    },
+    {
+      title: "Monthly Rent",
+      dataIndex: "property",
+      render: function (data: any) {
+        return `${data?.monthlyRent}`;
+      },
+      sorter: true,
+    },
     {
       title: "Booking Status",
       dataIndex: "bookingStatus",
@@ -101,17 +116,6 @@ const PropertyBookingPage = () => {
       render: function (id: any, record: any) {
         return (
           <>
-            <Link href={`/renter/manage-property/edit/${id}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link>
             <Button
               type="primary"
               onClick={() => {
@@ -181,19 +185,22 @@ const PropertyBookingPage = () => {
           },
         ]}
       />
-      <ActionBar title="Booking">
+
+      <Divider orientation="center">
+        <h1>
+          My <span style={{ color: "#1890ff" }}>All</span> Booking
+        </h1>
+      </Divider>
+      <ActionBar title="">
         <Input
           size="large"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "60%",
+            width: "50%",
           }}
         />
         <div>
-          <Link href="/renter/booking/add-booking">
-            <Button type="primary">Create Booking</Button>
-          </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
               style={{ margin: "0px 5px" }}
@@ -219,12 +226,12 @@ const PropertyBookingPage = () => {
       />
 
       <SSModal
-        title="Remove property"
+        title="Remove Booking"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deleteBookingHandler(propertyId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to delete the property?</p>
       </SSModal>
     </div>
   );
