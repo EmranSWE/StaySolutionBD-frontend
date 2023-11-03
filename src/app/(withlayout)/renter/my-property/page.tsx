@@ -75,7 +75,7 @@ const MyPropertyPage = () => {
         return (
           <>
             <div>
-              <Link href={`/renter/payment/${propertyId}`}>
+              <Link href={`/renter/payment/monthly-payment/${propertyId}`}>
                 <Button
                   style={{
                     margin: "0px 10px",

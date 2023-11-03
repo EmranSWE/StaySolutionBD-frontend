@@ -49,7 +49,7 @@ const PropertyBookingPage = () => {
 
   const { data, isLoading, isError, error, refetch } =
     useSingleUserBookingQuery({});
-  console.log(data);
+
   if (isLoading) {
     return <CustomLoading />;
   }
@@ -134,7 +134,7 @@ const PropertyBookingPage = () => {
                   style={{
                     margin: "0px 5px",
                   }}
-                  onClick={() => console.log(data)}
+                  onClick={() => ""}
                   type="primary"
                 >
                   <PayCircleOutlined />
@@ -147,7 +147,6 @@ const PropertyBookingPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };

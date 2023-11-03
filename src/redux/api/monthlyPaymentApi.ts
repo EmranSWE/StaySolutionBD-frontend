@@ -42,9 +42,25 @@ export const MonthlyPaymentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.monthlyPayment],
     }),
+    currentMonthMonthlyPayment: build.query({
+      query: (id) => ({
+        url: `${MonthlyPayment_URL}/current-month-rent/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.monthlyPayment],
+    }),
     addMonthlyPayment: build.mutation({
       query: (data) => ({
         url: `${MonthlyPayment_URL}/monthly-rent-payments`,
+        method: "POST",
+        data: data,
+      }),
+
+      invalidatesTags: [tagTypes.monthlyPayment],
+    }),
+    addRegularMonthlyPayment: build.mutation({
+      query: (data) => ({
+        url: `${MonthlyPayment_URL}/regular-monthly-payments`,
         method: "POST",
         data: data,
       }),
@@ -87,10 +103,12 @@ export const {
   useMonthlyPaymentsQuery,
   useSingleMonthlyPaymentQuery,
   useAddMonthlyPaymentMutation,
+  useAddRegularMonthlyPaymentMutation,
   useDeleteMonthlyPaymentMutation,
   useUpdateMonthlyPaymentMutation,
   useSingleUserMonthlyPaymentQuery,
   useAddMonthlyPaymentToStripeMutation,
   useRentManagementQuery,
   useTotalMonthlyPaymentQuery,
+  useCurrentMonthMonthlyPaymentQuery,
 } = MonthlyPaymentApi;

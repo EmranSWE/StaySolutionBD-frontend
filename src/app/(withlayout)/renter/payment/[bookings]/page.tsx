@@ -1,5 +1,4 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
@@ -9,10 +8,8 @@ import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { months } from "@/constants/global";
 import { useSingleBookingQuery } from "@/redux/api/bookingApi";
 import { useAddMonthlyPaymentMutation } from "@/redux/api/monthlyPaymentApi";
-
 import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
-
 type BookingDetailsProps = {
   params: {
     bookings: string;
@@ -120,6 +117,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   //@ts-ignore
                   options={months}
                   label="Month"
+                  //@ts-ignore
                   defaultValue={defaultMonth}
                   placeholder="Select Payment Month"
                 />

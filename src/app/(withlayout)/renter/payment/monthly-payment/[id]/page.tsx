@@ -10,7 +10,11 @@ import {
   useAddBookingMutation,
   useSingleBookingQuery,
 } from "@/redux/api/bookingApi";
-import { useAddMonthlyPaymentMutation } from "@/redux/api/monthlyPaymentApi";
+import {
+  useAddMonthlyPaymentMutation,
+  useAddRegularMonthlyPaymentMutation,
+  useCurrentMonthMonthlyPaymentQuery,
+} from "@/redux/api/monthlyPaymentApi";
 import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
@@ -22,14 +26,16 @@ type BookingDetailsProps = {
 };
 
 const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
-  const { data } = useSingleBookingQuery(params?.id);
+  console.log(params.id);
+  const { data } = useCurrentMonthMonthlyPaymentQuery(params?.id);
   console.log(data);
-  const [addMonthlyPayment] = useAddMonthlyPaymentMutation();
+  const [addRegularMonthlyPayment] = useAddRegularMonthlyPaymentMutation();
   const onSubmit = async (values: any) => {
-    const bookingId = params?.id;
-    values.bookingId = bookingId;
+    const propertyId = params?.id;
+    values.propertyId = propertyId;
+    console.log(values);
     try {
-      const res = await addMonthlyPayment(values);
+      const res = await addRegularMonthlyPayment(values);
       console.log(res);
       //@ts-ignore
       if (res?.data.success === true) {
@@ -61,8 +67,8 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
             link: "/renter",
           },
           {
-            label: "booking",
-            link: "/renter/booking/",
+            label: "my-property",
+            link: "/renter/my-property/",
           },
         ]}
       />

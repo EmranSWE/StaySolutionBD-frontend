@@ -51,7 +51,7 @@ const PageDetails = ({ params }: PageDetailsProps) => {
     isLoading,
     isError,
   } = useSinglePropertyQuery(params.id);
-  console.log(property);
+
   if (isLoading) {
     return <CustomLoading />;
   }

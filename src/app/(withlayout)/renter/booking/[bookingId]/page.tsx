@@ -1,11 +1,9 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { useAddBookingMutation } from "@/redux/api/bookingApi";
-import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
@@ -28,7 +26,7 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
     values.propertyId = propertyId;
     try {
       const res = await addBooking(values);
-      console.log(res);
+
       //@ts-ignore
       if (res?.data.success === true) {
         message.success({
