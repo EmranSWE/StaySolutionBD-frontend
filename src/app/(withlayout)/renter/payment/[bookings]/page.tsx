@@ -21,6 +21,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
   const [addMonthlyPayment] = useAddMonthlyPaymentMutation();
 
   const { data, isLoading } = useSingleBookingQuery(params?.bookings);
+  console.log(data);
   if (isLoading) {
     return <CustomLoading />;
   }
@@ -139,6 +140,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   name="amount"
                   size="large"
                   label="Monthly Rent Amount"
+                  required
                 />
               </Col>
               <Col xs={24} sm={12} md={8} lg={6}>

@@ -4,18 +4,15 @@ import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
+import CustomLoading from "@/components/ui/CustomLoading";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import { months, paymentStatus } from "@/constants/global";
+import { paymentStatus } from "@/constants/global";
 import {
-  useAddBookingMutation,
-  useSingleBookingQuery,
-} from "@/redux/api/bookingApi";
-import {
-  useAddMonthlyPaymentMutation,
   useAddRegularMonthlyPaymentMutation,
   useCurrentMonthMonthlyPaymentQuery,
 } from "@/redux/api/monthlyPaymentApi";
-import { getUserInfo } from "@/services/auth.service";
+import { getMonthName } from "@/utils/getUpcommingMonth";
+
 import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
@@ -26,17 +23,40 @@ type BookingDetailsProps = {
 };
 
 const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
-  console.log(params.id);
-  const { data } = useCurrentMonthMonthlyPaymentQuery(params?.id);
-  console.log(data);
+  const router = useRouter();
   const [addRegularMonthlyPayment] = useAddRegularMonthlyPaymentMutation();
+  const { data, isLoading } = useCurrentMonthMonthlyPaymentQuery(params?.id);
+  console.log(data);
+  if (isLoading) {
+    return <CustomLoading />;
+  }
+
+  const uniqueMonths = Array.from(
+    new Set(data.map((data: { month: any }) => data.month))
+  );
+
+  const monthOptions = uniqueMonths.map((month) => ({
+    label: getMonthName(month as number),
+    value: month,
+  }));
+
+  const defaultMonth = monthOptions[0];
+  const defaultFirstMonth = data[0].month;
+  const defaultYear = data ? data[0]?.year : new Date().getFullYear();
+  const defaultAmount = data[0].amount;
+
   const onSubmit = async (values: any) => {
     const propertyId = params?.id;
     values.propertyId = propertyId;
-    console.log(values);
+    values.status = "Completed";
+    if (values.month === undefined && defaultFirstMonth !== undefined) {
+      values.month = defaultFirstMonth;
+    }
+    if (!values.paymentDate) {
+      values.paymentDate = new Date();
+    }
     try {
       const res = await addRegularMonthlyPayment(values);
-      console.log(res);
       //@ts-ignore
       if (res?.data.success === true) {
         message.success({
@@ -44,6 +64,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
           key: "loading",
           duration: 5,
         });
+        router.push("/renter/my-property");
         //@ts-ignore
       } else if (res?.data.statusCode === 500) {
         message.error({
@@ -102,9 +123,11 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   size="large"
                   name="month"
                   //@ts-ignore
-                  options={months}
+                  options={monthOptions}
                   label="Month"
                   placeholder="Select Payment Month"
+                  //@ts-ignore
+                  defaultValue={defaultMonth}
                 />
               </Col>
               <Col xs={24} sm={12} md={8} lg={6}>
@@ -113,6 +136,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   name="year"
                   size="large"
                   label="Year"
+                  value={defaultYear}
                 />
               </Col>
               <Col xs={24} sm={12} md={8} lg={6}>
@@ -128,6 +152,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   type="number"
                   name="amount"
                   size="large"
+                  value={defaultAmount}
                   label="Monthly Rent Amount"
                 />
               </Col>
