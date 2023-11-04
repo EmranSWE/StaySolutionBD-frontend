@@ -12,7 +12,6 @@ const PopularPageCategory = () => {
   if (isLoading) {
     return <CustomLoading />;
   }
-  console.log(data);
 
   // Create a map to store unique categories with their first image
   const categoryToImageMap = new Map();

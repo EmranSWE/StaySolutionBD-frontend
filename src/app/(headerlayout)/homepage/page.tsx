@@ -22,11 +22,11 @@ const HomePage = () => {
         <LazyBannerPage />
       </Suspense>
       <FeaturedPropertyPage></FeaturedPropertyPage>
+      <OurMissionPage></OurMissionPage>
       <RecentPropertyPage></RecentPropertyPage>
       <PopularPageCategory></PopularPageCategory>
       <MarketPlaceProperty></MarketPlaceProperty>
       <FeedbackPage></FeedbackPage>
-      <OurMissionPage></OurMissionPage>
       <FAQ></FAQ>
       <WhyUsePage></WhyUsePage>
     </div>

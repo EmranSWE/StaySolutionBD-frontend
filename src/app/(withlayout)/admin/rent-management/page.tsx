@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -31,7 +31,7 @@ const RentManagement = () => {
   const [deleteProperty] = useDeletePropertyMutation();
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(50);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -56,6 +56,7 @@ const RentManagement = () => {
   if (isLoading) {
     return <CustomLoading />;
   }
+
   const meta = data?.meta;
   const transformData = (data: any[]): PaymentData[] => {
     const transformed: Record<string, PaymentData> = {};
@@ -88,7 +89,20 @@ const RentManagement = () => {
       title: monthName,
       dataIndex: monthName,
       sorter: true,
-      render: (status: string) => status || "Not Available",
+      render: (status: string) => {
+        return (
+          <span
+            style={{
+              backgroundColor: status ? "green" : "inherit",
+              fontSize: status ? "15px" : "",
+              fontWeight: status ? "bolder" : "", // Example font size
+              color: status ? "white" : "black",
+            }}
+          >
+            {status || "Not Available"}
+          </span>
+        );
+      },
     };
   });
 
@@ -99,7 +113,6 @@ const RentManagement = () => {
       sorter: true,
     },
     ...monthColumns,
-    // ... Action column ...
 
     {
       title: "Action",
@@ -122,7 +135,7 @@ const RentManagement = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setPropertyId(propertyId);
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -176,30 +189,11 @@ const RentManagement = () => {
           },
         ]}
       />
-      <ActionBar title="Property List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "20%",
-          }}
-        />
-        <div>
-          <Link href="/admin/manage-property/create">
-            <Button type="primary">Create Property</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="primary"
-              onClick={resetFilters}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
-      </ActionBar>
+      <Divider orientation="center">
+        <h1>
+          Payment<span style={{ color: "#1890ff" }}> Information</span>
+        </h1>
+      </Divider>
 
       <SSTable
         loading={isLoading}
