@@ -54,11 +54,10 @@ const MyPropertyPage = () => {
 
   const { id } = getUserInfo() as { id: String };
   if (!id) {
-    console.error("User ID not found");
+    console.error("Id not found");
   }
 
   const { data, isLoading, isError, error } = useSingleRenterPropertyQuery(id);
-  console.log(data);
   if (isError) {
     console.error("Error fetching property data:", error);
   }
@@ -147,14 +146,12 @@ const MyPropertyPage = () => {
       dataIndex: "bookings",
       render: function (data: any) {
         const startAt = data[0]?.bookingStartDate;
-        console.log(startAt);
         return startAt && dayjs(startAt).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -171,10 +168,8 @@ const MyPropertyPage = () => {
   };
 
   const deletePropertyHandler = async (id: string) => {
-    console.log(id);
     try {
       const res = await deleteProperty(id);
-      console.log("response", res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);
@@ -189,8 +184,8 @@ const MyPropertyPage = () => {
       <SSBreadCrumb
         items={[
           {
-            label: "owner",
-            link: "/owner",
+            label: "renter",
+            link: "/renter",
           },
         ]}
       />

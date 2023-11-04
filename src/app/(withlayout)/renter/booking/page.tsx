@@ -165,7 +165,9 @@ const PropertyBookingPage = () => {
   const deleteBookingHandler = async (id: string) => {
     try {
       const res = await deleteBooking(id);
-      if (res) {
+      console.log("deleted response", res);
+      //@ts-ignore
+      if (res?.data.success === true) {
         message.success("Booking Successfully Deleted!");
         setOpen(false);
       }

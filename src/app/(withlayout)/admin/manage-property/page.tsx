@@ -172,6 +172,7 @@ const AdminPage = () => {
     console.log(id);
     try {
       const res = await deleteProperty(id);
+      console.log(res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);

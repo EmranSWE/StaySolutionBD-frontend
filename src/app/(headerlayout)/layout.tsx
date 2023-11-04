@@ -51,22 +51,29 @@ const staticItems: MenuItem[] = [
 ];
 
 const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(isLoggedIn());
   const [menuItems, setMenuItems] = useState<MenuItem[]>(staticItems);
 
   useEffect(() => {
+    // No dependencies array, so it runs on every render
     const userLoggedIn = isLoggedIn();
-    let dynamicItems = userLoggedIn
+    let dynamicItems: MenuItem[] = userLoggedIn
       ? [
-          getItem("My Profile", "14", undefined, undefined, "/profile"),
-          getItem("Logout", "13", <LogoutOutlined />),
+          getItem("My Profile", "14", undefined, [], "/profile"),
+          {
+            key: "logout",
+            icon: <LogoutOutlined />,
+            label: "Logout",
+            onClick: () => handleLogout(),
+          },
         ]
-      : [getItem("Login", "12", <UserAddOutlined />, undefined, "/login")];
+      : [getItem("Login", "12", <UserAddOutlined />, [], "/login")];
 
     setMenuItems([...staticItems, ...dynamicItems]);
-  }, []);
-
+  }, [isUserLoggedIn]);
   const handleLogout = () => {
     removeUserInfo(authKey);
+    setIsUserLoggedIn(false);
   };
 
   return (

@@ -6,17 +6,23 @@ import { authKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
 import { useMyProfileQuery } from "@/redux/api/authApi";
 import CustomLoading from "./CustomLoading";
-const { Header: AntHeader, Content, Footer } = Layout;
+import { BounceLoader } from "react-spinners";
+const { Header: AntHeader } = Layout;
 const Header = () => {
-  const { data, isError, isLoading, isSuccess } = useMyProfileQuery({});
+  const router = useRouter();
+  const { data, isError, isLoading } = useMyProfileQuery({});
   if (isLoading) {
     return (
-      <div>
-        <CustomLoading></CustomLoading>
+      <div
+        style={{ display: "flex", justifyContent: "end", marginLeft: "20px" }}
+      >
+        <BounceLoader color="rgb(24, 144, 255)" size={20} speedMultiplier={5} />
       </div>
     );
   }
-  const router = useRouter();
+  if (isError) {
+    return <div>{isError}</div>;
+  }
   const logOut = () => {
     removeUserInfo(authKey);
     router.push("/login");

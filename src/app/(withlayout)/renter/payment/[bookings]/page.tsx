@@ -21,7 +21,6 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
   const [addMonthlyPayment] = useAddMonthlyPaymentMutation();
 
   const { data, isLoading } = useSingleBookingQuery(params?.bookings);
-  console.log(data);
   if (isLoading) {
     return <CustomLoading />;
   }
@@ -46,7 +45,6 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
       values.paymentDate = new Date(); // Replace this with your desired default date
     }
 
-    console.log(values);
     try {
       const res = await addMonthlyPayment(values);
       //@ts-ignore

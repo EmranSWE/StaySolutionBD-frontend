@@ -9,146 +9,148 @@ import {
   PhoneOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
-import appPlay from "../../../../assets/png-clipart-app-store-google-play-apple-apple-text-logo.png";
+import appPlay from "../../../../assets/Pay-with.png";
 import Image from "next/image";
+
 const RentalFooter = () => {
   const date = new Date().getFullYear();
-  const iconStyle = { fontSize: "24px", margin: "0 5px" };
+  const iconStyle = { fontSize: "24px", margin: "0 10px", color: "white" };
+  const linkStyle = { color: "white", marginBottom: "10px" };
+
   return (
-    <div style={{ backgroundColor: "rgb(24, 130, 200)", padding: "24px 50px" }}>
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-        <Col
-          xs={24}
-          sm={12}
-          md={6}
-          lg={6}
-          style={{ color: "white", marginBottom: "16px" }}
-        >
-          <h1>ABOUT US</h1>
-          <div style={{ display: "flex", alignItems: "center" }}>
+    <Layout.Footer
+      style={{ backgroundColor: "rgb(24, 130, 200)", padding: "40px" }}
+    >
+      <Row gutter={[32, 32]} justify="space-around">
+        {/* About us */}
+        <Col xs={24} sm={12} md={6} lg={6}>
+          <h2 style={{ color: "white", marginBottom: "20px" }}>ABOUT US</h2>
+          <div style={{ color: "white", marginBottom: "10px" }}>
             <MailOutlined style={{ ...iconStyle, color: "#FDCB58" }} />
-            Contact us staysolutionbd.com.
+            Contact us staysolutionbd.com
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ color: "white", marginBottom: "10px" }}>
             <HomeOutlined style={{ ...iconStyle, color: "#4DA8DA" }} />
-            Address: Arshinagar,Bosila, Mohammadpur, Dhaka -1212.
+            Address: Arshinagar, Bosila, Mohammadpur, Dhaka -1212
           </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <div style={{ color: "white", marginBottom: "10px" }}>
             <MailOutlined style={{ ...iconStyle, color: "#FDCB58" }} />
-            Have any questions? mdemran.swe@gmail.com
+            Questions? mdemran.swe@gmail.com
           </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
+          <div style={{ color: "white" }}>
             <PhoneOutlined style={{ ...iconStyle, color: "#67D5B5" }} />
             Help Line: +880 1838235450
           </div>
         </Col>
 
-        <Col
-          xs={24}
-          sm={12}
-          md={6}
-          lg={6}
-          style={{ color: "white", marginBottom: "16px" }}
-        >
-          <h1>QUICK LINKS</h1>
-          <div>
-            <Link href="/list-for-rent">
-              <p style={{ color: "white" }}>LIST FOR RENT</p>
+        {/* Quick Links */}
+        <Col xs={24} sm={12} md={6} lg={6}>
+          <h2 style={{ color: "white", marginBottom: "20px" }}>QUICK LINKS</h2>
+          <div style={{ color: "white", marginBottom: "10px" }}>
+            <Link
+              href="/list-for-rent"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              List for Rent
             </Link>
           </div>
-          <div>
-            <Link href="/list-for-sale">
-              <p style={{ color: "white" }}>LIST FOR SALE</p>
+          <div style={{ color: "white", marginBottom: "10px" }}>
+            <Link
+              href="/list-for-sale"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              List for Sale
             </Link>
           </div>
-          <div>
-            <Link href="/submit-property">
-              <p style={{ color: "white" }}>SUBMIT PROPERTY</p>
+          <div style={{ color: "white", marginBottom: "10px" }}>
+            <Link
+              href="/submit-property"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              Submit Property
             </Link>
           </div>
-          <div>
-            <Link href="/contact-us">
-              <p style={{ color: "white" }}>CONTACT US</p>
+          <div style={{ color: "white", marginBottom: "10px" }}>
+            <Link
+              href="/contact-us"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              Contact Us
             </Link>
           </div>
-          <div>
-            <Link href="/faq">
-              <p style={{ color: "white" }}>FAQ(HELP)</p>
-            </Link>
+          <div
+            style={{ color: "white", marginBottom: "10px" }}
+            style={{ color: "white", marginBottom: "10px" }}
+          >
+            <Link href="/faq">FAQ (Help)</Link>
           </div>
-          <div>
-            <Link href="/terms">
-              <p style={{ color: "white" }}>TERMS</p>
+          <div style={{ color: "white" }}>
+            <Link
+              href="/terms"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              Terms
             </Link>
           </div>
         </Col>
 
-        <Col
-          xs={24}
-          sm={12}
-          md={6}
-          lg={6}
-          style={{ color: "white", marginBottom: "16px" }}
-        >
-          <h1>Stay In Touch</h1>
-          <div>
-            <h2>
-              <FacebookOutlined /> Facebook
-            </h2>
+        {/* Stay In Touch */}
+        <Col xs={24} sm={12} md={6} lg={6}>
+          <h2 style={{ color: "white", marginBottom: "20px" }}>
+            STAY IN TOUCH
+          </h2>
+          <div style={{ color: "white", marginBottom: "10px" }}>
+            <Link
+              href="https://www.facebook.com/"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              <FacebookOutlined style={iconStyle} /> Facebook
+            </Link>
           </div>
-          <div>
-            <h2>
-              <TwitterOutlined /> Twitter
-            </h2>
+          <div style={{ color: "white", marginBottom: "10px" }}>
+            <Link
+              href="https://www.twitter.com/"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              <TwitterOutlined style={iconStyle} /> Twitter
+            </Link>
           </div>
-          <div>
-            <h2>
-              {" "}
-              <InstagramOutlined /> Instagram
-            </h2>
+          <div style={{ color: "white" }}>
+            <Link
+              href="https://www.instagram.com/"
+              style={{ color: "white", marginBottom: "10px" }}
+            >
+              <InstagramOutlined style={iconStyle} /> Instagram
+            </Link>
           </div>
         </Col>
 
-        <Col
-          xs={24}
-          sm={12}
-          md={6}
-          lg={6}
-          style={{ color: "white", marginBottom: "16px" }}
-        >
-          <h1>Payment Accepted</h1>
-          <div>
-            <Image src={appPlay} width={300} height={100} alt="play"></Image>
+        {/* Payment Accepted */}
+        <Col xs={24} sm={12} md={6} lg={6}>
+          <h2 style={{ color: "white", marginBottom: "20px" }}>
+            PAYMENT ACCEPTED
+          </h2>
+          <div style={{ marginBottom: "10px" }}>
+            <Image
+              src={appPlay}
+              width={300}
+              height={100}
+              alt="Payment Methods"
+            />
           </div>
-          <div>
-            <CreditCardOutlined /> Visa
-          </div>
-          <div>
-            <CreditCardOutlined /> Mastercard
-          </div>
-          <div>
-            <CreditCardOutlined /> PayPal
-          </div>
+          {/* ... your payment methods here */}
         </Col>
       </Row>
 
-      <Row style={{ marginTop: "24px", color: "white", textAlign: "center" }}>
+      <Row style={{ marginTop: "40px", color: "white", textAlign: "center" }}>
         <Col span={24}>
-          Home Rental Service ©{date}. All rights reserved.Developed by Emran
+          <p>
+            Home Rental Service ©{date}. All rights reserved. Developed by
+            Emran.
+          </p>
         </Col>
       </Row>
-    </div>
+    </Layout.Footer>
   );
 };
 

@@ -26,13 +26,12 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
   const router = useRouter();
   const [addRegularMonthlyPayment] = useAddRegularMonthlyPaymentMutation();
   const { data, isLoading } = useCurrentMonthMonthlyPaymentQuery(params?.id);
-  console.log(data);
   if (isLoading) {
     return <CustomLoading />;
   }
 
   const uniqueMonths = Array.from(
-    new Set(data.map((data: { month: any }) => data.month))
+    new Set(data?.map((data: { month: any }) => data.month))
   );
 
   const monthOptions = uniqueMonths.map((month) => ({

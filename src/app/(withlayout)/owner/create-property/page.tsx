@@ -28,7 +28,6 @@ const CreatePropertyPage = () => {
   const onSubmit = async (values: any) => {
     const { id } = getUserInfo() as { id: string };
     values.ownerId = id;
-    console.log("values", values);
     const obj = { ...values };
     const file = obj["file"];
     delete obj["file"];
@@ -40,14 +39,13 @@ const CreatePropertyPage = () => {
     try {
       const res = await addProperty(formData);
       //@ts-ignore
-      if (res?.data.success === true) {
+      if (res?.data.data.success === true) {
         message.success({
           content: "Property created successfully!",
           key: "loading",
           duration: 2,
         });
-        console.log("success", res);
-        // router.push("/owner/my-property");
+        router.push("/owner/my-property");
         //@ts-ignore
       } else if (res?.data.success === false) {
         message.error({

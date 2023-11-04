@@ -19,7 +19,7 @@ const FeedbackCard = ({ feedbackData }: any) => {
       <div className={styles.contentSection}>
         <h3
           className={styles.userName}
-        >{`${user?.firstName} ${user?.middleName} ${user?.lastName}`}</h3>
+        >{`${user?.firstName}  ${user?.lastName}`}</h3>
         <Rate disabled value={rating} />
         <p className={styles.feedbackText}>
           {truncateText({ text: feedback, limit: 80 })}

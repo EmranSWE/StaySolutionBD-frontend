@@ -27,6 +27,13 @@ export const propertyApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.property],
     }),
+    popularCategory: build.query({
+      query: () => ({
+        url: `${PROPERTY_URL}/popular-category`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.property],
+    }),
     singleUserProperty: build.query({
       query: (id) => ({
         url: `${PROPERTY_URL}/my-property/${id}`,
@@ -79,4 +86,5 @@ export const {
   useUpdatePropertyMutation,
   useSingleUserPropertyQuery,
   useSingleRenterPropertyQuery,
+  usePopularCategoryQuery,
 } = propertyApi;

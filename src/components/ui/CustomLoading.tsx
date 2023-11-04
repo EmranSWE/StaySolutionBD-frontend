@@ -1,6 +1,6 @@
 "use client";
 import { CSSProperties } from "react";
-import { GridLoader, BounceLoader, PulseLoader } from "react-spinners";
+import { GridLoader } from "react-spinners";
 
 const centerStyle: CSSProperties = {
   display: "flex",

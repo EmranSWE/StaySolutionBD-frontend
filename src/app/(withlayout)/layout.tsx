@@ -5,7 +5,9 @@ import { isLoggedIn } from "@/services/auth.service";
 import { Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Row, Space, Spin } from "antd";
+import { Row, Space } from "antd";
+
+import { BounceLoader } from "react-spinners";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();
   const router = useRouter();
@@ -20,9 +22,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (!isLoading) {
     return (
-      <Row justify="center" align="middle" style={{ height: "100vh" }}>
+      <Row justify="center" align="middle" style={{ height: "80vh" }}>
         <Space>
-          <Spin tip="Loading" size="large"></Spin>
+          <BounceLoader color="rgb(24, 144, 255)" />
         </Space>
       </Row>
     );
