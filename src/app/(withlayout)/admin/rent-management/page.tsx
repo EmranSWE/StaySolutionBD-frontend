@@ -88,7 +88,7 @@ const RentManagement = () => {
     return {
       title: monthName,
       dataIndex: monthName,
-      sorter: true,
+
       render: (status: string) => {
         return (
           <span
@@ -110,7 +110,6 @@ const RentManagement = () => {
     {
       title: "Flat No",
       dataIndex: "flatNo",
-      sorter: true,
     },
     ...monthColumns,
 
@@ -120,28 +119,30 @@ const RentManagement = () => {
       render: function (propertyId: any) {
         return (
           <>
-            <Link href={`/admin/manage-property/edit/${propertyId}`}>
+            <div style={{ display: "flex" }}>
+              <Link href={`/admin/manage-property/edit/${propertyId}`}>
+                <Button
+                  style={{
+                    margin: "0px 5px",
+                  }}
+                  onClick={() => console.log(data)}
+                  type="primary"
+                >
+                  <EditOutlined />
+                </Button>
+              </Link>
               <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
                 type="primary"
+                onClick={() => {
+                  setOpen(true);
+                  setPropertyId(propertyId);
+                }}
+                danger
+                style={{ marginLeft: "3px" }}
               >
-                <EditOutlined />
+                <DeleteOutlined />
               </Button>
-            </Link>
-            <Button
-              type="primary"
-              onClick={() => {
-                setOpen(true);
-                setPropertyId(propertyId);
-              }}
-              danger
-              style={{ marginLeft: "3px" }}
-            >
-              <DeleteOutlined />
-            </Button>
+            </div>
           </>
         );
       },

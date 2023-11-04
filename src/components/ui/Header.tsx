@@ -5,7 +5,6 @@ import { removeUserInfo } from "@/services/auth.service";
 import { authKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
 import { useMyProfileQuery } from "@/redux/api/authApi";
-import CustomLoading from "./CustomLoading";
 import { BounceLoader } from "react-spinners";
 const { Header: AntHeader } = Layout;
 const Header = () => {

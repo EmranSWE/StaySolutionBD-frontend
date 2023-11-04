@@ -7,9 +7,14 @@ const ProfilePage = () => {
   const { email, role } = getUserInfo() as { email: string; role: string };
   return (
     <div>
-      <h2>Welcome back to your profile </h2>
-      <p>Dear: {email}</p>
-      {role === "admin" ? <AdminPage></AdminPage> : ""}
+      {role === "admin" ? (
+        <AdminPage></AdminPage>
+      ) : (
+        <div>
+          <h2>Welcome back to your profile </h2>
+          <p>You are "" {email} ""</p>
+        </div>
+      )}
     </div>
   );
 };
