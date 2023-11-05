@@ -1,3 +1,4 @@
+"use client";
 import { Layout, Row, Col } from "antd";
 import {
   FacebookOutlined,
@@ -42,7 +43,7 @@ const RentalFooter = () => {
             Help Line: +880 1838235450
           </div>
         </Col>
-
+        //@ts-ignore
         {/* Quick Links */}
         <Col xs={24} sm={12} md={6} lg={6}>
           <h2 style={{ color: "white", marginBottom: "20px" }}>QUICK LINKS</h2>
@@ -93,7 +94,6 @@ const RentalFooter = () => {
             </Link>
           </div>
         </Col>
-
         {/* Stay In Touch */}
         <Col xs={24} sm={12} md={6} lg={6}>
           <h2 style={{ color: "white", marginBottom: "20px" }}>
@@ -124,7 +124,6 @@ const RentalFooter = () => {
             </Link>
           </div>
         </Col>
-
         {/* Payment Accepted */}
         <Col xs={24} sm={12} md={6} lg={6}>
           <h2 style={{ color: "white", marginBottom: "20px" }}>

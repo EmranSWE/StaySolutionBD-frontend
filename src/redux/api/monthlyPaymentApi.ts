@@ -49,6 +49,13 @@ export const MonthlyPaymentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.monthlyPayment],
     }),
+    currentBookingStatus: build.query({
+      query: () => ({
+        url: `${MonthlyPayment_URL}/rents/flat-status`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.monthlyPayment],
+    }),
     addMonthlyPayment: build.mutation({
       query: (data) => ({
         url: `${MonthlyPayment_URL}/monthly-rent-payments`,
@@ -66,6 +73,13 @@ export const MonthlyPaymentApi = baseApi.injectEndpoints({
       }),
 
       invalidatesTags: [tagTypes.monthlyPayment],
+    }),
+    monthWiseTotals: build.query({
+      query: () => ({
+        url: `${MonthlyPayment_URL}/rents/month-wise-totals`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.property],
     }),
     addMonthlyPaymentToStripe: build.mutation({
       query: (data) => ({
@@ -111,4 +125,6 @@ export const {
   useRentManagementQuery,
   useTotalMonthlyPaymentQuery,
   useCurrentMonthMonthlyPaymentQuery,
+  useMonthWiseTotalsQuery,
+  useCurrentBookingStatusQuery,
 } = MonthlyPaymentApi;

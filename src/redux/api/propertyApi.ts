@@ -41,6 +41,7 @@ export const propertyApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.property],
     }),
+
     singleRenterProperty: build.query({
       query: (id) => ({
         url: `${PROPERTY_URL}/properties/${id}/my-property`,

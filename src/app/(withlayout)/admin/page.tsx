@@ -25,7 +25,7 @@ const AdminPage = () => {
       <p>Dear,{`${data?.firstName} ${data?.lastName}`}</p>
       <Divider orientation="center">
         <h1>
-          Welcome to<span style={{ color: "#1890ff" }}> Admin </span>
+          Welcome to <br /> <span style={{ color: "#1890ff" }}> Admin </span>
           Dashboard
         </h1>
       </Divider>
