@@ -72,16 +72,16 @@ The project is structured into various directories:
 Our Structure Codex elucidates the roles and responsibilities of each segment.
 ## Running the Project
 
-### Clone the repository
-git clone https://github.com/YourUsername/staysolutionbd-frontend.git
+# Clone the repository
+git [clone](https://github.com/YourUsername/staysolutionbd-frontend.git) 
 
-### Navigate to the project directory
+# Navigate to the project directory
 cd staysolutionbd-frontend
 
-### Install dependencies
+# Install dependencies
 npm install
 
-### Run the development server
+# Run the development server
 npm run dev
 
 ## 📜 The Scroll of Licensing
