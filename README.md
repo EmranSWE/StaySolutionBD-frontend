@@ -1,19 +1,18 @@
 # StaySolutionBD Frontend - Where Elegance Meets Functionality
 ![StaySolutionBD Banner](staySolutionBanner.png)
-
-Welcome to the front end of StaySolutionBD, the comprehensive solution for property rentals that connects tenants with property owners. Our platform provides a seamless user experience, powered by a modern tech stack and best practices in web development.beckons the future of property rental services. Our frontend architecture is a symphony of design and technology, harmoniously integrated to create an immersive experience for both property owners and tenants. With a focus on user-centric design, we deliver a powerful platform that's as pleasant to use as it is efficient.
+Welcome to the front end of StaySolutionBD, the comprehensive solution for property rentals that connects tenants with property owners. Our platform provides a seamless user experience, powered by a modern tech stack and best practices in web development. With a focus on user-centric design, we deliver a powerful platform that's as pleasant to use as it is efficient.
 
 # 🌐 Quick Links
+- [Live Demo](https://stay-solution-bd-emranswe.vercel.app/)
+- [Feature Requests](https://stay-solution-bd-emranswe.vercel.app/contact-us)
 
-- [Live Demo](#)
-- [Issue Tracker](#)
-- [Feature Requests](#)
-- [Community Discussions](#)
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Aesthetic](#aesthetic)
 - [Getting Started](#getting-started)
 - [Tech Stack](#tech-stack)
+- [Highlighted](#highlighted)
 - [Features](#features)
 - [Project Structure](#project-structure)
 - [Running the Project](#running-the-project)
@@ -25,13 +24,17 @@ Welcome to the front end of StaySolutionBD, the comprehensive solution for prope
 
 StaySolutionBD's frontend is crafted to deliver an intuitive and responsive interface that streamlines the rental process. From property listings and user profiles to booking management and payments, our interface is designed for ease of use and efficiency.
 
+## 🎨 Aesthetic and Responsive Design
+
+Our design philosophy marries aesthetics with functionality. Responsive layouts, seamless transitions, and intuitive navigation form the core of our user interface, offering a consistent experience across all devices - be it a desktop, tablet, or mobile.
+![StaySolutionBD Banner](main.png)
+- Admin Dashboard
+![StaySolutionBD Banner](dashboard.png)
+  
 ## Getting Started
 
 To get started with the development of StaySolutionBD's frontend, you need to have Node.js and npm/yarn installed on your system. Follow the installation instructions below to set up the project on your local machine.In the bustling digital era, StaySolutionBD stands as a beacon of innovation in the property rental landscape. We've sculpted a frontend that not only meets the demands of today's users but anticipates the needs of tomorrow. Dive into an interface where every click brings satisfaction, and every view is a vista of possibility.
 
-## 🎨 Aesthetic and Responsive Design
-
-Our design philosophy marries aesthetics with functionality. Responsive layouts, seamless transitions, and intuitive navigation form the core of our user interface, offering a consistent experience across all devices - be it a desktop, tablet, or mobile.
 
 ## 📚 Tech Stack Enlightenment
 
@@ -58,39 +61,30 @@ Our design philosophy marries aesthetics with functionality. Responsive layouts,
 ## Project Structure
 
 The project is structured into various directories:
-
-- `components/`: Reusable UI components.
+- `app/`: main app components.
 - `pages/`: Page components that correspond to a route.
+- `components/`: Reusable UI components.
 - `public/`: Static assets like images and fonts.
 - `styles/`: Global styles and CSS/SCSS modules.
 - `store/`: Redux store configuration, actions, and reducers.
-- `services/`: Services and utilities for handling API requests.
 - `hooks/`: Custom React hooks.
-|-- /components
-|-- /pages
-|-- /public
-|-- /styles
-|-- /store
-|-- /services
-|-- /hooks
-|-- /tests
+
 Our Structure Codex elucidates the roles and responsibilities of each segment.
 ## Running the Project
 
-
-# Clone the repository
+### Clone the repository
 git clone https://github.com/YourUsername/staysolutionbd-frontend.git
 
-# Navigate to the project directory
+### Navigate to the project directory
 cd staysolutionbd-frontend
 
-# Install dependencies
+### Install dependencies
 npm install
 
-# Run the development server
+### Run the development server
 npm run dev
 
-📜 The Scroll of Licensing
+## 📜 The Scroll of Licensing
 StaySolutionBD's frontend is disseminated with the MIT license, a testament to our belief in the open-source odyssey.
 
 Embark on the full StaySolutionBD journey with us. Together, let's chart a course to the zenith of property rental services.
