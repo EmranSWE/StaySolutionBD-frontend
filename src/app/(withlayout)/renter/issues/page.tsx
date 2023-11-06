@@ -47,7 +47,6 @@ const PropertyIssuePage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  console.log(getUserInfo());
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("User ID not found");
@@ -59,8 +58,6 @@ const PropertyIssuePage = () => {
     console.error("Error fetching property data:", error);
     // Handle the error as needed
   }
-
-  console.log("data", data);
 
   const meta = data?.meta;
 
@@ -90,7 +87,7 @@ const PropertyIssuePage = () => {
                 style={{
                   margin: "0px 5px",
                 }}
-                onClick={() => console.log(data)}
+                onClick={() => ""}
                 type="primary"
               >
                 <EditOutlined />
@@ -100,7 +97,7 @@ const PropertyIssuePage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setPropertyId(propertyId);
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -113,13 +110,11 @@ const PropertyIssuePage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -131,10 +126,8 @@ const PropertyIssuePage = () => {
   };
 
   const deletePropertyHandler = async (id: string) => {
-    console.log(id);
     try {
       const res = await deleteProperty(id);
-      console.log("response", res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);

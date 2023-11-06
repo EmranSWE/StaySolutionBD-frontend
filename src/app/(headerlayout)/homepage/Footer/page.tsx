@@ -43,7 +43,7 @@ const RentalFooter = () => {
             Help Line: +880 1838235450
           </div>
         </Col>
-        //@ts-ignore
+
         {/* Quick Links */}
         <Col xs={24} sm={12} md={6} lg={6}>
           <h2 style={{ color: "white", marginBottom: "20px" }}>QUICK LINKS</h2>
@@ -79,10 +79,7 @@ const RentalFooter = () => {
               Contact Us
             </Link>
           </div>
-          <div
-            style={{ color: "white", marginBottom: "10px" }}
-            style={{ color: "white", marginBottom: "10px" }}
-          >
+          <div style={{ color: "white", marginBottom: "10px" }}>
             <Link href="/faq">FAQ (Help)</Link>
           </div>
           <div style={{ color: "white" }}>

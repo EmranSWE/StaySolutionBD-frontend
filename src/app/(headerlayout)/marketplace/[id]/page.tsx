@@ -10,7 +10,6 @@ import Link from "next/link";
 import React from "react";
 
 const MarketplacePropertyDetails = ({ params }: any) => {
-  console.log(params);
   const {
     data: property,
     isLoading,

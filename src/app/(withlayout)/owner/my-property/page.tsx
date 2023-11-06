@@ -141,35 +141,36 @@ const MyPropertyPage = () => {
       render: function (propertyId: any) {
         return (
           <>
-            <Link href={`/admin/manage-property/edit/${propertyId}`}>
+            <div style={{ display: "flex" }}>
+              <Link href={`/owner/my-property/edit/${propertyId}`}>
+                <Button
+                  style={{
+                    margin: "0px 5px",
+                  }}
+                  onClick={() => ""}
+                  type="primary"
+                >
+                  <EditOutlined />
+                </Button>
+              </Link>
               <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
                 type="primary"
+                onClick={() => {
+                  setOpen(true);
+                  setPropertyId(propertyId);
+                }}
+                danger
+                style={{ marginLeft: "3px" }}
               >
-                <EditOutlined />
+                <DeleteOutlined />
               </Button>
-            </Link>
-            <Button
-              type="primary"
-              onClick={() => {
-                setOpen(true);
-                setPropertyId(propertyId);
-              }}
-              danger
-              style={{ marginLeft: "3px" }}
-            >
-              <DeleteOutlined />
-            </Button>
+            </div>
           </>
         );
       },
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -189,7 +190,6 @@ const MyPropertyPage = () => {
     console.log(id);
     try {
       const res = await deleteProperty(id);
-      console.log("response", res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);

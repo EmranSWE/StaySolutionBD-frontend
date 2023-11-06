@@ -22,8 +22,6 @@ const AddIssuePage = () => {
   const onSubmit = async (values: any) => {
     const { id } = getUserInfo() as { id: string };
 
-    console.log("values", values);
-
     try {
       const res = await addIssue(values);
       if (!res) {

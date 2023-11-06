@@ -149,7 +149,6 @@ const RentManagement = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -167,10 +166,8 @@ const RentManagement = () => {
   };
 
   const deletePropertyHandler = async (id: string) => {
-    console.log(id);
     try {
       const res = await deleteProperty(id);
-      console.log("response", res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);

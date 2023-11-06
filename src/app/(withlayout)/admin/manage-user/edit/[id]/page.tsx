@@ -8,7 +8,7 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import {
-  LOCATIONS,
+  locations,
   propertyAmenities,
   propertyRules,
 } from "@/constants/global";
@@ -19,14 +19,12 @@ import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const UpdatePropertyPage = ({ params }: any) => {
-  console.log(params);
   const router = useRouter();
   const [addProperty] = useAddPropertyMutation();
 
   const onSubmit = async (values: any) => {
     const { id } = getUserInfo() as { id: string };
     values.ownerId = id;
-    console.log("values", values);
     const obj = { ...values };
     const file = obj["file"];
     delete obj["file"];
@@ -41,7 +39,6 @@ const UpdatePropertyPage = ({ params }: any) => {
       if (!res) {
         message.error("Your property doesnot added");
       }
-      console.log(res);
       message.success("Property created successfully!");
       router.push("/owner/my-property");
     } catch (err: any) {
@@ -109,7 +106,7 @@ const UpdatePropertyPage = ({ params }: any) => {
                   mode="multiple"
                   size="large"
                   name="location"
-                  options={LOCATIONS}
+                  options={locations}
                   label="Location"
                   placeholder="Select Locations"
                 />

@@ -16,11 +16,9 @@ type BookingDetailsProps = {
 };
 
 const AddBookingPage = ({ params }: BookingDetailsProps) => {
-  console.log(params.bookingId);
   const router = useRouter();
   const [addBooking] = useAddBookingMutation();
   const propertyId = params?.bookingId;
-  console.log(propertyId);
   const onSubmit = async (values: any) => {
     const { id } = getUserInfo() as { id: string };
     const propertyId = params?.bookingId;
@@ -31,14 +29,12 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
     }
 
     values.propertyId = propertyId;
-    console.log("values", values);
 
     try {
       const res = await addBooking(values);
       if (!res) {
         message.error("Your issue does not added");
       }
-      console.log(res);
       message.success("Reviews created successfully!");
       router.push("/renter/booking");
     } catch (err: any) {

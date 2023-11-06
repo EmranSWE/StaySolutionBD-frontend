@@ -14,7 +14,6 @@ const CreateAdminPage = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      console.log(data);
       await userSignup(data);
       message.success("Admin created successfully");
     } catch (err: any) {

@@ -54,7 +54,6 @@ const CreatePropertyPage = () => {
           key: "loading",
           duration: 5,
         });
-        console.log("error", res);
       }
     } catch (err: any) {
       console.error(err.message);

@@ -18,7 +18,6 @@ const AddReviewPage = () => {
 
   const onSubmit = async (values: any) => {
     const { id } = getUserInfo() as { id: string };
-    console.log(values);
     values.renterId = id;
     console.log("values", values);
     const obj = { ...values };
@@ -29,7 +28,6 @@ const AddReviewPage = () => {
     formData.append("file", file as Blob);
     formData.append("data", data);
     message.loading("Creating...");
-    console.log("form data", formData);
     try {
       const res = await addReview(formData);
       if (!res) {

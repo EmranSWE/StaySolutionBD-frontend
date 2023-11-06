@@ -85,7 +85,6 @@ const AdminPage = () => {
       title: "Action",
       dataIndex: "id",
       render: function (data: any) {
-        // console.log(data);
         return (
           <>
             <Link href={`/super_admin/admin/details/${data}`}>
@@ -121,7 +120,6 @@ const AdminPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -138,18 +136,6 @@ const AdminPage = () => {
     setSearchTerm("");
   };
 
-  // const deleteAdminHandler = async (id: string) => {
-  //   // console.log(id);
-  //   try {
-  //     const res = await deleteAdmin(id);
-  //     if (res) {
-  //       message.success("Admin Successfully Deleted!");
-  //       setOpen(false);
-  //     }
-  //   } catch (error: any) {
-  //     message.error(error.message);
-  //   }
-  // };
   return (
     <div>
       <SSBreadCrumb

@@ -57,12 +57,12 @@ const UpdatePropertyPage = ({ params }: any) => {
       <SSBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: "owner",
+            link: "/owner",
           },
           {
-            label: "property",
-            link: "/admin/manage-property/",
+            label: "my property",
+            link: "/owner/my-property/",
           },
         ]}
       />

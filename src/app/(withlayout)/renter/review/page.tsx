@@ -49,7 +49,6 @@ const MyReviewPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  console.log(getUserInfo());
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("User ID not found");
@@ -120,7 +119,6 @@ const MyReviewPage = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -138,10 +136,8 @@ const MyReviewPage = () => {
   };
 
   const deletePropertyHandler = async (id: string) => {
-    console.log(id);
     try {
       const res = await deleteProperty(id);
-      console.log("response", res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);

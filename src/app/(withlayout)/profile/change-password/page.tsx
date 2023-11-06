@@ -16,7 +16,6 @@ const ChangePasswordPage = () => {
     if (!res) {
       message.error("Data doesn't update");
     }
-    console.log(res);
 
     message.success("User updated successfully!");
     // router.push("/owner/my-property");
@@ -59,7 +58,10 @@ const ChangePasswordPage = () => {
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
                 className="gutter-row"
-                span={8}
+                xs={24}
+                sm={24}
+                md={12}
+                lg={12}
                 style={{
                   marginBottom: "10px",
                 }}
@@ -74,7 +76,10 @@ const ChangePasswordPage = () => {
               </Col>
               <Col
                 className="gutter-row"
-                span={8}
+                xs={24}
+                sm={24}
+                md={12}
+                lg={12}
                 style={{
                   marginBottom: "10px",
                 }}

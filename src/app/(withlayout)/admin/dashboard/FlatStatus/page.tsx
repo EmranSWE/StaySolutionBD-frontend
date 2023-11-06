@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Row, Col, Card, Divider } from "antd";
 import { useCurrentBookingStatusQuery } from "@/redux/api/monthlyPaymentApi";

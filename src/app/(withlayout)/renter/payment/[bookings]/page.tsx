@@ -54,7 +54,6 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
           key: "loading",
           duration: 5,
         });
-        console.log(res);
         router.push("/renter/booking");
         //@ts-ignore
       } else if (res?.data.statusCode === 500) {

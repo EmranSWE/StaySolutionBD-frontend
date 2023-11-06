@@ -49,7 +49,6 @@ const AdminPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = usePropertiesQuery({ ...query });
-  console.log(data);
   if (isLoading) {
     return <CustomLoading></CustomLoading>;
   }
@@ -169,10 +168,8 @@ const AdminPage = () => {
   };
 
   const deletePropertyHandler = async (id: string) => {
-    console.log(id);
     try {
       const res = await deleteProperty(id);
-      console.log(res);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);

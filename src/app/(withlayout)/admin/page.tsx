@@ -19,7 +19,6 @@ const AdminPage = () => {
   if (isError) {
     return <div>{isError}</div>;
   }
-  console.log(data);
   return (
     <>
       <p>Dear,{`${data?.firstName} ${data?.lastName}`}</p>

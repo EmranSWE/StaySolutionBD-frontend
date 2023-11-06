@@ -62,7 +62,6 @@ const MyMarketplaceProduct = () => {
   if (isLoading) {
     return <CustomLoading />;
   }
-  console.log("data", data);
 
   const meta = data?.meta;
 
@@ -130,7 +129,6 @@ const MyMarketplaceProduct = () => {
     },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
-    console.log("Page:", page, "PageSize:", pageSize);
     setPage(page);
     setSize(pageSize);
   };
@@ -147,10 +145,8 @@ const MyMarketplaceProduct = () => {
   };
 
   const deletePropertyHandler = async (id: string) => {
-    console.log(id);
     try {
       const res = await deleteMarketplaceData(id);
-      console.log("response", res);
       if (res) {
         message.success("Marketplace Data Successfully Deleted!");
         setOpen(false);

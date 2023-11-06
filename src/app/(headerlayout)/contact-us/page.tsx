@@ -14,7 +14,6 @@ const ContactUsPage = () => {
   const [form] = Form.useForm();
   const onFinish = async (values: any) => {
     const { ...rest } = values;
-    console.log("Received values of form:", rest);
     // Handle the form values, e.g., send them to your backend
     try {
       const res = await addContact(rest);
@@ -24,7 +23,6 @@ const ContactUsPage = () => {
       } else {
         message.error("Your review doesn't added");
       }
-      console.log(res);
     } catch (err: any) {
       console.error(err.message);
     }

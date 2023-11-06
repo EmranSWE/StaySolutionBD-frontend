@@ -8,7 +8,6 @@ const Feedback: React.FC = () => {
 
   const onFinish = (values: any) => {
     setLoading(true);
-    console.log("Received values of form: ", values);
     setTimeout(() => {
       setLoading(false);
       message.success("Feedback submitted successfully!");

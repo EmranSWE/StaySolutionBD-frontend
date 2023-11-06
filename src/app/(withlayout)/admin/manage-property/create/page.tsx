@@ -28,7 +28,6 @@ const CreatePropertyPage = () => {
   const onSubmit = async (values: any) => {
     const { id } = getUserInfo() as { id: string };
     values.ownerId = id;
-    console.log("values", values);
     const obj = { ...values };
     const file = obj["file"];
     delete obj["file"];
@@ -46,7 +45,6 @@ const CreatePropertyPage = () => {
           key: "loading",
           duration: 2,
         });
-        console.log("success", res);
         // router.push("/owner/my-property");
         //@ts-ignore
       } else if (res?.data.success === false) {
@@ -56,7 +54,6 @@ const CreatePropertyPage = () => {
           key: "loading",
           duration: 5,
         });
-        console.log("error", res);
       }
     } catch (err: any) {
       console.error(err.message);
