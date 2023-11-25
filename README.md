@@ -1,4 +1,4 @@
-# StaySolutionBD Frontend - Where Elegance Meets Functionality
+# StaySolutionBD Frontend -
 ![StaySolutionBD Banner](staySolutionBanner.png)
 Welcome to the front end of StaySolutionBD, the comprehensive solution for property rentals that connects tenants with property owners. Our platform provides a seamless user experience, powered by a modern tech stack and best practices in web development. With a focus on user-centric design, we deliver a powerful platform that's as pleasant to use as it is efficient.
 
