@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
-  HomeOutlined,
   AppstoreOutlined,
   UserAddOutlined,
   MenuUnfoldOutlined,
@@ -14,7 +13,6 @@ import { authKey } from "@/constants/storageKey";
 import RentalFooter from "./homepage/Footer/page";
 
 type MenuItem = Required<MenuProps>["items"][number];
-
 function getItem(
   label: React.ReactNode,
   key: React.Key,
@@ -31,7 +29,7 @@ function getItem(
 }
 
 const staticItems: MenuItem[] = [
-  getItem("Home", "1", <HomeOutlined />, [], "/"),
+  getItem("Homes", "1", undefined, undefined, "/"),
   getItem(
     "Our Apartments",
     "2",
@@ -39,23 +37,28 @@ const staticItems: MenuItem[] = [
     undefined,
     "/property/all-property"
   ),
-  getItem("Marketplace", "15", undefined, undefined, "/marketplace/"),
-  getItem("Long term rental", "3", undefined, undefined, "/long-term"),
-  getItem("About us", "4", undefined, undefined, "/about-us"),
-  getItem("Contact us", "5", undefined, undefined, "/contact-us"),
+  getItem("Marketplace", "3", undefined, undefined, "/marketplace/"),
+  getItem("Long term rental", "4", undefined, undefined, "/long-term"),
+  getItem("About us", "5", undefined, undefined, "/about-us"),
+  getItem("Contact us", "6", undefined, undefined, "/contact-us"),
   getItem("For sell", "sub2", <AppstoreOutlined />, [
-    getItem("Studio", "9"),
-    getItem("Ready Plot", "10"),
-    getItem("Flat", "sub3", null, [getItem("Special Plat", "11")]),
+    getItem("Studio", "7"),
+    getItem("Ready Plot", "8"),
+    getItem("Flat", "sub3", null, [getItem("Special Plat", "9")]),
   ]),
 ];
 
 const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(isLoggedIn());
+  const [activeMenuItem, setActiveMenuItem] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("activeMenuItem") || "";
+    }
+    return "";
+  });
   const [menuItems, setMenuItems] = useState<MenuItem[]>(staticItems);
 
   useEffect(() => {
-    // No dependencies array, so it runs on every render
     const userLoggedIn = isLoggedIn();
     let dynamicItems: MenuItem[] = userLoggedIn
       ? [
@@ -67,11 +70,13 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
             onClick: () => handleLogout(),
           },
         ]
-      : [getItem("Login", "12", <UserAddOutlined />, [], "/login")];
+      : [getItem("Login", "12", <UserAddOutlined />, undefined, "/login")];
 
     setMenuItems([...staticItems, ...dynamicItems]);
   }, [isUserLoggedIn]);
+
   const handleLogout = () => {
+    localStorage.removeItem("activeMenuItem");
     removeUserInfo(authKey);
     setIsUserLoggedIn(false);
   };
@@ -84,14 +89,12 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
         gutter={16}
         style={{ padding: "16px 16px", display: "flex", margin: "10px 10px" }} // Added margin
       >
-        {/* Logo for all devices */}
         <Col xs={2} sm={0} md={2} lg={2} xl={2}>
           <Link href="/">
             <h1>SSBD</h1>
           </Link>
         </Col>
 
-        {/* Dropdown menu icon for mobile devices */}
         <Col xs={2} sm={0} md={0} lg={0} xl={0} style={{ textAlign: "left" }}>
           <Dropdown overlay={<Menu items={menuItems} />} trigger={["click"]}>
             <MenuUnfoldOutlined style={{ fontSize: "40px" }} />
@@ -100,13 +103,15 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
 
         <Col xs={0} sm={24} md={22} lg={22} xl={22}>
           <Menu
-            defaultSelectedKeys={["1"]}
+            selectedKeys={[activeMenuItem]}
             defaultOpenKeys={["sub1"]}
             mode="horizontal"
             items={menuItems}
             style={{ justifyContent: "flex-end", fontWeight: "bolder" }}
             onClick={({ key }) => {
-              if (key === "13") handleLogout();
+              localStorage.setItem("activeMenuItem", key.toString());
+              setActiveMenuItem(key.toString());
+              if (key === "logout") handleLogout();
             }}
           />
         </Col>
