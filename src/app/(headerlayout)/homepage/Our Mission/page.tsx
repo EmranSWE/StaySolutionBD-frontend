@@ -8,7 +8,9 @@ const OurMissionPage = () => {
   return (
     <div style={{ position: "relative" }}>
       <Divider orientation="center">
-        <h1>Our Mission</h1>
+        <h1>
+          Our <span style={{ color: "#1890ff" }}>Mission</span>
+        </h1>
       </Divider>
       <div className={styles.backgroundDroplet}></div>
       <Row

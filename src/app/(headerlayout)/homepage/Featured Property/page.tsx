@@ -67,8 +67,8 @@ const AllPropertyData = () => {
             <Col
               xs={24}
               sm={24}
-              md={6}
-              lg={6}
+              md={10}
+              lg={8}
               xl={6}
               key={property.id}
               style={{ margin: "0 auto" }}

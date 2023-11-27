@@ -85,18 +85,6 @@ const MarketPlacePropertyCard = ({
                 <p style={{ ...baseStyle, fontSize: "1.6em" }}>{data?.price}</p>
               </div>
             </div>
-            <Button
-              type="text"
-              style={{
-                position: "absolute",
-                top: 10,
-                right: 10,
-                border: "none",
-                background: "transparent",
-              }}
-              icon={<ShoppingCartOutlined />}
-              onClick={() => onAddToCart(data)}
-            />
           </Card>
         </Link>
       </div>

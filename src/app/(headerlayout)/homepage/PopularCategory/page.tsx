@@ -13,7 +13,6 @@ const PopularPageCategory = () => {
     return <CustomLoading />;
   }
 
-  // Create a map to store unique categories with their first image
   const categoryToImageMap = new Map();
 
   data?.forEach((item: any) => {
@@ -42,16 +41,12 @@ const PopularPageCategory = () => {
       </Divider>
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify="center">
         {uniqueCategories.map((item, index) => (
-          // Ensure lg and xl are set to span 6 grid units to have four items per row
-          <Col key={index} xs={24} sm={12} md={8} lg={6} xl={6}>
-            {/* Adjust maxWidth if needed and make sure the margin auto is working */}
+          <Col key={index} xs={24} sm={12} md={10} lg={8} xl={6}>
             <Card
               hoverable
               style={{ width: "100%", maxWidth: "300px", margin: "0 auto" }}
             >
               <Link href={`/property/all-property`}>
-                {" "}
-                {/* Make sure the anchor tag is used correctly for the Link component */}
                 <div
                   style={{
                     display: "flex",

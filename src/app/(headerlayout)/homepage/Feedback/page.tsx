@@ -29,7 +29,7 @@ const FeedbackPage = () => {
 
         <Row gutter={16}>
           {data?.map((feedbackData: any) => (
-            <Col xs={24} sm={12} md={8} lg={6} key={feedbackData.id}>
+            <Col xs={24} sm={24} md={10} lg={8} xl={6} key={feedbackData.id}>
               <FeedbackCard feedbackData={feedbackData} />
             </Col>
           ))}

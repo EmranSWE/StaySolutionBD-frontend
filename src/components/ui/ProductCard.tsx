@@ -26,18 +26,6 @@ const ProductCard = ({ data, onAddToCart }: ProductCardProps) => {
           title={data.category}
           description={data.itemDescription}
         />
-        <Button
-          type="text"
-          style={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            border: "none",
-            background: "transparent",
-          }}
-          icon={<ShoppingCartOutlined />}
-          onClick={() => onAddToCart(data)}
-        />
       </Card>
     </Col>
   );

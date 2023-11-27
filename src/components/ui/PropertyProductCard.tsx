@@ -1,10 +1,6 @@
 import { truncateText } from "@/utils/truncateText";
-import {
-  DollarOutlined,
-  HomeOutlined,
-  ShoppingCartOutlined,
-} from "@ant-design/icons";
-import { Button, Card, Col } from "antd";
+import { DollarOutlined, HomeOutlined } from "@ant-design/icons";
+import { Card, Col } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 const { Meta } = Card;
@@ -14,10 +10,7 @@ type PropertyProductCardProps = {
   data?: any;
   onAddToCart?: any;
 };
-const PropertyProductCard = ({
-  data,
-  onAddToCart,
-}: PropertyProductCardProps) => {
+const PropertyProductCard = ({ data }: PropertyProductCardProps) => {
   const isAvailable = data.propertyStatus === "available";
 
   const baseStyle = useMemo(
@@ -131,19 +124,6 @@ const PropertyProductCard = ({
             </div>
           </Card>
         </Link>
-        <Button
-          type="text"
-          style={{
-            position: "absolute",
-            top: 10,
-            right: 60,
-            border: "none",
-            background: "gray",
-            borderRadius: "50%",
-          }}
-          icon={<ShoppingCartOutlined />}
-          onClick={() => onAddToCart(data)}
-        />
       </div>
     </Col>
   );
