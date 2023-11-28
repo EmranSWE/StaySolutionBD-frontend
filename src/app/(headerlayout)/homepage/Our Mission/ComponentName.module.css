@@ -1,5 +1,4 @@
 .rotatingImage:hover {
-  /* transform: rotate(90deg) !important; */
   transform: scale(0.8);
   border-radius: 5%;
   transition: all 5s;

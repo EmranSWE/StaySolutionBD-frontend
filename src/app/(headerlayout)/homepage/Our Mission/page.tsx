@@ -42,7 +42,7 @@ const OurMissionPage = () => {
           />
         </Col>
 
-        <Col xs={24} sm={24} md={14} lg={10}>
+        <Col xs={22} sm={22} md={14} lg={10}>
           <div className={styles.missionContainer}>
             <Typography.Title level={1}>Stay Solution BD</Typography.Title>
             <Typography.Paragraph className={styles.intro}>

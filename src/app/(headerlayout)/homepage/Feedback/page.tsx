@@ -21,11 +21,11 @@ const FeedbackPage = () => {
           <h1>
             <span style={{ color: "#1890ff" }}>Feedback </span> page
           </h1>
-          <p>
-            Your feedback <span style={{ color: "#1890ff" }}>helps us</span>{" "}
-            improve and <br /> provide a better experience for everyone.
-          </p>
         </Divider>
+        <p>
+          Your feedback <span style={{ color: "#1890ff" }}>helps us</span>{" "}
+          improve and <br /> provide a better experience for everyone.
+        </p>
 
         <Row gutter={16}>
           {data?.map((feedbackData: any) => (
