@@ -49,10 +49,7 @@ const AllPropertyData = () => {
   const [rent, setRent] = useState<number>(0);
   const [room, setRoom] = useState<number>(0);
   const [occupancy, setOccupancy] = useState<number>(0);
-  const handleReset = () => {
-    setSearchTerm("");
-    setCategory(null);
-  };
+
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
@@ -84,13 +81,6 @@ const AllPropertyData = () => {
   if (isLoading) {
     return <CustomLoading />;
   }
-  const handleAddToCart = (property: Property) => {
-    message.success("Added to cart");
-    setCartCounts((prevCounts) => ({
-      ...prevCounts,
-      [property.id]: (prevCounts[property.id] || 0) + 1,
-    }));
-  };
 
   const handleRentChange = (value: number) => {
     setRent(value);
@@ -102,7 +92,17 @@ const AllPropertyData = () => {
   const handleMaxOccupancy = (value: number) => {
     setOccupancy(value);
   };
-
+  const handleReset = () => {
+    setSearchTerm("");
+    setCategory(null);
+    setRent(0);
+    setRoom(0);
+    setOccupancy(0);
+    setSortBy("");
+    setSortOrder("");
+    setPage(1);
+    setSize(100);
+  };
   return (
     <>
       <SSBreadCrumb items={[{ label: "home", link: "/" }]} />
@@ -146,14 +146,6 @@ const AllPropertyData = () => {
               onChange={setSearchTerm}
               style={{ width: "100%", marginBottom: "10px" }}
             />
-            {/* <p>Search by category</p>
-            <CategorySelect
-              options={marketplaceCategory}
-              value={category || undefined}
-              onChange={setCategory}
-              placeholder="Search The category"
-              style={{ width: "100%", marginBottom: "10px" }}
-            /> */}
 
             <p>Monthly Rent</p>
             <DataSlider
@@ -166,7 +158,7 @@ const AllPropertyData = () => {
             <p>Number of Rooms</p>
             <DataSlider
               min={1}
-              max={100}
+              max={20}
               defaultValue={1}
               onChange={handleRoomChange}
               style={{ width: "100%", marginBottom: "10px" }}
@@ -174,18 +166,18 @@ const AllPropertyData = () => {
             <p>Max number of people</p>
             <DataSlider
               min={1}
-              max={250}
+              max={20}
               defaultValue={1}
               onChange={handleMaxOccupancy}
               style={{ width: "100%", marginBottom: "10px" }}
             />
-            {/* <Button
+            <Button
               type="primary"
               onClick={handleReset}
               style={{ width: "100%", marginBottom: "10px" }}
             >
               Reset
-            </Button> */}
+            </Button>
           </div>
         </Col>
 
@@ -204,16 +196,13 @@ const AllPropertyData = () => {
                 <Col
                   xs={20}
                   sm={24}
-                  md={8}
+                  md={10}
                   lg={8}
                   xl={8}
                   key={property.id}
                   style={{ margin: "0 auto" }}
                 >
-                  <PropertyProductCard
-                    data={property}
-                    onAddToCart={handleAddToCart}
-                  />
+                  <PropertyProductCard data={property} />
                 </Col>
               ))}
           </Row>

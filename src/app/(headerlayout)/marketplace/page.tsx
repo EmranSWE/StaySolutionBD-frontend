@@ -1,5 +1,5 @@
 "use client";
-import { Row, Col, message } from "antd";
+import { Row, Col, message, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { useDebounced } from "@/redux/hooks";
@@ -50,7 +50,15 @@ const MarketplacePropertyPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [category, setCategory] = useState<string | null>(null);
   const [price, setPrice] = useState<number>(0);
-
+  const handleReset = () => {
+    setSearchTerm("");
+    setCategory(null);
+    setSortBy("");
+    setSortOrder("");
+    setPrice(0);
+    setPage(1);
+    setSize(100);
+  };
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
@@ -223,6 +231,14 @@ const MarketplacePropertyPage = () => {
               onChange={handlePriceChange}
               style={{ width: "100%", marginBottom: "10px" }}
             />
+
+            <Button
+              type="primary"
+              onClick={handleReset}
+              style={{ width: "100%", marginBottom: "10px" }}
+            >
+              Reset
+            </Button>
           </div>
         </Col>
 
@@ -241,8 +257,8 @@ const MarketplacePropertyPage = () => {
                 <Col
                   xs={20}
                   sm={24}
-                  md={8}
-                  lg={8}
+                  md={10}
+                  lg={10}
                   xl={8}
                   key={property.id}
                   style={{ margin: "0 auto" }}

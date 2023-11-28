@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { usePropertiesQuery } from "@/redux/api/propertyApi";
 import { useState } from "react";
-import { Button, Card } from "antd";
+import { Button, Card, Divider } from "antd";
 const { Meta } = Card;
 import Image from "next/image";
 import Link from "next/link";
@@ -65,16 +65,19 @@ const RecentPropertyPage = () => {
 
   return (
     <>
-      <h2
-        style={{
-          textAlign: "center",
-          fontSize: "30px",
-          fontWeight: "bolder",
-          padding: "20px 0px",
-        }}
-      >
-        Recent<span style={{ color: "#1890ff" }}> Added Properties</span>
-      </h2>
+      <Divider>
+        <h2
+          style={{
+            textAlign: "center",
+            fontSize: "30px",
+            fontWeight: "bolder",
+            padding: "20px 0px",
+          }}
+        >
+          Recent<span style={{ color: "#1890ff" }}> Added Properties</span>
+        </h2>
+      </Divider>
+
       <Slider {...settings}>
         {data?.map((property: any) => (
           <div
