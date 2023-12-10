@@ -13,6 +13,14 @@ export const IssueApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.issues],
     }),
+    myFlat: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${ISSUE_URL}/my-flat`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [tagTypes.issues],
+    }),
     singleIssue: build.query({
       query: (id) => ({
         url: `${ISSUE_URL}/${id}`,
@@ -66,4 +74,5 @@ export const {
   useDeleteIssueMutation,
   useUpdateIssueMutation,
   useSingleUserIssueQuery,
+  useMyFlatQuery,
 } = IssueApi;

@@ -26,6 +26,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
   const router = useRouter();
   const [addRegularMonthlyPayment] = useAddRegularMonthlyPaymentMutation();
   const { data, isLoading } = useCurrentMonthMonthlyPaymentQuery(params?.id);
+
   if (isLoading) {
     return <CustomLoading />;
   }
@@ -34,7 +35,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
     new Set(data?.map((data: { month: any }) => data.month))
   );
 
-  const monthOptions = uniqueMonths.map((month) => ({
+  const monthOptions = uniqueMonths?.map((month) => ({
     label: getMonthName(month as number),
     value: month,
   }));
@@ -79,7 +80,12 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -94,11 +100,17 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
       />
       <Divider orientation="center">
         <h1>
-          Monthly <span style={{ color: "#1890ff" }}>Rent</span> Payment
+          Monthly <span style={{ color: "#4096FF" }}>Rent</span> Payment
         </h1>
       </Divider>
 
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Form submitHandler={onSubmit}>
           <div
             style={{
@@ -110,14 +122,15 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
           >
             <p
               style={{
-                fontSize: "18px",
+                fontSize: "24px",
+                fontWeight: "bolder",
                 marginBottom: "10px",
               }}
             >
               Payment Information
             </p>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={12} md={8} lg={6}>
+              <Col xs={24} sm={12} md={8} lg={12}>
                 <FormSelectField
                   size="large"
                   name="month"
@@ -129,7 +142,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   defaultValue={defaultMonth}
                 />
               </Col>
-              <Col xs={24} sm={12} md={8} lg={6}>
+              <Col xs={24} sm={12} md={8} lg={12}>
                 <FormInput
                   type="number"
                   name="year"
@@ -138,15 +151,8 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   value={defaultYear}
                 />
               </Col>
-              <Col xs={24} sm={12} md={8} lg={6}>
-                <FormSelectField
-                  name="status"
-                  options={paymentStatus}
-                  size="large"
-                  label="Status"
-                />
-              </Col>
-              <Col xs={24} sm={12} md={8} lg={6}>
+
+              <Col xs={24} sm={12} md={8} lg={12}>
                 <FormInput
                   type="number"
                   name="amount"
@@ -155,7 +161,7 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
                   label="Monthly Rent Amount"
                 />
               </Col>
-              <Col xs={24} sm={12} md={8} lg={6}>
+              <Col xs={24} sm={12} md={8} lg={12}>
                 <FormDatePicker
                   name="paymentDate"
                   label="Payment Date"
@@ -165,7 +171,11 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
             </Row>
           </div>
 
-          <Button htmlType="submit" type="primary">
+          <Button
+            htmlType="submit"
+            type="primary"
+            style={{ width: "100%", margin: "10px 0" }}
+          >
             Pay Now
           </Button>
         </Form>

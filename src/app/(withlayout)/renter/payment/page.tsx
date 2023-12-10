@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-
 import SSTable from "@/components/ui/SSBDTable";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import CustomLoading from "@/components/ui/CustomLoading";
@@ -30,28 +29,48 @@ const BookingPaymentPage = () => {
     {}
   );
 
-  if (isLoading) {
+  if (isLoading || !monthlyPayments || monthlyPayments.length === 0) {
     return <CustomLoading></CustomLoading>;
   }
-  // Generate an array with all months initially set to "Complete"
-  const allMonths = Array.from({ length: 12 }, (_, index) => ({
-    month: index + 1,
-    year: 2023, // Set the year to your desired value
-    status: "Complete",
-  }));
 
-  // Update the "Status" for months that exist in the backend response
-  monthlyPayments.forEach((payment: any) => {
-    const monthIndex = payment.month - 1;
-    allMonths[monthIndex] = payment;
-  });
+  const currentYear = new Date().getFullYear();
+  const next10Years = Array.from(
+    { length: 11 },
+    (_, index) => currentYear + index
+  );
+
+  const validYears = monthlyPayments
+    .map((payment: any) => payment.year)
+    .filter((year: number) => typeof year === "number" && !isNaN(year));
+
+  if (validYears.length === 0) {
+    return <div>No valid data available</div>;
+  }
+
+  const minYear = Math.min(...validYears, ...next10Years);
+  const maxYear = Math.max(...validYears, ...next10Years);
+
+  const allMonths = [];
+  for (let year = minYear; year <= maxYear; year++) {
+    for (let month = 1; month <= 12; month++) {
+      const monthIndex = (year - minYear) * 12 + (month - 1);
+      const payment = monthlyPayments.find(
+        (p: any) => p.year === year && p.month === month
+      );
+      allMonths.push({
+        month,
+        year,
+        amount: payment ? payment.amount : 0,
+        status: payment ? payment.status : "Incomplete",
+      });
+    }
+  }
 
   const columns = [
     {
       title: "Month",
       dataIndex: "month",
       render: (month: number) => getMonthName(month),
-      sorter: true,
     },
     {
       title: "Year",
@@ -73,14 +92,11 @@ const BookingPaymentPage = () => {
     },
   ];
 
-  const onTableChange = (pagination: any, filter: any, sorter: any) => {
-    // You can add sorting functionality here if needed
-  };
+  const onTableChange = (pagination: any, filters: any, sorter: any) => {};
 
   const rowClassName = (record: any) => {
     return record.status === "Completed" ? "green" : "yellow";
   };
-
   return (
     <div>
       <SSBreadCrumb

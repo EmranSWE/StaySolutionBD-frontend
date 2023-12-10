@@ -1,31 +1,38 @@
 "use client";
-
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import CustomLoading from "@/components/ui/CustomLoading";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import UploadImage from "@/components/ui/UploadImage";
 import { issueStatus, priorityLevel } from "@/constants/global";
 import { useAddIssueMutation } from "@/redux/api/issueApi";
-
-import { useAddReviewMutation } from "@/redux/api/reviewApi";
+import { useSingleRenterPropertyQuery } from "@/redux/api/propertyApi";
 import { getUserInfo } from "@/services/auth.service";
 
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const AddIssuePage = () => {
   const router = useRouter();
   const [addIssue] = useAddIssueMutation();
+  // const { data } = useMyFlatQuery({});
+  const { id } = getUserInfo() as { id: String };
+  if (!id) {
+    console.error("Id not found");
+  }
+  const { data, isLoading, isError, error } = useSingleRenterPropertyQuery(id);
+  if (isLoading) {
+    return <CustomLoading />;
+  }
+  const property = data[0]?.id;
 
   const onSubmit = async (values: any) => {
-    const { id } = getUserInfo() as { id: string };
-
     try {
+      console.log(values);
       const res = await addIssue(values);
       if (!res) {
-        message.error("Your issue doesnot added");
+        message.error("Your issue doesn't added");
       }
       console.log(res);
       message.success("Reviews created successfully!");
@@ -49,7 +56,11 @@ const AddIssuePage = () => {
           },
         ]}
       />
-      <h1>Create Issue</h1>
+      <Divider orientation="center">
+        <h1>
+          Create <span style={{ color: "#1890ff" }}>Issues</span>
+        </h1>
+      </Divider>
 
       <div>
         <Form submitHandler={onSubmit}>
@@ -67,7 +78,7 @@ const AddIssuePage = () => {
                 marginBottom: "10px",
               }}
             >
-              Property Information
+              Issues Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <Col
@@ -121,10 +132,12 @@ const AddIssuePage = () => {
                 }}
               >
                 <FormInput
-                  type="text"
                   name="propertyId"
+                  type="text"
+                  value={property}
+                  disabled
                   size="large"
-                  label="Property Id"
+                  label="Id"
                 />
               </Col>
             </Row>

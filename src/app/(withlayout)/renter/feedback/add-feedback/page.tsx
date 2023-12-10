@@ -3,17 +3,13 @@ import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import UploadImage from "@/components/ui/UploadImage";
 import { useAddFeedbackMutation } from "@/redux/api/feedbackApi";
-import { useAddReviewMutation } from "@/redux/api/reviewApi";
 import { FeedbackValidation } from "@/schemas/feedbackValidation";
-import { getUserInfo } from "@/services/auth.service";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const AddReviewPage = () => {
-  const router = useRouter();
   const [addFeedback] = useAddFeedbackMutation();
 
   const onSubmit = async (values: any) => {
@@ -46,18 +42,18 @@ const AddReviewPage = () => {
       <SSBreadCrumb
         items={[
           {
-            label: "owner",
+            label: "renter",
             link: "/owner",
           },
           {
             label: "feedback",
-            link: "/owner/feedback/",
+            link: "/renter/feedback/",
           },
         ]}
       />
       <Divider orientation="center">
         <h1>
-          Create <span style={{ color: "#1890ff" }}>Feedback</span> Question
+          Create <span style={{ color: "#1890ff" }}>Your Feedback</span>
         </h1>
       </Divider>
 
@@ -74,15 +70,6 @@ const AddReviewPage = () => {
               marginBottom: "10px",
             }}
           >
-            <p
-              style={{
-                fontSize: "18px",
-                marginBottom: "10px",
-                textAlign: "center",
-              }}
-            >
-              Feedback Information
-            </p>
             <Row
               gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
               style={{ display: "flex", justifyContent: "center" }}

@@ -48,11 +48,10 @@ const MyReviewPage = () => {
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("User ID not found");
-    // Handle the error as required, maybe redirect the user or show an error message
   }
 
   const { data, isLoading, isError, error } = useMyFeedbackQuery(id);
-
+  console.log(data);
   if (isLoading) {
     return <CustomLoading />;
   }
@@ -76,7 +75,7 @@ const MyReviewPage = () => {
       render: function (id: any) {
         return (
           <>
-            <Link href={`/owner/feedback/edit/${id}`}>
+            <Link href={`/renter/feedback/edit/${id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -91,7 +90,7 @@ const MyReviewPage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setIds(id); // Corrected this line
+                setIds(id);
               }}
               danger
               style={{ marginLeft: "3px" }}
@@ -144,7 +143,7 @@ const MyReviewPage = () => {
       />
       <Divider orientation="center">
         <h1>
-          Create <span style={{ color: "#1890ff" }}>Feedback</span> Question
+          Create <span style={{ color: "#1890ff" }}>Feedback</span>
         </h1>
       </Divider>
       <ActionBar title="Feedback List">
@@ -157,7 +156,7 @@ const MyReviewPage = () => {
           }}
         />
         <div>
-          <Link href="/owner/feedback/add-feedback">
+          <Link href="/renter/feedback/add-feedback">
             <Button type="primary">Create Feedback</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (

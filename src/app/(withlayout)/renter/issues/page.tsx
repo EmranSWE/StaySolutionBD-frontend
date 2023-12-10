@@ -13,18 +13,16 @@ import {
 import { useState } from "react";
 import { useDebounced } from "@/redux/hooks";
 
-import dayjs from "dayjs";
 import SSTable from "@/components/ui/SSBDTable";
 import SSModal from "@/components/ui/SSModal";
 import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
-import { useReviewsQuery } from "@/redux/api/reviewApi";
-import { useIssuesQuery } from "@/redux/api/issueApi";
+import { useDeleteIssueMutation, useIssuesQuery } from "@/redux/api/issueApi";
 
 const PropertyIssuePage = () => {
   const query: Record<string, any> = {};
-  const [deleteProperty] = useDeletePropertyMutation();
+  const [deleteProperty] = useDeleteIssueMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
