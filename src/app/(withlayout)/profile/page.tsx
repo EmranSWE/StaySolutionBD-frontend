@@ -2,6 +2,7 @@
 import { getUserInfo } from "@/services/auth.service";
 import React from "react";
 import AdminPage from "../admin/page";
+import UserDashboard from "../renter/dashboard/page";
 
 const ProfilePage = () => {
   const { email, role } = getUserInfo() as { email: string; role: string };
@@ -12,10 +13,7 @@ const ProfilePage = () => {
         <AdminPage></AdminPage>
       ) : (
         <div>
-          <h2>Welcome back to your profile </h2>
-          <p>You are "{email}"</p>
-          {/* Render your dashboard page here */}
-          {/* <DashboardPage /> */}
+          <UserDashboard />
         </div>
       )}
     </div>
