@@ -21,14 +21,23 @@ const AdminPage = () => {
   }
   return (
     <>
-      <p>Dear,{`${data?.firstName} ${data?.lastName}`}</p>
-      <Divider orientation="center">
-        <h1>
-          Welcome to <br /> <span style={{ color: "#1890ff" }}> Admin </span>
-          Dashboard
-        </h1>
-      </Divider>
-      <DashboardPage />
+      <div
+        style={{
+          background:
+            "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
+          padding: "20px",
+          minHeight: "100vh",
+        }}
+      >
+        <h3>Dear, {`${data?.firstName} ${data?.lastName}`}</h3>
+        <Divider orientation="center">
+          <h1 style={{ color: "white" }}>
+            Welcome to <br /> <span style={{ color: "#1890ff" }}> Admin </span>
+            Dashboard
+          </h1>
+        </Divider>
+        <DashboardPage />
+      </div>
     </>
   );
 };

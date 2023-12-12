@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useCurrentBookingStatusQuery } from "@/redux/api/monthlyPaymentApi";
 import CustomLoading from "@/components/ui/CustomLoading";
@@ -56,8 +57,9 @@ const BuildingPage = () => {
       <style jsx>{`
         .building-container {
           position: relative;
-          width: 300px;
+          width: 280px;
           height: 600px;
+          margin-left: 10px;
           background-color: #f0e8d5;
         }
 
@@ -81,11 +83,10 @@ const BuildingPage = () => {
           top: -50px;
           left: 50%;
           transform: translateX(-50%);
-          width: 0;
-          height: 0;
-          border-left: 150px solid transparent;
-          border-right: 150px solid transparent;
-          border-bottom: 50px solid #4c4c4c;
+
+          border-left: 140px solid transparent;
+          border-right: 140px solid transparent;
+          border-bottom: 50px solid rgb(63, 94, 251);
           z-index: 4;
         }
 

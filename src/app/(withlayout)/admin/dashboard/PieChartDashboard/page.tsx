@@ -17,7 +17,7 @@ const PieChartDashboard = () => {
     return <div>No data available</div>;
   }
 
-  const totalValue = totalAmount; // Example total value
+  const totalValue = totalAmount;
   const maxValue = 1000000;
   const remainingValue = Math.max(maxValue - totalValue, 0);
 
@@ -33,16 +33,16 @@ const PieChartDashboard = () => {
   return (
     <div>
       <div style={{ marginLeft: "20px" }}>
-        <h3>Pie Status</h3>
-        <p>
+        <h2 style={{ marginTop: "5%" }}>Pie Status</h2>
+        <p style={{ fontSize: "18px", fontWeight: "bolder" }}>
           <CalendarOutlined />
-          <span
-            style={{ fontSize: "20px", fontWeight: "bolder" }}
-          >{`${month}/${day}/${year}`}</span>
+          <span>{`${month}/${day}/${year}`}</span>
         </p>
-        <p>
+        <p style={{ fontSize: "20px", fontWeight: "bolder", color: "green" }}>
           <DollarOutlined />
-          <span style={{ fontSize: "20px", fontWeight: "bolder" }}>
+          <span
+            style={{ fontSize: "20px", fontWeight: "bolder", color: "green" }}
+          >
             {totalAmount} Taka
           </span>
         </p>

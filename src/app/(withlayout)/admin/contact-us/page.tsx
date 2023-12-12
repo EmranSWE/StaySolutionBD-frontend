@@ -179,7 +179,7 @@ const AdminPage = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deleteContactHandler(propertyId)}
       >
-        <p className="my-5">Do you want to remove this contactus data?</p>
+        <p className="my-5">Do you want to remove this contact us data?</p>
       </SSModal>
     </div>
   );

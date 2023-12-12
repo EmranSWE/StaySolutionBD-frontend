@@ -54,7 +54,13 @@ const BarChartDashboard: React.FC = () => {
   );
 
   return (
-    <div style={{ width: "100%", height: "300px" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "300px",
+        marginBottom: "15%",
+      }}
+    >
       <h2 style={{ textAlign: "center" }}>Monthly Rent</h2>
       <ResponsiveContainer>
         <BarChart
@@ -71,12 +77,12 @@ const BarChartDashboard: React.FC = () => {
           <YAxis />
           <Tooltip formatter={(value: number) => [`${value} Taka`, "Total"]} />
           <Legend />
-          <Bar dataKey="Total" fill="#8884d8" barSize={20}>
+          <Bar dataKey="Total" fill="#3498db" barSize={20}>
             <LabelList dataKey="Total" position="top" />
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <div style={{ textAlign: "center" }}>
         <strong>Total Amount Collected: </strong>
         {totalAmount.toLocaleString()} Taka
       </div>
