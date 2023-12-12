@@ -130,7 +130,13 @@ const AdminPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background:
+          "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
+        minHeight: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -145,7 +151,7 @@ const AdminPage = () => {
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            width: "20%",
+            width: "80%",
           }}
         />
         <div>

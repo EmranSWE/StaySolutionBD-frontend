@@ -53,7 +53,7 @@ export const SignUpValidation = yup.object().shape({
   role: yup
     .string()
     .required("User Type is required")
-    .oneOf(["owner", "renter"], "Invalid User Type"),
+    .oneOf(["owner", "renter", "admin"], "Invalid User Type"),
   address: yup
     .string()
     .required("Address is required")

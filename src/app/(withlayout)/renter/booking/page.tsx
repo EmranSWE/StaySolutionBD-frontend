@@ -177,7 +177,12 @@ const PropertyBookingPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -192,27 +197,6 @@ const PropertyBookingPage = () => {
           My <span style={{ color: "#1890ff" }}>All</span> Booking
         </h1>
       </Divider>
-      <ActionBar title="">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "50%",
-          }}
-        />
-        <div>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="primary"
-              onClick={resetFilters}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
-      </ActionBar>
 
       <SSTable
         loading={isLoading}

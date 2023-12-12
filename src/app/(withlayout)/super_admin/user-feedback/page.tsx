@@ -1,0 +1,129 @@
+"use client";
+
+import { Button } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import SSTable from "@/components/ui/SSBDTable";
+import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
+import { useFeedbacksQuery } from "@/redux/api/feedbackApi";
+
+const ManageFeedbackPage = () => {
+  const query: Record<string, any> = {};
+  //   const [deleteProperty] = useDeletePropertyMutation();
+
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [propertyId, setPropertyId] = useState<string>("");
+
+  query["limit"] = size;
+  query["page"] = page;
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
+
+  const { data, isLoading } = useFeedbacksQuery({ ...query });
+  const meta = data?.meta;
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "user",
+      render: function (data: any) {
+        return `${data?.firstName} ${data?.lastName}`;
+      },
+    },
+    {
+      title: "Email",
+      dataIndex: "user",
+      render: function (data: any) {
+        return `${data?.email}`;
+      },
+    },
+    {
+      title: "Rating",
+      dataIndex: "rating",
+    },
+    {
+      title: "Feedback",
+      dataIndex: "feedback",
+      sorter: true,
+    },
+
+    {
+      title: "Action",
+      dataIndex: "id",
+      render: function (id: any) {
+        return (
+          <>
+            <Button
+              type="primary"
+              onClick={() => {
+                setOpen(true);
+                setPropertyId(id);
+              }}
+              danger
+              style={{ marginLeft: "3px" }}
+            >
+              <DeleteOutlined />
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
+  const onPaginationChange = (page: number, pageSize: number) => {
+    console.log("Page:", page, "PageSize:", pageSize);
+    setPage(page);
+    setSize(pageSize);
+  };
+  const onTableChange = (pagination: any, filter: any, sorter: any) => {
+    const { order, field } = sorter;
+    // console.log(order, field);
+    setSortBy(field as string);
+    setSortOrder(order === "ascend" ? "asc" : "desc");
+  };
+
+  return (
+    <div
+      style={{
+        background:
+          "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
+        minHeight: "100vh",
+      }}
+    >
+      <SSBreadCrumb
+        items={[
+          {
+            label: "Super admin",
+            link: "/super_admin",
+          },
+        ]}
+      />
+
+      <SSTable
+        loading={isLoading}
+        columns={columns}
+        dataSource={data}
+        pageSize={size}
+        totalPages={meta?.total}
+        showSizeChanger={true}
+        onPaginationChange={onPaginationChange}
+        onTableChange={onTableChange}
+        showPagination={true}
+      />
+
+      {/* <SSModal
+        title="Remove property"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deletePropertyHandler(propertyId)}
+      >
+        <p className="my-5">Do you want to remove this admin?</p>
+      </SSModal> */}
+    </div>
+  );
+};
+
+export default ManageFeedbackPage;

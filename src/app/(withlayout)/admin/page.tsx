@@ -29,7 +29,17 @@ const AdminPage = () => {
           minHeight: "100vh",
         }}
       >
-        <h3>Dear, {`${data?.firstName} ${data?.lastName}`}</h3>
+        <h3>
+          Dear, {`${data?.firstName} ${data?.lastName}`}{" "}
+          <span
+            style={{
+              display: "inline-block",
+              animation: "shake 2s ease-in-out infinite",
+            }}
+          >
+            👋
+          </span>
+        </h3>
         <Divider orientation="center">
           <h1 style={{ color: "white" }}>
             Welcome to <br /> <span style={{ color: "#1890ff" }}> Admin </span>

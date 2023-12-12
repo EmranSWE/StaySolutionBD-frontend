@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 const AddIssuePage = () => {
   const router = useRouter();
   const [addIssue] = useAddIssueMutation();
-  // const { data } = useMyFlatQuery({});
+
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("Id not found");
@@ -28,9 +28,10 @@ const AddIssuePage = () => {
   const property = data[0]?.id;
 
   const onSubmit = async (values: any) => {
+    values.issueStatus = "OPEN";
     try {
-      console.log(values);
       const res = await addIssue(values);
+      console.log(res);
       if (!res) {
         message.error("Your issue doesn't added");
       }
@@ -43,7 +44,12 @@ const AddIssuePage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -81,41 +87,14 @@ const AddIssuePage = () => {
               Issues Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormTextArea
                   name="issueDescription"
                   label="Issue Description"
                   rows={4}
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="issueStatus"
-                  options={issueStatus}
-                  label="Issue"
-                  placeholder="Select status"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormSelectField
                   size="large"
                   name="priorityLevel"
@@ -124,13 +103,7 @@ const AddIssuePage = () => {
                   placeholder="Select Priority Level"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} sm={24} md={8} lg={8}>
                 <FormInput
                   name="propertyId"
                   type="text"

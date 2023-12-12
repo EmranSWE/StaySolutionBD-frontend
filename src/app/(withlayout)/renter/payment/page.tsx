@@ -5,6 +5,7 @@ import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import CustomLoading from "@/components/ui/CustomLoading";
 import { useSingleUserMonthlyPaymentQuery } from "@/redux/api/monthlyPaymentApi";
 import "./payment.style.css";
+import { Divider } from "antd";
 function getMonthName(monthNumber: number) {
   const months = [
     "January",
@@ -98,7 +99,12 @@ const BookingPaymentPage = () => {
     return record.status === "Completed" ? "green" : "yellow";
   };
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -107,7 +113,11 @@ const BookingPaymentPage = () => {
           },
         ]}
       />
-
+      <Divider orientation="center">
+        <h1>
+          My <span style={{ color: "#1890ff" }}>Payment</span> History
+        </h1>
+      </Divider>
       {isLoading ? (
         <CustomLoading />
       ) : (

@@ -18,11 +18,15 @@ const ChangePasswordPage = () => {
     }
 
     message.success("User updated successfully!");
-    // router.push("/owner/my-property");
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background:
+          "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -35,69 +39,79 @@ const ChangePasswordPage = () => {
           },
         ]}
       />
-      <h1>Change Password</h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <h1>Change Password</h1>
 
-      <div>
-        <Form submitHandler={onSubmit}>
-          <div
-            style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "5px",
-              padding: "15px",
-              marginBottom: "10px",
-            }}
-          >
-            <p
+        <div>
+          <Form submitHandler={onSubmit}>
+            <div
               style={{
-                fontSize: "18px",
+                border: "1px solid #d9d9d9",
+                borderRadius: "5px",
+                padding: "15px",
                 marginBottom: "10px",
               }}
             >
-              Profile Information
-            </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                xs={24}
-                sm={24}
-                md={12}
-                lg={12}
+              <p
                 style={{
+                  fontSize: "18px",
                   marginBottom: "10px",
                 }}
               >
-                <FormInput
-                  name="oldPassword"
-                  type="text"
-                  size="large"
-                  label="Old Password"
-                  placeholder="Enter your old password"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                sm={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  name="newPassword"
-                  type="text"
-                  size="large"
-                  label="New Password"
-                  placeholder="Enter the New Password"
-                />
-              </Col>
-            </Row>
-          </div>
-          <Button htmlType="submit" type="primary">
-            Update
-          </Button>
-        </Form>
+                Profile Information
+              </p>
+              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  sm={24}
+                  md={24}
+                  lg={24}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormInput
+                    name="oldPassword"
+                    type="text"
+                    size="large"
+                    label="Old Password"
+                    placeholder="Enter your old password"
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  xs={24}
+                  sm={24}
+                  md={24}
+                  lg={24}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormInput
+                    name="newPassword"
+                    type="text"
+                    size="large"
+                    label="New Password"
+                    placeholder="Enter the New Password"
+                  />
+                </Col>
+              </Row>
+            </div>
+            <Button htmlType="submit" type="primary" style={{ width: "100%" }}>
+              Update
+            </Button>
+          </Form>
+        </div>
       </div>
     </div>
   );

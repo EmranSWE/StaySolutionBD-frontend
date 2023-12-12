@@ -27,6 +27,20 @@ export const propertyApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.property],
     }),
+    availableProperty: build.query({
+      query: () => ({
+        url: `${PROPERTY_URL}/available-property`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.property],
+    }),
+    bookedProperty: build.query({
+      query: () => ({
+        url: `${PROPERTY_URL}/booked-property`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.property],
+    }),
     popularCategory: build.query({
       query: () => ({
         url: `${PROPERTY_URL}/popular-category`,
@@ -88,4 +102,6 @@ export const {
   useSingleUserPropertyQuery,
   useSingleRenterPropertyQuery,
   usePopularCategoryQuery,
+  useAvailablePropertyQuery,
+  useBookedPropertyQuery,
 } = propertyApi;

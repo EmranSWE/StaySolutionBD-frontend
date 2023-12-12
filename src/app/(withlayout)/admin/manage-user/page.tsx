@@ -81,17 +81,6 @@ const ManageUserPage = () => {
       render: function (userId: any) {
         return (
           <>
-            {/* <Link href={`/admin/manage-user/edit/${userId}`}>
-              <Button
-                style={{
-                  margin: "0px 5px",
-                }}
-                onClick={() => console.log(data)}
-                type="primary"
-              >
-                <EditOutlined />
-              </Button>
-            </Link> */}
             <Button
               type="primary"
               onClick={() => {
@@ -118,10 +107,6 @@ const ManageUserPage = () => {
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
-  const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-  };
   const deleteUserHandler = async (id: string) => {
     try {
       const res = await deleteUser(id);
@@ -135,7 +120,13 @@ const ManageUserPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background:
+          "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
+        minHeight: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {

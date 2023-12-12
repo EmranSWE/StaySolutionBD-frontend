@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -80,7 +80,7 @@ const PropertyIssuePage = () => {
       render: function (propertyId: any) {
         return (
           <>
-            <Link href={`/renter/manage-property/edit/${propertyId}`}>
+            <Link href={`/renter/issues/edit/${propertyId}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -136,7 +136,12 @@ const PropertyIssuePage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -145,22 +150,36 @@ const PropertyIssuePage = () => {
           },
         ]}
       />
-      <ActionBar title="Issue List">
+      <Divider orientation="center">
+        <h1>
+          Issues <span style={{ color: "#1890ff" }}>List</span>
+        </h1>
+      </Divider>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Input
           size="large"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
             width: "60%",
+            marginBottom: "10px",
           }}
         />
-        <div>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Link href="/renter/issues/add-issue">
-            <Button type="primary">Create Issue</Button>
+            <Button type="primary" style={{ marginRight: "10px" }}>
+              Create Issue
+            </Button>
           </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+          {!!searchTerm && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ marginRight: "10px" }}
               type="primary"
               onClick={resetFilters}
             >
@@ -168,7 +187,7 @@ const PropertyIssuePage = () => {
             </Button>
           )}
         </div>
-      </ActionBar>
+      </div>
 
       <SSTable
         loading={isLoading}
@@ -183,12 +202,12 @@ const PropertyIssuePage = () => {
       />
 
       <SSModal
-        title="Remove property"
+        title="Remove Issues⚠️"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deletePropertyHandler(propertyId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this Issues?</p>
       </SSModal>
     </div>
   );

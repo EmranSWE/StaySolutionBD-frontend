@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -22,11 +22,14 @@ import {
 } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
-import { useReviewsQuery } from "@/redux/api/reviewApi";
+import {
+  useDeleteReviewMutation,
+  useReviewsQuery,
+} from "@/redux/api/reviewApi";
 
 const MyReviewPage = () => {
   const query: Record<string, any> = {};
-  const [deleteProperty] = useDeletePropertyMutation();
+  const [deleteReview] = useDeleteReviewMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
@@ -58,14 +61,18 @@ const MyReviewPage = () => {
   const { data, isLoading, isError, error } = useReviewsQuery({ ...query });
   if (isError) {
     console.error("Error fetching property data:", error);
-    // Handle the error as needed
   }
-
-  console.log("data", data);
 
   const meta = data?.meta;
 
   const columns = [
+    {
+      title: "Image",
+      dataIndex: "reviewPic",
+      render: function (data: any) {
+        return <img src={data[0]} alt="" width={30} />;
+      },
+    },
     {
       title: "Comments",
       dataIndex: "comments",
@@ -91,7 +98,7 @@ const MyReviewPage = () => {
       render: function (propertyId: any) {
         return (
           <>
-            <Link href={`/renter/manage-property/edit/${propertyId}`}>
+            <Link href={`/renter/review/edit/${propertyId}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -124,7 +131,7 @@ const MyReviewPage = () => {
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    // console.log(order, field);
+
     setSortBy(field as string);
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
@@ -137,7 +144,7 @@ const MyReviewPage = () => {
 
   const deletePropertyHandler = async (id: string) => {
     try {
-      const res = await deleteProperty(id);
+      const res = await deleteReview(id);
       if (res) {
         message.success("Property Successfully Deleted!");
         setOpen(false);
@@ -148,7 +155,12 @@ const MyReviewPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -157,22 +169,36 @@ const MyReviewPage = () => {
           },
         ]}
       />
-      <ActionBar title="Property List">
+      <Divider orientation="center">
+        <h1>
+          My <span style={{ color: "#1890ff" }}>Property</span> Feedback
+        </h1>
+      </Divider>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Input
           size="large"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
             width: "60%",
+            marginBottom: "10px",
           }}
         />
-        <div>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Link href="/renter/review/add-review">
-            <Button type="primary">Create Review</Button>
+            <Button type="primary" style={{ marginRight: "10px" }}>
+              Create Issue
+            </Button>
           </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+          {!!searchTerm && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ marginRight: "10px" }}
               type="primary"
               onClick={resetFilters}
             >
@@ -180,7 +206,7 @@ const MyReviewPage = () => {
             </Button>
           )}
         </div>
-      </ActionBar>
+      </div>
 
       <SSTable
         loading={isLoading}
@@ -195,12 +221,12 @@ const MyReviewPage = () => {
       />
 
       <SSModal
-        title="Remove property"
+        title="Remove property Reviews"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => deletePropertyHandler(propertyId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this feedback?</p>
       </SSModal>
     </div>
   );

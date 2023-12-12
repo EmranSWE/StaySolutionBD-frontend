@@ -39,6 +39,8 @@ const AccountProfile = () => {
         alignItems: "center",
         height: "100vh",
         padding: "20px",
+        background:
+          "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
       }}
     >
       <Card style={{ width: "90vw", maxWidth: 800 }}>

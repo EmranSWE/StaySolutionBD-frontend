@@ -113,7 +113,13 @@ const ManageFeedbackPage = () => {
   //   };
 
   return (
-    <div>
+    <div
+      style={{
+        background:
+          "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
+        minHeight: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {

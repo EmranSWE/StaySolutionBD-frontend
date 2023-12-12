@@ -7,18 +7,13 @@ import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import CustomLoading from "@/components/ui/CustomLoading";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import UploadImage from "@/components/ui/UploadImage";
-import {
-  locations,
-  propertyAmenities,
-  propertyRules,
-} from "@/constants/global";
+
 import {
   useSingleFeedbackQuery,
   useUpdateFeedbackMutation,
 } from "@/redux/api/feedbackApi";
 
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const UpdateFeedback = ({ params }: any) => {
@@ -60,7 +55,12 @@ const UpdateFeedback = ({ params }: any) => {
     }
   };
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -73,7 +73,11 @@ const UpdateFeedback = ({ params }: any) => {
           },
         ]}
       />
-      <h1>Update Feedback</h1>
+      <Divider orientation="center">
+        <h3>
+          Update <span style={{ color: "#1890ff" }}>Feedback</span> List
+        </h3>
+      </Divider>
 
       <div>
         <Form submitHandler={onSubmit}>
@@ -94,13 +98,7 @@ const UpdateFeedback = ({ params }: any) => {
               Feedback Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col sm={24} lg={12} xl={12}>
                 <FormInput
                   name="rating"
                   type="number"
@@ -111,7 +109,7 @@ const UpdateFeedback = ({ params }: any) => {
                 />
               </Col>
 
-              <Col span={12} style={{ margin: "10px 0" }}>
+              <Col sm={24} lg={12} xl={12}>
                 <FormTextArea
                   name="feedback"
                   defaultValue={data?.feedback}

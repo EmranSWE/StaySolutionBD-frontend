@@ -1,0 +1,10 @@
+.rotatingImage {
+  transform: rotate(0deg) scale(1);
+  border-radius: 0;
+  transition: transform 6s, border-radius 6s;
+}
+
+.rotatingImage:hover {
+  transform: rotate(-70deg) scale(1.1);
+  border-radius: 10%;
+}

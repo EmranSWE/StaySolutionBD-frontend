@@ -112,41 +112,6 @@ const RentManagement = () => {
       dataIndex: "flatNo",
     },
     ...monthColumns,
-
-    {
-      title: "Action",
-      dataIndex: "id",
-      render: function (propertyId: any) {
-        return (
-          <>
-            <div style={{ display: "flex" }}>
-              <Link href={`/admin/manage-property/edit/${propertyId}`}>
-                <Button
-                  style={{
-                    margin: "0px 5px",
-                  }}
-                  onClick={() => console.log(data)}
-                  type="primary"
-                >
-                  <EditOutlined />
-                </Button>
-              </Link>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setOpen(true);
-                  setPropertyId(propertyId);
-                }}
-                danger
-                style={{ marginLeft: "3px" }}
-              >
-                <DeleteOutlined />
-              </Button>
-            </div>
-          </>
-        );
-      },
-    },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -178,7 +143,13 @@ const RentManagement = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background:
+          "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
+        minHeight: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {

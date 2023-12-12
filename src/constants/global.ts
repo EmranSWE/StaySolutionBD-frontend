@@ -3,6 +3,8 @@ export const userTypes = [
   { label: "Renter", value: "renter" },
 ];
 
+export const adminTypes = [{ label: "Admin", value: "admin" }];
+
 export const propertyRules = [
   { label: "No smoking", value: "No smoking" },
   { label: "No pets", value: "No pets" },

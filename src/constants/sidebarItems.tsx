@@ -4,9 +4,7 @@ import {
   TableOutlined,
   AppstoreOutlined,
   ScheduleOutlined,
-  ThunderboltOutlined,
   CreditCardOutlined,
-  FileTextOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -71,11 +69,6 @@ export const sidebarItems = (role: string) => {
       icon: <AppstoreOutlined />,
       children: [
         {
-          label: <Link href={`/${role}/payment`}>Payment</Link>,
-          key: `/${role}/payment`,
-        },
-
-        {
           label: <Link href={`/${role}/issues`}>Issues</Link>,
           key: `/${role}/issues`,
         },
@@ -92,21 +85,9 @@ export const sidebarItems = (role: string) => {
       key: `/${role}/admin`,
     },
     {
-      label: <Link href={`/${role}/user`}>Manage User</Link>,
+      label: <Link href={`/${role}/create-admin`}>Create Admin</Link>,
       icon: <TableOutlined />,
-      key: `/${role}/user`,
-    },
-
-    {
-      label: "Management",
-      key: "management",
-      icon: <AppstoreOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}/property`}>Property</Link>,
-          key: `/${role}/property`,
-        },
-      ],
+      key: `/${role}/create-admin`,
     },
   ];
 

@@ -42,13 +42,15 @@ export const ReviewApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.reviews],
     }),
+
     updateReview: build.mutation({
       query: (data) => ({
         url: `${REVIEW_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
+        contentType: "multipart/form-data",
       }),
-      invalidatesTags: [tagTypes.reviews],
+      invalidatesTags: [tagTypes.property],
     }),
     deleteReview: build.mutation({
       query: (id) => ({

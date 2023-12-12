@@ -3,23 +3,37 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
+import CustomLoading from "@/components/ui/CustomLoading";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
+import { useSingleRenterPropertyQuery } from "@/redux/api/propertyApi";
 
 import { useAddReviewMutation } from "@/redux/api/reviewApi";
 import { getUserInfo } from "@/services/auth.service";
 
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const AddReviewPage = () => {
-  const router = useRouter();
+  const { id } = getUserInfo() as { id: String };
   const [addReview] = useAddReviewMutation();
+  const router = useRouter();
 
+  if (!id) {
+    console.error("Id not found");
+  }
+  const { data, isLoading, isError, error } = useSingleRenterPropertyQuery(id);
+  if (isLoading) {
+    return <CustomLoading />;
+  }
+  const propertyId = data[0]?.id;
+  const flatNo = data[0]?.flatNo;
+  if (isLoading) {
+    return <CustomLoading />;
+  }
   const onSubmit = async (values: any) => {
-    const { id } = getUserInfo() as { id: string };
     values.renterId = id;
-    console.log("values", values);
+    values.propertyId = propertyId;
     const obj = { ...values };
     const file = obj["file"];
     delete obj["file"];
@@ -31,7 +45,7 @@ const AddReviewPage = () => {
     try {
       const res = await addReview(formData);
       if (!res) {
-        message.error("Your review doesnot added");
+        message.error("Your review doesn't added");
       }
       console.log(res);
       message.success("Reviews created successfully!");
@@ -42,7 +56,12 @@ const AddReviewPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -51,11 +70,15 @@ const AddReviewPage = () => {
           },
           {
             label: "review",
-            link: "/renter/my-review/",
+            link: "/renter/review/",
           },
         ]}
       />
-      <h1>Create Review</h1>
+      <Divider orientation="center">
+        <h1>
+          Add <span style={{ color: "#1890ff" }}>New</span> Review
+        </h1>
+      </Divider>
 
       <div>
         <Form submitHandler={onSubmit}>
@@ -76,26 +99,11 @@ const AddReviewPage = () => {
               Property Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormTextArea
-                  name="comments"
-                  label="Property Comments"
-                  rows={4}
-                />
+              <Col xs={24} sm={24} lg={8} xl={8} style={{ fontSize: "20px" }}>
+                <UploadImage name="file" />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+
+              <Col xs={24} sm={24} lg={8} xl={8} style={{ fontSize: "20px" }}>
                 <FormInput
                   name="rating"
                   type="number"
@@ -106,35 +114,45 @@ const AddReviewPage = () => {
               </Col>
 
               <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <UploadImage name="file" />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
+                xs={24}
+                sm={24}
+                lg={8}
+                xl={8}
+                style={{ fontSize: "20px", marginTop: "2px" }}
               >
                 <FormInput
-                  type="text"
                   name="propertyId"
+                  type="text"
+                  value={flatNo}
+                  disabled
                   size="large"
-                  label="Property Id"
+                  label="Your Flat"
                 />
+              </Col>
+              <Col xs={24} sm={24} lg={24} xl={24} style={{ fontSize: "20px" }}>
+                <FormTextArea
+                  name="comments"
+                  label="Property Comments"
+                  rows={4}
+                />
+              </Col>
+              <Col
+                xs={24}
+                sm={24}
+                lg={24}
+                xl={24}
+                style={{ fontSize: "20px", textAlign: "center" }}
+              >
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  style={{ width: "100%", marginTop: "10px" }}
+                >
+                  Add Review
+                </Button>
               </Col>
             </Row>
           </div>
-
-          <Button htmlType="submit" type="primary">
-            Add Review
-          </Button>
         </Form>
       </div>
     </div>

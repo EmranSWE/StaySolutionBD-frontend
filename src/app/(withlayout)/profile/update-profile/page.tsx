@@ -50,7 +50,13 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background:
+          "linear-gradient(90deg, hsla(113, 96%, 81%, 1) 0%, hsla(188, 90%, 51%, 1) 100%)",
+        minHeight: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -84,7 +90,6 @@ const UpdateProfile = () => {
               Profile Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              {/* For extra small screens (xs) */}
               <Col xs={24} sm={24} md={8} lg={8}>
                 <UploadImage name="file" />
               </Col>
@@ -165,11 +170,23 @@ const UpdateProfile = () => {
                   label="Your address"
                 />
               </Col>
+              <Col
+                xs={24}
+                sm={24}
+                md={22}
+                lg={22}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  style={{ width: "80%", marginTop: "5px" }}
+                >
+                  Update
+                </Button>
+              </Col>
             </Row>
           </div>
-          <Button htmlType="submit" type="primary">
-            Update
-          </Button>
         </Form>
       </div>
     </div>

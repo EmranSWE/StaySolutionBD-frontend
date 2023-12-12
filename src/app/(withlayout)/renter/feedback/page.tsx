@@ -132,7 +132,12 @@ const MyReviewPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -143,25 +148,34 @@ const MyReviewPage = () => {
       />
       <Divider orientation="center">
         <h1>
-          Create <span style={{ color: "#1890ff" }}>Feedback</span>
+          Your <span style={{ color: "#1890ff" }}>Feedback</span> List
         </h1>
       </Divider>
-      <ActionBar title="Feedback List">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Input
           size="large"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
             width: "60%",
+            marginBottom: "10px",
           }}
         />
-        <div>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Link href="/renter/feedback/add-feedback">
-            <Button type="primary">Create Feedback</Button>
+            <Button type="primary" style={{ marginRight: "10px" }}>
+              Create Issue
+            </Button>
           </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+          {!!searchTerm && (
             <Button
-              style={{ margin: "0px 5px" }}
+              style={{ marginRight: "10px" }}
               type="primary"
               onClick={resetFilters}
             >
@@ -169,7 +183,7 @@ const MyReviewPage = () => {
             </Button>
           )}
         </div>
-      </ActionBar>
+      </div>
 
       <SSTable
         loading={isLoading}
@@ -184,7 +198,7 @@ const MyReviewPage = () => {
       />
 
       <SSModal
-        title="Remove property"
+        title="Remove Feedback ⚠️"
         isOpen={open}
         closeModal={() => setOpen(false)}
         handleOk={() => DeleteFeedbackHandler(ids)}
