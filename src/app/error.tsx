@@ -1,6 +1,6 @@
 "use client";
 const Error = () => {
-  return <div></div>;
+  return <div>Error in applications</div>;
 };
 
 export default Error;

@@ -6,7 +6,6 @@ import { Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Row, Space } from "antd";
-
 import { BounceLoader } from "react-spinners";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = isLoggedIn();

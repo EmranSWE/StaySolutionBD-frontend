@@ -8,12 +8,10 @@ import { useRouter } from "next/navigation";
 const NotFound = () => {
   const router = useRouter();
 
-  // Use useEffect to trigger the router push with a 2-second delay
   useEffect(() => {
     const redirectTimeout = setTimeout(() => {
       router.push("/");
-    }, 2000); // 2000 milliseconds = 2 seconds
-
+    }, 2000);
     // Clear the timeout when the component unmounts
     return () => {
       clearTimeout(redirectTimeout);
