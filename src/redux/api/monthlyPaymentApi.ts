@@ -70,6 +70,20 @@ export const MonthlyPaymentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.monthlyPayment],
     }),
+    singleOwnerTotalEarn: build.query({
+      query: (id) => ({
+        url: `${MonthlyPayment_URL}/rents/my-total-earn/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.monthlyPayment],
+    }),
+    singleOwnerTotalProperties: build.query({
+      query: (id) => ({
+        url: `${MonthlyPayment_URL}/rents/my-total-property/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.monthlyPayment],
+    }),
 
     currentMonthMonthlyPayment: build.query({
       query: (id) => ({
@@ -160,4 +174,6 @@ export const {
   useAllPropertiesQuery,
   useThisMonthTotalRentsQuery,
   useSingleUserTotalPaymentQuery,
+  useSingleOwnerTotalEarnQuery,
+  useSingleOwnerTotalPropertiesQuery,
 } = MonthlyPaymentApi;

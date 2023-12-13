@@ -11,7 +11,7 @@ import { useAddToMarketplaceMutation } from "@/redux/api/marketplaceApi";
 
 import { getUserInfo } from "@/services/auth.service";
 
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const AddPropertyToMarketplace = () => {
@@ -57,7 +57,12 @@ const AddPropertyToMarketplace = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -70,7 +75,11 @@ const AddPropertyToMarketplace = () => {
           },
         ]}
       />
-      <h1>Create Property</h1>
+      <Divider orientation="center">
+        <h1>
+          Add <span style={{ color: "#1890ff" }}>To Marketplace </span>
+        </h1>
+      </Divider>
 
       <div>
         <Form submitHandler={onSubmit}>

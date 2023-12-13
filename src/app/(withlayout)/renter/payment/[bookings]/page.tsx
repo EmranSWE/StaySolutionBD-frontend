@@ -70,7 +70,12 @@ const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {

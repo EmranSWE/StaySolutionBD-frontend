@@ -3,10 +3,8 @@ import { Row, Col, Button, message } from "antd";
 import React, { useEffect, useState } from "react";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { useDebounced } from "@/redux/hooks";
-import { marketplaceCategory } from "@/constants/global";
 import DataSlider from "@/components/Forms/FormDataSlider";
 import FormDataSearchInput from "@/components/Forms/FormDataSearchInput";
-import CategorySelect from "@/components/ui/CategorySelect";
 import { usePropertiesQuery } from "@/redux/api/propertyApi";
 import PropertyProductCard from "@/components/ui/PropertyProductCard";
 import CustomLoading from "@/components/ui/CustomLoading";
@@ -27,21 +25,9 @@ type Property = {
 };
 
 const AllPropertyData = () => {
-  const [cartCounts, setCartCounts] = useState<Record<string, number>>(() => {
-    if (typeof window !== "undefined") {
-      const savedCounts = localStorage.getItem("cartCounts");
-      return savedCounts ? JSON.parse(savedCounts) : {};
-    }
-    return {};
-  });
-
-  useEffect(() => {
-    localStorage.setItem("propertyCount", JSON.stringify(cartCounts));
-  }, [cartCounts]);
   const query: Record<string, any> = {};
-
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(100);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -69,7 +55,7 @@ const AllPropertyData = () => {
   }
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
-    delay: 600,
+    delay: 200,
   });
 
   if (!!debouncedSearchTerm) {
@@ -106,6 +92,7 @@ const AllPropertyData = () => {
   return (
     <>
       <SSBreadCrumb items={[{ label: "home", link: "/" }]} />
+
       <h1 style={{ textAlign: "center", marginBottom: "15px" }}>
         All <span style={{ color: "rgb(24, 144, 255)" }}>Selling</span> Property
       </h1>
@@ -149,8 +136,8 @@ const AllPropertyData = () => {
 
             <p>Monthly Rent</p>
             <DataSlider
-              min={10000}
-              max={100000}
+              min={1000}
+              max={50000}
               defaultValue={1000}
               onChange={handleRentChange}
               style={{ width: "100%", marginBottom: "10px" }}
@@ -158,7 +145,7 @@ const AllPropertyData = () => {
             <p>Number of Rooms</p>
             <DataSlider
               min={1}
-              max={20}
+              max={10}
               defaultValue={1}
               onChange={handleRoomChange}
               style={{ width: "100%", marginBottom: "10px" }}
@@ -166,7 +153,7 @@ const AllPropertyData = () => {
             <p>Max number of people</p>
             <DataSlider
               min={1}
-              max={20}
+              max={10}
               defaultValue={1}
               onChange={handleMaxOccupancy}
               style={{ width: "100%", marginBottom: "10px" }}

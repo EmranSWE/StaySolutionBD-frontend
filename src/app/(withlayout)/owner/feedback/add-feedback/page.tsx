@@ -42,7 +42,12 @@ const AddReviewPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -57,7 +62,7 @@ const AddReviewPage = () => {
       />
       <Divider orientation="center">
         <h1>
-          Create <span style={{ color: "#1890ff" }}>Feedback</span> Question
+          Add <span style={{ color: "#1890ff" }}>Your </span>Feedback
         </h1>
       </Divider>
 

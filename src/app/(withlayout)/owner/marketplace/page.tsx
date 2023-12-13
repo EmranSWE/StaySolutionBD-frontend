@@ -1,6 +1,6 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -157,7 +157,12 @@ const MyMarketplaceProduct = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -166,30 +171,11 @@ const MyMarketplaceProduct = () => {
           },
         ]}
       />
-      <ActionBar title="Property List">
-        <Input
-          size="large"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "60%",
-          }}
-        />
-        <div>
-          <Link href="/owner/marketplace/add-to-marketplace">
-            <Button type="primary">Create Property</Button>
-          </Link>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="primary"
-              onClick={resetFilters}
-            >
-              <ReloadOutlined />
-            </Button>
-          )}
-        </div>
-      </ActionBar>
+      <Divider orientation="center">
+        <h1>
+          My <span style={{ color: "#1890ff" }}>Marketplace Property </span>
+        </h1>
+      </Divider>
 
       <SSTable
         loading={isLoading}

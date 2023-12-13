@@ -7,13 +7,13 @@ import SmallDetailsCard from "./SmallCard/page";
 import { useMyProfileQuery } from "@/redux/api/authApi";
 import CustomLoading from "@/components/ui/CustomLoading";
 
-const UserDashboard = () => {
+const OwnerDashboard = () => {
   const { data, isError, isLoading } = useMyProfileQuery({});
   if (isLoading) {
     return <CustomLoading />;
   }
-  const firstName = data?.firstName;
-  const lastName = data?.lastName;
+  const firstName = data.firstName;
+  const lastName = data.lastName;
   return (
     <div
       style={{
@@ -22,7 +22,7 @@ const UserDashboard = () => {
       }}
     >
       <h3>
-        Dear, {`${firstName} ${lastName} `}
+        Dear, {`${firstName} ${lastName}`}
         <span
           style={{
             display: "inline-block",
@@ -43,7 +43,7 @@ const UserDashboard = () => {
           <SmallDetailsCard />
         </Col>
 
-        <Col xs={24} sm={24} md={24} lg={24} xl={16}>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
           <PaymentDetails />
         </Col>
       </Row>
@@ -51,4 +51,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default OwnerDashboard;

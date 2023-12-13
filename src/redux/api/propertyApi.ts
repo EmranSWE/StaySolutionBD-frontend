@@ -63,6 +63,13 @@ export const propertyApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.property],
     }),
+    singleOwnerProperty: build.query({
+      query: (id) => ({
+        url: `${PROPERTY_URL}/properties/${id}/owner-property`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.property],
+    }),
     addProperty: build.mutation({
       query: (data) => ({
         url: PROPERTY_URL,
@@ -104,4 +111,5 @@ export const {
   usePopularCategoryQuery,
   useAvailablePropertyQuery,
   useBookedPropertyQuery,
+  useSingleOwnerPropertyQuery,
 } = propertyApi;

@@ -4,7 +4,7 @@ import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { useAddBookingMutation } from "@/redux/api/bookingApi";
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Divider, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 type BookingDetailsProps = {
@@ -50,7 +50,12 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
@@ -63,8 +68,11 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
           },
         ]}
       />
-      <h1>Create Booking</h1>
-
+      <Divider orientation="center">
+        <h1>
+          Book <span style={{ color: "#1890ff" }}>Your</span> Flat
+        </h1>
+      </Divider>
       <div>
         <Form submitHandler={onSubmit}>
           <div
@@ -120,7 +128,7 @@ const AddBookingPage = ({ params }: BookingDetailsProps) => {
                   size="large"
                   required
                   label="Booking Request"
-                  placeholder="Enter the type of payment, Advanced, Monthly ...."
+                  placeholder="Request if any extra facility you need ...."
                 />
               </Col>
             </Row>

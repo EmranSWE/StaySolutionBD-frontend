@@ -21,12 +21,20 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
 
+  // const handleGoBack = () => {
+  //   const backResult = router.back();
+  //   // Use the default behavior (go back or fallback to home page)
+  //   return backResult !== undefined ? backResult : "/";
+  // };
+
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
       if (res?.accessToken) {
         message.success("User is logged in successfully");
         storeUserInfo({ accessToken: res.accessToken });
+        // router.push(handleGoBack());
+
         router.push("/");
       } else {
         if (res?.statusCode === 500) {

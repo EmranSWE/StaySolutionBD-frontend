@@ -59,7 +59,6 @@ const MyReviewPage = () => {
     // Handle the error as required, maybe redirect the user or show an error message
   }
 
-  // const { data, isLoading, isError, error } = useReviewsQuery({ ...query });
   const { data, isLoading, isError } = useSingleUserReviewQuery(id);
   console.log(data);
   if (isError) {

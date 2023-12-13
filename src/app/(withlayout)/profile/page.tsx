@@ -3,6 +3,7 @@ import { getUserInfo } from "@/services/auth.service";
 import React from "react";
 import AdminPage from "../admin/page";
 import UserDashboard from "../renter/dashboard/page";
+import OwnerDashboard from "../owner/dashboard/page";
 
 const ProfilePage = () => {
   const { email, role } = getUserInfo() as { email: string; role: string };
@@ -10,11 +11,13 @@ const ProfilePage = () => {
   return (
     <div>
       {role === "admin" || role === "super_admin" ? (
-        <AdminPage></AdminPage>
+        <AdminPage />
+      ) : role === "owner" ? (
+        <OwnerDashboard />
+      ) : role === "renter" ? (
+        <UserDashboard />
       ) : (
-        <div>
-          <UserDashboard />
-        </div>
+        <UserDashboard />
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input, message } from "antd";
+import { Button, Divider, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -137,15 +137,25 @@ const MyReviewPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+        height: "100vh",
+      }}
+    >
       <SSBreadCrumb
         items={[
           {
-            label: "renter",
-            link: "/renter",
+            label: "owner",
+            link: "/owner",
           },
         ]}
       />
+      <Divider orientation="center">
+        <h1>
+          My <span style={{ color: "#1890ff" }}>Feedback </span>List
+        </h1>
+      </Divider>
       <ActionBar title="Feedback List">
         <Input
           size="large"

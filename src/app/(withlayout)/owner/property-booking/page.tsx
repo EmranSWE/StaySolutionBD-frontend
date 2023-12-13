@@ -1,7 +1,7 @@
 import { Divider } from "antd";
 import React from "react";
 
-const OwnerIssues = () => {
+const PropertyInsurancePage = () => {
   return (
     <div
       style={{
@@ -11,11 +11,11 @@ const OwnerIssues = () => {
     >
       <Divider orientation="center">
         <h1>
-          My <span style={{ color: "#1890ff" }}>Issues </span>List
+          My Property <span style={{ color: "#1890ff" }}>Booking </span>Page
         </h1>
       </Divider>
     </div>
   );
 };
 
-export default OwnerIssues;
+export default PropertyInsurancePage;
