@@ -5,9 +5,14 @@ import React from "react";
 import PaymentDetails from "./PaymentDetails/page";
 import SmallDetailsCard from "./SmallCard/page";
 import { useMyProfileQuery } from "@/redux/api/authApi";
+import CustomLoading from "@/components/ui/CustomLoading";
 
 const UserDashboard = () => {
   const { data, isError, isLoading } = useMyProfileQuery({});
+  if (isLoading) {
+    return <CustomLoading />;
+  }
+  const firstName = data.firstName;
   return (
     <div
       style={{
@@ -16,7 +21,7 @@ const UserDashboard = () => {
       }}
     >
       <h3>
-        Dear, {`${data?.firstName} ${data?.lastName}`}{" "}
+        Dear, {`${firstName} `}
         <span
           style={{
             display: "inline-block",

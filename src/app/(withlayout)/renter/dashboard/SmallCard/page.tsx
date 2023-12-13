@@ -33,7 +33,7 @@ const SmallDetailsCard = () => {
     console.error("Id not found");
   }
   const { data: myTotalPayment, isLoading: isLoading2 } =
-    useSingleUserTotalPaymentQuery({});
+    useSingleUserTotalPaymentQuery(id);
 
   const { data, isLoading, isError, error } = useSingleRenterPropertyQuery(id);
   if (isLoading || isLoading2) {
@@ -43,6 +43,7 @@ const SmallDetailsCard = () => {
   const propertyId = data[0]?.id;
   const property = data[0];
   console.log(myTotalPayment);
+  const totalPaymentAmount = myTotalPayment;
   return (
     <div style={{ marginBottom: "5%" }}>
       <Row gutter={[16, 16]}>
@@ -56,30 +57,43 @@ const SmallDetailsCard = () => {
               background: "linear-gradient(45deg, #4CAF50, #434242)",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: "16px",
-              }}
-            >
-              <p>
-                <MoneyCollectTwoTone
-                  style={{ fontSize: "30px", marginRight: "8px" }}
-                />
-              </p>
-              <p
+            {typeof totalPaymentAmount === "number" ? (
+              <div
                 style={{
-                  fontSize: "25px",
-                  fontWeight: "bold",
-                  color: "white",
-                  margin: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: "16px",
                 }}
               >
-                <DollarOutlined /> {myTotalPayment}
+                <p>
+                  <MoneyCollectTwoTone
+                    style={{ fontSize: "30px", marginRight: "8px" }}
+                  />
+                </p>
+                <p
+                  style={{
+                    fontSize: "25px",
+                    fontWeight: "bold",
+                    color: "white",
+                    margin: 0,
+                  }}
+                >
+                  <DollarOutlined /> {totalPaymentAmount}
+                </p>
+              </div>
+            ) : (
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "rgba(255, 255, 255, 0.8)",
+                  textAlign: "center",
+                }}
+              >
+                No total payment information available.
               </p>
-            </div>
+            )}
+
             <p
               style={{
                 fontSize: "14px",
