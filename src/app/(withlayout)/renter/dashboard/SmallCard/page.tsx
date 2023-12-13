@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
-import { Card, Col, Row } from "antd";
+import { Button, Card, Col, Row } from "antd";
 import {
   BankTwoTone,
   DollarOutlined,
   HomeTwoTone,
   MoneyCollectTwoTone,
+  PayCircleOutlined,
 } from "@ant-design/icons";
 import {
   useSingleUserMonthlyPaymentQuery,
@@ -15,6 +16,7 @@ import {
 import CustomLoading from "@/components/ui/CustomLoading";
 import { useSingleRenterPropertyQuery } from "@/redux/api/propertyApi";
 import { getUserInfo } from "@/services/auth.service";
+import Link from "next/link";
 
 const commonCardStyle = {
   borderRadius: 10,
@@ -26,18 +28,21 @@ const commonCardStyle = {
 };
 
 const SmallDetailsCard = () => {
-  const { data: myTotalPayment, isLoading: isLoading2 } =
-    useSingleUserTotalPaymentQuery({});
   const { id } = getUserInfo() as { id: String };
   if (!id) {
     console.error("Id not found");
   }
-  const { data, isLoading, isError, error } = useSingleRenterPropertyQuery(id);
-  const currentFlat = data;
+  const { data: myTotalPayment, isLoading: isLoading2 } =
+    useSingleUserTotalPaymentQuery({});
 
+  const { data, isLoading, isError, error } = useSingleRenterPropertyQuery(id);
   if (isLoading || isLoading2) {
     return <CustomLoading />;
   }
+
+  const propertyId = data[0]?.id;
+  const property = data[0];
+  console.log(myTotalPayment);
   return (
     <div style={{ marginBottom: "5%" }}>
       <Row gutter={[16, 16]}>
@@ -112,7 +117,7 @@ const SmallDetailsCard = () => {
                   margin: 0,
                 }}
               >
-                {/* {currentFlat} */}
+                {property?.flatNo}
               </p>
             </div>
             <p
@@ -128,7 +133,7 @@ const SmallDetailsCard = () => {
         </Col>
         <Col xs={24} sm={24} md={8} lg={6}>
           <Card
-            title="Booked"
+            title="Monthly Rent"
             //@ts-ignore
 
             style={{
@@ -153,7 +158,7 @@ const SmallDetailsCard = () => {
                   margin: 0,
                 }}
               >
-                {/* {booked} */}
+                {property?.monthlyRent}
               </p>
             </div>
             <p
@@ -163,13 +168,13 @@ const SmallDetailsCard = () => {
                 textAlign: "center",
               }}
             >
-              Total booked property
+              My month wise Rent
             </p>
           </Card>
         </Col>
         <Col xs={24} sm={24} md={8} lg={6}>
           <Card
-            title="This Month"
+            title="Pay For the month"
             //@ts-ignore
             style={{
               ...commonCardStyle,
@@ -180,21 +185,22 @@ const SmallDetailsCard = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
+                justifyContent: "center",
                 marginBottom: "16px",
               }}
             >
-              <BankTwoTone style={{ fontSize: "30px", marginRight: "8px" }} />
-              <p
-                style={{
-                  fontSize: "27px",
-                  fontWeight: "bold",
-                  color: "white",
-                  margin: 0,
-                }}
-              >
-                {/* {thisMonth} */}
-              </p>
+              <Link href={`/renter/payment/monthly-payment/${propertyId}`}>
+                <Button
+                  style={{
+                    margin: "0px 10px",
+                    backgroundColor: "green",
+                  }}
+                  onClick={() => ""}
+                  type="primary"
+                >
+                  <PayCircleOutlined />
+                </Button>
+              </Link>
             </div>
             <p
               style={{
@@ -203,7 +209,7 @@ const SmallDetailsCard = () => {
                 textAlign: "center",
               }}
             >
-              This month revenue
+              Please Pay Now!
             </p>
           </Card>
         </Col>

@@ -25,6 +25,7 @@ import { getUserInfo } from "@/services/auth.service";
 import {
   useDeleteReviewMutation,
   useReviewsQuery,
+  useSingleUserReviewQuery,
 } from "@/redux/api/reviewApi";
 
 const MyReviewPage = () => {
@@ -58,7 +59,9 @@ const MyReviewPage = () => {
     // Handle the error as required, maybe redirect the user or show an error message
   }
 
-  const { data, isLoading, isError, error } = useReviewsQuery({ ...query });
+  // const { data, isLoading, isError, error } = useReviewsQuery({ ...query });
+  const { data, isLoading, isError } = useSingleUserReviewQuery(id);
+  console.log(data);
   if (isError) {
     console.error("Error fetching property data:", error);
   }
@@ -113,7 +116,7 @@ const MyReviewPage = () => {
               type="primary"
               onClick={() => {
                 setOpen(true);
-                setPropertyId(propertyId); // Corrected this line
+                setPropertyId(propertyId);
               }}
               danger
               style={{ marginLeft: "3px" }}

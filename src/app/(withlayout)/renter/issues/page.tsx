@@ -18,7 +18,11 @@ import SSModal from "@/components/ui/SSModal";
 import { useDeletePropertyMutation } from "@/redux/api/propertyApi";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
-import { useDeleteIssueMutation, useIssuesQuery } from "@/redux/api/issueApi";
+import {
+  useDeleteIssueMutation,
+  useIssuesQuery,
+  useSingleUserIssueQuery,
+} from "@/redux/api/issueApi";
 
 const PropertyIssuePage = () => {
   const query: Record<string, any> = {};
@@ -51,7 +55,7 @@ const PropertyIssuePage = () => {
     // Handle the error as required, maybe redirect the user or show an error message
   }
 
-  const { data, isLoading, isError, error } = useIssuesQuery({ ...query });
+  const { data, isLoading, isError, error } = useSingleUserIssueQuery({});
   if (isError) {
     console.error("Error fetching property data:", error);
     // Handle the error as needed

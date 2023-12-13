@@ -30,8 +30,29 @@ const BookingPaymentPage = () => {
     {}
   );
 
-  if (isLoading || !monthlyPayments || monthlyPayments.length === 0) {
+  if (isLoading) {
     return <CustomLoading></CustomLoading>;
+  }
+  if (!monthlyPayments || monthlyPayments.length === 0) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "linear-gradient(to right, #ff6e7f, #bfe9cf)",
+          height: "100vh",
+          color: "white",
+          textAlign: "center",
+        }}
+      >
+        <h1 style={{ fontSize: "2em", marginBottom: "16px" }}>
+          Only renters who have already made payments can view the details.
+        </h1>
+        {/* Add more content or styling as needed */}
+      </div>
+    );
   }
 
   const currentYear = new Date().getFullYear();

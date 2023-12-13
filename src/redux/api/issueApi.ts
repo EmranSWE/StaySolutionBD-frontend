@@ -29,8 +29,8 @@ export const IssueApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.issues],
     }),
     singleUserIssue: build.query({
-      query: (id) => ({
-        url: `${ISSUE_URL}/my-Issue/${id}`,
+      query: () => ({
+        url: `${ISSUE_URL}/single-renter-issue/`,
         method: "GET",
       }),
       providesTags: [tagTypes.issues],

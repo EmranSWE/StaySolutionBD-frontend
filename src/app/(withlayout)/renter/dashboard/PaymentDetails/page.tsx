@@ -22,7 +22,6 @@ const PaymentDetails = () => {
     isError,
     error,
   } = useSingleRenterPropertyQuery(id);
-  console.log(properties);
   const [selectedFlat, setSelectedFlat] = useState(null);
   const { data: paymentDetails, isLoading: paymentLoading } =
     useSpecificPropertyMonthWiseDetailsQuery(selectedFlat);

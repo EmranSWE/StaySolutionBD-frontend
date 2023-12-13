@@ -22,7 +22,7 @@ export const ReviewApi = baseApi.injectEndpoints({
     }),
     singleUserReview: build.query({
       query: (id) => ({
-        url: `${REVIEW_URL}/my-review/${id}`,
+        url: `${REVIEW_URL}/user/${id}/reviews`,
         method: "GET",
       }),
       providesTags: [tagTypes.reviews],

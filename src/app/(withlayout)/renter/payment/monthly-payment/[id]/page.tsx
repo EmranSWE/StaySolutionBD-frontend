@@ -6,7 +6,7 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import CustomLoading from "@/components/ui/CustomLoading";
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
-import { paymentStatus } from "@/constants/global";
+
 import {
   useAddRegularMonthlyPaymentMutation,
   useCurrentMonthMonthlyPaymentQuery,
@@ -25,14 +25,22 @@ type BookingDetailsProps = {
 const AddMonthlyPayments = ({ params }: BookingDetailsProps) => {
   const router = useRouter();
   const [addRegularMonthlyPayment] = useAddRegularMonthlyPaymentMutation();
-  const { data, isLoading } = useCurrentMonthMonthlyPaymentQuery(params?.id);
+  const { data, isLoading, isError } = useCurrentMonthMonthlyPaymentQuery(
+    params?.id
+  );
 
   if (isLoading) {
     return <CustomLoading />;
   }
 
+  if (isError) {
+    return <div>Error</div>;
+  }
+  // const uniqueMonths = Array.from(
+  //   new Set(data?.map((data: { month: any }) => data.month))
+  // );
   const uniqueMonths = Array.from(
-    new Set(data?.map((data: { month: any }) => data.month))
+    new Set(data?.map?.((dataItem: { month: any }) => dataItem?.month) || [])
   );
 
   const monthOptions = uniqueMonths?.map((month) => ({

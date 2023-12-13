@@ -142,7 +142,7 @@ const MyReviewPage = () => {
         items={[
           {
             label: "renter",
-            link: "/renter",
+            link: "/profile",
           },
         ]}
       />
