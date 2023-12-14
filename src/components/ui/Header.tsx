@@ -7,8 +7,23 @@ import { useRouter } from "next/navigation";
 import { useMyProfileQuery } from "@/redux/api/authApi";
 import { BounceLoader } from "react-spinners";
 import Link from "next/link";
+import Marquee from "react-fast-marquee";
+import { useEffect, useState } from "react";
 const { Header: AntHeader } = Layout;
 const Header = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const router = useRouter();
   const { data, isError, isLoading } = useMyProfileQuery({});
   if (isLoading) {
@@ -51,25 +66,50 @@ const Header = () => {
       ),
     },
   ];
+  const marqueeStyle = {
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+  };
+
+  const antHeaderStyle = {
+    backgroundColor: "#001529",
+    color: "#fff",
+    fontWeight: "bold",
+    display: "flex",
+    justifyContent: "space-between",
+  };
+  const gradientColor = {
+    background: "linear-gradient(to right, #ff4500, #ff8c00)",
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+    fontFamily: "Arial, sans-serif",
+    padding: "10px",
+    fontSize: "16px",
+  };
+  const adjustedWidth = width <= 800 ? "50px" : "700px";
   return (
-    <AntHeader
-      style={{
-        backgroundColor: "#001529",
-        color: "#fff",
-      }}
-    >
+    <AntHeader style={antHeaderStyle}>
+      <div style={{ ...marqueeStyle, width: adjustedWidth }}>
+        <Marquee>
+          <h3
+            style={gradientColor}
+          >{`💚Dear  ${data?.firstName} ${data?.lastName} 💚`}</h3>
+          Welcome to your Dashboard. We hope you enjoy your experience. If you
+          need any assistance with the dashboard, feel free to contact us at
+          mdemranswe@gmail.com or by phone at 01838235450.
+        </Marquee>
+      </div>
       <Row justify="end" align="middle" style={{ height: "100%" }}>
-        <p>{`${data?.firstName} ${data?.lastName}`}</p>
+        <h3>{`${data?.firstName} ${data?.lastName}`}</h3>
+
         <Dropdown menu={{ items }}>
-          <a>
-            <Space wrap size={16}>
-              <Avatar
-                size="large"
-                src={data?.profilePic}
-                icon={<UserOutlined />}
-              />
-            </Space>
-          </a>
+          <Space wrap size={16}>
+            <Avatar
+              size="large"
+              src={data?.profilePic}
+              icon={<UserOutlined />}
+            />
+          </Space>
         </Dropdown>
       </Row>
     </AntHeader>

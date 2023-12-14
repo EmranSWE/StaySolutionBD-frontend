@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "StaySolutionBD",
   description: "Developed By Imran",
+  icons: {
+    icon: "https://i.ibb.co/YLP18Js/logo.png",
+  },
 };
 
 export default function RootLayout({
