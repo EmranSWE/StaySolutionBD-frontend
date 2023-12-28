@@ -15,18 +15,12 @@ const SideBar = () => {
   const { role } = getUserInfo() as any;
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#001529" }}>
       {isMobile && !collapsed && (
         <Button
           type="primary"
           icon={<MenuOutlined />}
           onClick={() => setCollapsed(true)}
-          style={{
-            position: "fixed",
-            zIndex: 2,
-            top: "1rem",
-            left: "1rem",
-          }}
         />
       )}
 

@@ -45,11 +45,11 @@ const staticItems: MenuItem[] = [
   getItem("Long term rental", "4", undefined, undefined, "/long-term"),
   getItem("About us", "5", undefined, undefined, "/about-us"),
   getItem("Contact us", "6", undefined, undefined, "/contact-us"),
-  getItem("For sell", "sub2", <AppstoreOutlined />, [
-    getItem("Studio", "7"),
-    getItem("Ready Plot", "8"),
-    getItem("Flat", "sub3", null, [getItem("Special Plat", "9")]),
-  ]),
+  // getItem("For sell", "sub2", <AppstoreOutlined />, [
+  //   getItem("Studio", "7"),
+  //   getItem("Ready Plot", "8"),
+  //   getItem("Flat", "sub3", null, [getItem("Special Plat", "9")]),
+  // ]),
 ];
 
 const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
@@ -91,7 +91,6 @@ const HeaderLayoutPage = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    // Provide a small delay to ensure that the localStorage value is retrieved after initial rendering
     const timeoutId = setTimeout(() => {
       if (typeof window !== "undefined") {
         const storedValue = localStorage.getItem("activeMenuItem") || "1";

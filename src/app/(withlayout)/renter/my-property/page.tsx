@@ -17,20 +17,18 @@ import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
 import SSTable from "@/components/ui/SSBDTable";
 import SSModal from "@/components/ui/SSModal";
-import {
-  useDeletePropertyMutation,
-  usePropertiesQuery,
-  useSingleRenterPropertyQuery,
-  useSingleUserPropertyQuery,
-} from "@/redux/api/propertyApi";
+
 import SSBreadCrumb from "@/components/ui/SSBreadCrumb";
 import { getUserInfo } from "@/services/auth.service";
 import CustomLoading from "@/components/ui/CustomLoading";
+import {
+  useDeletePropertyMutation,
+  useSingleUserPropertyQuery,
+} from "@/redux/api/propertyApi";
 
 const MyPropertyPage = () => {
   const query: Record<string, any> = {};
   const [deleteProperty] = useDeletePropertyMutation();
-
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -57,7 +55,8 @@ const MyPropertyPage = () => {
     console.error("Id not found");
   }
 
-  const { data, isLoading, isError, error } = useSingleRenterPropertyQuery(id);
+  const { data, isLoading, isError, error } = useSingleUserPropertyQuery(id);
+  console.log(data);
   if (isError) {
     console.error("Error fetching property data:", error);
   }
@@ -141,15 +140,15 @@ const MyPropertyPage = () => {
       dataIndex: "size",
     },
 
-    {
-      title: "Booking Start",
-      dataIndex: "bookings",
-      render: function (data: any) {
-        const startAt = data[0]?.bookingStartDate;
-        return startAt && dayjs(startAt).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
-    },
+    // {
+    //   title: "Booking Start",
+    //   dataIndex: "bookings",
+    //   render: function (data: any) {
+    //     const startAt = data[0]?.bookingStartDate;
+    //     return startAt && dayjs(startAt).format("MMM D, YYYY hh:mm A");
+    //   },
+    //   sorter: true,
+    // },
   ];
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);

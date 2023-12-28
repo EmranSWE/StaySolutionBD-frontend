@@ -11,13 +11,12 @@ import FeedbackPage from "./Feedback/page";
 const LazyBannerPage = React.lazy(() => import("./BannerPage/page"));
 
 const LoadingComponent = () => {
-  // You can customize the loading component as needed
   return <div>Loading...</div>;
 };
 
 const HomePage = () => {
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <Suspense fallback={<LoadingComponent />}>
         <LazyBannerPage />
       </Suspense>

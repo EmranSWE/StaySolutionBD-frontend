@@ -76,7 +76,7 @@ const Header = () => {
     color: "#fff",
     fontWeight: "bold",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "end",
   };
   const gradientColor = {
     background: "linear-gradient(to right, #ff4500, #ff8c00)",
@@ -89,7 +89,7 @@ const Header = () => {
   const adjustedWidth = width <= 800 ? "50px" : "700px";
   return (
     <AntHeader style={antHeaderStyle}>
-      <div style={{ ...marqueeStyle, width: adjustedWidth }}>
+      {/* <div style={{ ...marqueeStyle, width: adjustedWidth }}>
         <Marquee>
           <h3
             style={gradientColor}
@@ -98,8 +98,8 @@ const Header = () => {
           need any assistance with the dashboard, feel free to contact us at
           mdemranswe@gmail.com or by phone at 01838235450.
         </Marquee>
-      </div>
-      <Row justify="end" align="middle" style={{ height: "100%" }}>
+      </div> */}
+      <Row>
         <h3>{`${data?.firstName} ${data?.lastName}`}</h3>
 
         <Dropdown menu={{ items }}>

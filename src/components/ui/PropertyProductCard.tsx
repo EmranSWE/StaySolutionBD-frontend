@@ -5,12 +5,29 @@ import Image from "next/image";
 import Link from "next/link";
 const { Meta } = Card;
 import styles from "./css/propertyCard.module.css";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 type PropertyProductCardProps = {
   data?: any;
   onAddToCart?: any;
 };
 const PropertyProductCard = ({ data }: PropertyProductCardProps) => {
+  const [componentWidth, setComponentWidth] = useState("300px"); // Default width for smaller devices
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newWidth = window.innerWidth > 2000 ? "400px" : "300px"; // Adjust the width based on your condition
+      setComponentWidth(newWidth);
+    };
+
+    handleResize(); // Initial check
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const isAvailable = data.propertyStatus === "available";
 
   const baseStyle = useMemo(
@@ -49,14 +66,14 @@ const PropertyProductCard = ({ data }: PropertyProductCardProps) => {
       <div>
         <Link href={`/property/${data?.id}`}>
           <Card
-            style={{ width: 300 }}
+            style={{ width: componentWidth }}
             cover={
               <div className={styles.imageContainer}>
                 <Image
                   src={data.propertyImage || data.imageGallery[0]}
                   alt="Landscape picture"
                   className={styles.zoom}
-                  width={300}
+                  width={componentWidth === "400px" ? 400 : 300}
                   height={200}
                 />
               </div>

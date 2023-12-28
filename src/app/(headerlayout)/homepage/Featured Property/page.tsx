@@ -37,6 +37,7 @@ const AllPropertyData = () => {
     return <CustomLoading></CustomLoading>;
   }
 
+  console.log(data);
   const handleAddToCart = (property: Property) => {
     message.success("Added to cart");
     setCartCounts((prevCounts) => ({
@@ -54,25 +55,10 @@ const AllPropertyData = () => {
         <span style={{ color: "#1890ff" }}>Featured</span> Property
       </Divider>
 
-      <Row
-        gutter={[0, 20]}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-        }}
-      >
+      <Row justify="space-around" align="top">
         {data &&
           data?.map((property: Property) => (
-            <Col
-              xs={24}
-              sm={24}
-              md={10}
-              lg={8}
-              xl={6}
-              key={property.id}
-              style={{ margin: "0 auto" }}
-            >
+            <Col xs={24} sm={24} md={10} lg={8} xl={4} key={property.id}>
               <PropertyProductCard
                 data={property}
                 onAddToCart={handleAddToCart}
