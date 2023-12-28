@@ -53,67 +53,67 @@ const BuildingPage = () => {
   const reversedWindows = [...windows].reverse();
 
   return (
-    <div className="building-container">
-      <style jsx>{`
-        .building-container {
-          position: relative;
-          width: 280px;
-          height: 600px;
-          margin-left: 10px;
-          background-color: #f0e8d5;
-        }
+    <div style={{ display: "block" }}>
+      <div className="building-container">
+        <style jsx>{`
+          .building-container {
+            position: relative;
+            min-width: 70%;
+            height: 600px;
+            margin-left: 10px;
+            background-color: #f0e8d5;
+          }
+          .top-design {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
 
-        .floors {
-          display: flex;
-          flex-direction: column-reverse;
-          height: 100%;
-          margin-top: 10%;
-        }
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-bottom: 50px solid rgb(63, 94, 251);
+            z-index: 4;
+          }
+          .floors {
+            display: flex;
+            flex-direction: column-reverse;
+            height: 100%;
+            margin-top: 10%;
+          }
 
-        .floor {
-          display: flex;
-          justify-content: space-between;
-          height: 100px;
-          border: 2px solid gray;
-          padding-top: 10px;
-        }
+          .floor {
+            display: flex;
+            justify-content: space-between;
+            height: 100px;
+            border: 2px solid gray;
+            padding-top: 10px;
+          }
 
-        .top-design {
-          position: absolute;
-          top: -50px;
-          left: 50%;
-          transform: translateX(-50%);
+          .text {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 20px;
+            z-index: 10;
+          }
 
-          border-left: 140px solid transparent;
-          border-right: 140px solid transparent;
-          border-bottom: 50px solid rgb(63, 94, 251);
-          z-index: 4;
-        }
+          .window:hover .shutter {
+            transform: rotate(-90deg);
+          }
+        `}</style>
 
-        .text {
-          position: absolute;
-          top: -25px;
-          left: 50%;
-          transform: translateX(-50%);
-          color: white;
-          font-size: 20px;
-          z-index: 10;
-        }
-
-        .window:hover .shutter {
-          transform: rotate(-90deg);
-        }
-      `}</style>
-
-      <div className="floors">
-        {reversedWindows.map((windowRow, index) => (
-          <div key={index} className="floor">
-            {windowRow}
-          </div>
-        ))}
+        <div className="floors">
+          {reversedWindows.map((windowRow, index) => (
+            <div key={index} className="floor">
+              {windowRow}
+            </div>
+          ))}
+        </div>
+        <div className="top-design"></div>
+        <div className="text">Sheikh Home</div>
       </div>
-      <div className="top-design"></div>
-      <div className="text">Sheikh Home</div>
     </div>
   );
 };

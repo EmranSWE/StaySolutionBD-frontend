@@ -56,6 +56,7 @@ const MyPropertyPage = () => {
   }
 
   const { data, isLoading, isError, error } = useSingleUserPropertyQuery(id);
+  console.log(data);
   if (isError) {
     console.error("Error fetching property data:", error);
   }

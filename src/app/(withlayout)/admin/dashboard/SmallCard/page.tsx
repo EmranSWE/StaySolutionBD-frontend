@@ -40,7 +40,7 @@ const SmallDetailsCard = () => {
     return <CustomLoading />;
   }
   return (
-    <div style={{ marginBottom: "5%" }}>
+    <div style={{ marginBottom: "7%" }}>
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={24} md={8} lg={6}>
           <Card

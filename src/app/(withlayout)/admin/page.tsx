@@ -42,7 +42,7 @@ const AdminPage = () => {
         </h3>
         <Divider orientation="center">
           <h1 style={{ color: "white" }}>
-            Welcome to <br /> <span style={{ color: "#1890ff" }}> Admin </span>
+            Welcome to <br /> <span style={{ color: "#1890ff" }}> Your </span>
             Dashboard
           </h1>
         </Divider>

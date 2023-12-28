@@ -14,7 +14,7 @@ const DashboardPage = () => {
         <Col xs={24} sm={24} md={24} lg={24}>
           <SmallDetailsCard />
         </Col>
-        <Col xs={24} sm={24} md={12} lg={8}>
+        <Col xs={24} sm={24} md={12} lg={8} xl={8}>
           <CurrentFlatStatus />
         </Col>
 
@@ -27,12 +27,7 @@ const DashboardPage = () => {
         </Col>
         <Col xs={24} sm={24} md={12} lg={8} xl={6}></Col>
         <Col xs={24} sm={24} md={24} lg={24} xl={16}>
-          <div
-            style={{
-              position: "relative",
-              top: window.innerWidth > 1000 ? "-35%" : 0,
-            }}
-          >
+          <div>
             <PaymentDetails />
           </div>
         </Col>

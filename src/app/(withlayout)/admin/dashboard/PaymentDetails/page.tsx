@@ -122,7 +122,7 @@ const PaymentDetails = () => {
                     backgroundColor: "green",
                   }}
                 >
-                  Print Now
+                  Print
                 </Button>
               </div>
               {paymentLoading ? (
